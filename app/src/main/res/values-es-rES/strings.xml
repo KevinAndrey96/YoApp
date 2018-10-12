@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YoPresto Aliado</string>
+    <string name="sign_in">Ingreso</string>
+    <string name="prompt_email">Correo</string>
+    <string name="action_sign_in_short">Ingresar</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="user_hint">Usuario</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Ingresar</string>
+    <string name="error_invalid_email">El email es obligatorio</string>
+    <string name="error_invalid_password">Contraseña muy corta</string>
+    <string name="error_incorrect_password">Contraseña incorrecta</string>
+    <string name="error_field_required">Campo obligatorio</string>
+    <string name="permission_rationale">Es necesario permitir el acceso a los contactos</string>
+    <string name="title_activity_main_menu">Menu Principal</string>
+    <string name="title_activity_main">YoPresto Aliado</string>
+    <string name="title_activity_capture_dni">YoPresto Aliado</string>
+    <string name="use">Utilizacion</string>
+    <string name="use_message">Realice la lectura del código de barras de la cédula de ciudadanía</string>
+    <string name="dni">Cédula</string>
+    <string name="available_amount">Monto disponible para retiro</string>
+    <string name="amount_to_use">Monto a utilizar</string>
+    <string name="quota_amount">Valor de la cuota</string>
+    <string name="write_otp">Ingresa la OTP</string>
+    <string name="generate_new_otp">Generar nueva OTP</string>
+    <string name="accept">Aceptar</string>
+    <string name="close_session">Cerrar Sesión</string>
+    <string name="use_transaction">Utilización</string>
+    <string name="more">Más</string>
+    <string name="information">Información</string>
+    <string name="close_session_ask">¡Desea cerrar sesión?</string>
+    <string name="quota_date">Fecha Cuota</string>
+    <string name="loading">Cargando</string>
+    <string name="progress_dialog">Consultando</string>
+    <string name="please_wait">Por favor espere</string>
+    <string name="quota_must_be_minor_that_amount">La cuota debe ser menor a el valor a utilizar</string>
+    <string name="quota_must_be_almost">La cuota debe ser como mínimo $20.000</string>
+    <string name="amount_to_use_must_be_almost">El monto minimo a utilizar debe ser $100.000</string>
+    <string name="amount_to_use_must_be_minor_that_balance">El monto a utilizar debe ser menor al valor disponible</string>
+    <string name="wrong_otp">OTP incorrecta</string>
+</resources>

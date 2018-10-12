@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1098797142385",
+    "firebase_url": "https://yoprestoaliado.firebaseio.com",
+    "project_id": "yoprestoaliado",
+    "storage_bucket": "yoprestoaliado.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098797142385:android:ae62fc72b5a30a4a",
+        "android_client_info": {
+          "package_name": "com.yopresto.app.yoprestoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098797142385-m1581htce2edinv3ohccbce7enq03v9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yopresto.app.yoprestoapp",
+            "certificate_hash": "f4d8c0c4f9f598989bb3170cd26d8d88a37d2eef"
+          }
+        },
+        {
+          "client_id": "1098797142385-6mkm72ebr3d2t4g7h52hblgba6qo1t0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAixTCmscSVmxyGEtBsF1T6IC4z3_Q-4t0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098797142385-6mkm72ebr3d2t4g7h52hblgba6qo1t0c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

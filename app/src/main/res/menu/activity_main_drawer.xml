@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_use_transaction"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/use" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Gallery"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Slideshow"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Tools"
+            android:visible="false" />
+    </group>
+
+    <item android:title="@string/more">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share"
+                android:visible="false" />
+            <item
+                android:id="@+id/nav_close_session"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/close_session" />
+        </menu>
+    </item>
+
+</menu>
