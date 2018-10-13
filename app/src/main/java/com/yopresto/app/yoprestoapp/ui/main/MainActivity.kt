@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -28,8 +27,6 @@ import android.widget.Toast
 import com.yopresto.app.yoprestoapp.Enrollment
 import com.yopresto.app.yoprestoapp.Stores
 import com.yopresto.app.yoprestoapp.dto.LoginDataresponse
-import com.yopresto.app.yoprestoapp.dto.LoginResponse
-import kotlinx.android.synthetic.main.nav_header_main.*
 import org.codehaus.jackson.map.ObjectMapper
 
 
@@ -59,6 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         context = this
 
         val fragment = TakeDNIPictureFragment()
+        //val fragment = HomeActivity()
         val tx = supportFragmentManager.beginTransaction()
         tx.replace(R.id.main_fragment, fragment)
         tx.addToBackStack("WelcomeFrg").commit()

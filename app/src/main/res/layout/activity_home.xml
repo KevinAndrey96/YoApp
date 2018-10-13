@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondohome"
-    tools:context="com.yopresto.app.yoprestoapp.ui.HomeActivity">
+    tools:context="com.yopresto.app.yoprestoapp.ui.main.HomeActivity">
 
     <ImageView
         android:id="@+id/BtnEnrollment"

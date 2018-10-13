@@ -29,6 +29,37 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- Define new permissions -->
+    <permission
+        android:name="com.biometric.usosdkbytte.NEW_READ_LKMS_LICENSE_PROVIDER"
+        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+    <permission
+        android:name="com.biometric.usosdkbytte.NEW_WRITE_LKMS_LICENSE_PROVIDER"
+        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+
+    <permission
+        android:name="com.biometric.usosdkbytte.NEW_READ_MPH_BIO_SDK_PROVIDER"
+        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+    <permission
+        android:name="com.biometric.usosdkbytte.NEW_WRITE_MPH_BIO_SDK_PROVIDER"
+        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+
+
+    <!-- Remove old permissions -->
+    <permission
+        android:name="BioStoreProvider.READ_MPH_BIO_SDK_PROVIDER"
+        tools:node="remove" /> <!-- unless otherwise required, set the maximum security permission -->
+    <permission
+        android:name="BioStoreProvider.WRITE_MPH_BIO_SDK_PROVIDER"
+        tools:node="remove" /> <!-- unless otherwise required, set the maximum security permission -->
+
+    <permission
+        android:name="com.morpho.lkms.android.sdk.lkms_core.content_provider.LkmsStoreProvider.WRITE_LKMS_LICENSE_PROVIDER"
+        tools:node="remove" />
+    <permission
+        android:name="com.morpho.lkms.android.sdk.lkms_core.content_provider.LkmsStoreProvider.READ_LKMS_LICENSE_PROVIDER"
+        tools:node="remove" />
+
     <application
         android:name=".YoPrestoApp"
         android:allowBackup="true"
@@ -84,7 +115,7 @@
 
         <activity
             android:name=".Stores"
-            android:label="@string/title_activity_stores" />
+            android:label="Mis Tiendas" />
         <activity android:name=".Enrollment"></activity>
     </application>
 
