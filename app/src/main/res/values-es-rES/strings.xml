@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">YoPresto Aliado</string>
+    <string name="app_name">YoPresto</string>
     <string name="sign_in">Ingreso</string>
     <string name="prompt_email">Correo</string>
     <string name="action_sign_in_short">Ingresar</string>
@@ -40,4 +40,8 @@
     <string name="amount_to_use_must_be_almost">El monto minimo a utilizar debe ser $100.000</string>
     <string name="amount_to_use_must_be_minor_that_balance">El monto a utilizar debe ser menor al valor disponible</string>
     <string name="wrong_otp">OTP incorrecta</string>
+    <string name="take_picture">Tomar fotografia</string>
+    <string name="avalaible_value">Mi cupo disponible</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="avalaible_money">Tu dinero disponible:</string>
 </resources>

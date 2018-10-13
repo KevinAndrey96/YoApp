@@ -72,9 +72,6 @@ class LoginActivity : AppCompatActivity() {
 
 
             try{
-
-
-
                 when {
                     editTextUser.text.toString().isNullOrEmpty() -> editTextUser.error = getString(R.string.error_field_required)
                     editTextPassword.text.toString().isNullOrEmpty() -> editTextPassword.error = getString(R.string.error_field_required)

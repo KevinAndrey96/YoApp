@@ -34,12 +34,9 @@ class TakeDNIPictureFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-
         imageButtonTakeDNICapture.setOnClickListener{
             startActivityForResult(Intent(activity, TakeDNICaptureActivity::class.java), takePictureRequestCode)
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
