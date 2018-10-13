@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_enrollment"
+            android:icon="@android:drawable/ic_menu_view"
+            android:title="Enrolamiento" />
+        <item
+            android:id="@+id/nav_stores"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="Mis Tiendas" />
         <item
             android:id="@+id/nav_use_transaction"
             android:icon="@drawable/ic_menu_camera"

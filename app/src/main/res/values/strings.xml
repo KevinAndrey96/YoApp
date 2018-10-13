@@ -59,4 +59,5 @@
     <string name="avalaible_value">Available amount</string>
     <string name="welcome">Welcome</string>
     <string name="avalaible_money">Avalaible money:</string>
+    <string name="title_activity_stores">Map</string>
 </resources>
