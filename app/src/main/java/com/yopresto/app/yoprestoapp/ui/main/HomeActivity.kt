@@ -1,40 +1,15 @@
 package com.yopresto.app.yoprestoapp.ui.main
 
-import android.app.Application
-import android.support.multidex.MultiDex
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
-import com.yopresto.app.yoprestoapp.constants.WebConstant
-import com.yopresto.app.yoprestoapp.enumeration.SessionKeys
-import hundredthirtythree.sessionmanager.SessionManager
-
-class HomeActivity : Application(){
-    val endpoint = WebConstant.DEV_ENDPOINT_URL
-
-    override fun onCreate() {
-        super.onCreate()
-
-        MultiDex.install(this)
-
-        Logger.addLogAdapter(AndroidLogAdapter())
-
-        SessionManager.Builder()
-                .setContext(applicationContext)
-                .setPrefsName(SessionKeys.PREFS_NAME.key)
-                .build()
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import com.yopresto.app.yoprestoapp.R
 
 
-        SessionManager.putString(SessionKeys.TEST.key, "I'm SessionManager")
-        Logger.d("onCreate: "+SessionManager.getString(SessionKeys.TEST.key, "1"))
+class HomeActivity : AppCompatActivity() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_home)
 
-
-    }
-
-    companion object {
-
-        fun getEndpoint(yoPrestoAliado: HomeActivity): String {
-            return yoPrestoAliado.endpoint
-        }
     }
 }
