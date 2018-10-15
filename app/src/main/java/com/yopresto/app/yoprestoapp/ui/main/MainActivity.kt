@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)//Primera Vista
         setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(
@@ -142,8 +142,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
             }
             R.id.nav_enrollment -> {
-                Toast.makeText(applicationContext, "Hola", Toast.LENGTH_LONG);
                 val intent = Intent(this, Enrollment::class.java)
+                startActivity(intent)
+            }
+
+            R.id.nav_home -> {
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
             }
 
@@ -167,6 +171,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 SessionManager.removeKey(SessionKeys.USER_SESSION.key)
                                 SessionManager.putBoolean(SessionKeys.IS_LOGGED_IN.key, false)
                                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+
                                 finish()
                             }
 
