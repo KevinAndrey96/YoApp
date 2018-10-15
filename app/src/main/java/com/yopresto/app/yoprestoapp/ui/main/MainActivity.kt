@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -24,9 +23,10 @@ import libs.mjn.prettydialog.PrettyDialog
 import net.hockeyapp.android.CrashManager
 import net.hockeyapp.android.UpdateManager
 import android.widget.TextView
+import android.widget.Toast
+import com.yopresto.app.yoprestoapp.Enrollment
+import com.yopresto.app.yoprestoapp.Stores
 import com.yopresto.app.yoprestoapp.dto.LoginDataresponse
-import com.yopresto.app.yoprestoapp.dto.LoginResponse
-import kotlinx.android.synthetic.main.nav_header_main.*
 import org.codehaus.jackson.map.ObjectMapper
 
 
@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         context = this
 
         val fragment = TakeDNIPictureFragment()
+        //val fragment = HomeActivity()
         val tx = supportFragmentManager.beginTransaction()
         tx.replace(R.id.main_fragment, fragment)
         tx.addToBackStack("WelcomeFrg").commit()
@@ -136,18 +137,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 tx.replace(R.id.main_fragment, fragment)
                 tx.addToBackStack("TakeDNIPicFrg").commit()
             }
-            R.id.nav_gallery -> {
+            R.id.nav_stores -> {
+                val intent = Intent(this, Stores::class.java)
+                startActivity(intent)
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_enrollment -> {
+                Toast.makeText(applicationContext, "Hola", Toast.LENGTH_LONG);
+                val intent = Intent(this, Enrollment::class.java)
+                startActivity(intent)
             }
-            R.id.nav_manage -> {
 
-
-
-            }
-            R.id.nav_share -> {
-
-            }
             R.id.nav_close_session -> {
 
 
