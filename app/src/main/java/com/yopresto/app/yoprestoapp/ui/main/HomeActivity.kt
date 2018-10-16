@@ -46,7 +46,7 @@ class HomeActivity : AppCompatActivity() {
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withDisplayBelowStatusBar(true)
-                .withTranslucentStatusBar(false)
+                .withTranslucentStatusBar(true)
                 .withActionBarDrawerToggle(true)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
