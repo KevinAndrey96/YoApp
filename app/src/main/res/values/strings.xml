@@ -59,5 +59,12 @@
     <string name="avalaible_value">Available amount</string>
     <string name="welcome">Welcome</string>
     <string name="avalaible_money">Avalaible money:</string>
-    <string name="title_activity_stores">Map</string>
+    <string name="title_activity_stores" translatable="false">Map</string>
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+    </string-array>
+
 </resources>

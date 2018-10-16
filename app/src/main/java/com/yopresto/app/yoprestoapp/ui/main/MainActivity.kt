@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)//Primera Vista
+
         setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(
@@ -65,8 +66,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     }
-
-
     override fun onResume() {
         super.onResume()
         checkForCrashes()
@@ -84,26 +83,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
     }
-
     private fun checkForCrashes() {
         CrashManager.register(this)
     }
-
-
     private fun checkForUpdates() {
         // Remove this for store builds!
         UpdateManager.register(this)
     }
-
     private fun unregisterManagers() {
         UpdateManager.unregister()
     }
-
     public override fun onDestroy() {
         super.onDestroy()
         unregisterManagers()
     }
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -111,13 +104,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         //menuInflater.inflate(R.menu.main, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -127,7 +118,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             else -> return super.onOptionsItemSelected(item)
         }
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -198,8 +188,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-
-
     fun changeFragment(fragment: Fragment, bundle: Bundle){
 
         val tx = supportFragmentManager.beginTransaction()
@@ -207,8 +195,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         tx.replace(R.id.main_fragment, fragment)
         tx.addToBackStack("TakeDNIPicFrg").commit()
     }
-
-
     companion object {
         fun getContext(mainActivity: MainActivity): MainActivity? {
             return mainActivity.context
