@@ -22,20 +22,59 @@
         android:name="android.hardware.location.gps"
         android:required="false" />
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Define new permissions -->
+    <permission
+        android:name="com.biometric.usosdkbytte.NEW_READ_LKMS_LICENSE_PROVIDER"
+        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+    <permission
+        android:name="com.biometric.usosdkbytte.NEW_WRITE_LKMS_LICENSE_PROVIDER"
+        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+
+    <permission
+        android:name="com.biometric.usosdkbytte.NEW_READ_MPH_BIO_SDK_PROVIDER"
+        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+    <permission
+        android:name="com.biometric.usosdkbytte.NEW_WRITE_MPH_BIO_SDK_PROVIDER"
+        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+
+
+    <!-- Remove old permissions -->
+    <permission
+        android:name="BioStoreProvider.READ_MPH_BIO_SDK_PROVIDER"
+        tools:node="remove" /> <!-- unless otherwise required, set the maximum security permission -->
+    <permission
+        android:name="BioStoreProvider.WRITE_MPH_BIO_SDK_PROVIDER"
+        tools:node="remove" /> <!-- unless otherwise required, set the maximum security permission -->
+
+    <permission
+        android:name="com.morpho.lkms.android.sdk.lkms_core.content_provider.LkmsStoreProvider.WRITE_LKMS_LICENSE_PROVIDER"
+        tools:node="remove" />
+    <permission
+        android:name="com.morpho.lkms.android.sdk.lkms_core.content_provider.LkmsStoreProvider.READ_LKMS_LICENSE_PROVIDER"
+        tools:node="remove" />
+
     <application
         android:name=".YoPrestoApp"
         android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icon"
         android:largeHeap="true"
-        android:hardwareAccelerated="true"
+        android:roundIcon="@mipmap/icon"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="allowBackup"
-        android:fullBackupContent="true">
-
-        <meta-data android:name="net.hockeyapp.android.appIdentifier" android:value="a22fc240470e4094806b6ae404fbf8e2" />
+        tools:replace="allowBackup">
+        <meta-data
+            android:name="net.hockeyapp.android.appIdentifier"
+            android:value="a22fc240470e4094806b6ae404fbf8e2" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -55,13 +94,33 @@
             tools:replace="screenOrientation" />
         <activity
             android:name=".ui.main.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.main.TakeDNICaptureActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Stores"
+            android:label="Mis Tiendas" />
+        <activity android:name=".Enrollment"></activity>
+        <activity
+            android:name=".ui.main.HomeActivity"
+            android:label="Yo Presto APP"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
