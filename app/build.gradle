@@ -107,4 +107,21 @@ dependencies {
     implementation(name: 'AndroidBiometricSDK-4.7.0-biometry', ext: 'aar')
     implementation 'net.zetetic:android-database-sqlcipher:3.5.7'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    implementation("com.mikepenz:materialdrawer:6.0.9@aar") {
+        transitive = true
+    }
+    //implementation 'co.zsmb:materialdrawer-kt:1.3.7'
+
+
+//required support lib modules
+    implementation "com.android.support:appcompat-v7:27.1.1"
+    implementation "com.android.support:recyclerview-v7:27.1.1"
+    implementation "com.android.support:support-annotations:27.1.1"
+    implementation "com.android.support:design:27.1.1"
+
+
+
+
+
 }
