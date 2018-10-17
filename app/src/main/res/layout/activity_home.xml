@@ -44,17 +44,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/deportes" />
 
-    <ImageView
-        android:id="@+id/BtnReport"
-        android:layout_width="115dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginEnd="108dp"
-        android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon4" />
 
     <TextView
         android:id="@+id/textView16"
