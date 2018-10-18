@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.yopresto.app.yoprestoapp">
+    package="com.trantec.yo">
 
     <!-- permissions -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -61,7 +61,7 @@
         tools:node="remove" />
 
     <application
-        android:name=".YoPrestoApp"
+        android:name="com.trantec.app.com.trantec.yo.YoPrestoApp"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:hardwareAccelerated="true"
@@ -80,7 +80,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.trantec.app.com.trantec.yo.ui.LoginActivity"
             android:label="@string/app_name">
 
         </activity>
@@ -89,12 +89,12 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.trantec.app.com.trantec.yo.ui.main.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.main.TakeDNICaptureActivity"
+            android:name="com.trantec.app.com.trantec.yo.ui.main.TakeDNICaptureActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <!--
@@ -110,11 +110,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Stores"
+            android:name="com.trantec.app.com.trantec.yo.Stores"
             android:label="Mis Tiendas" />
-        <activity android:name=".Enrollment"></activity>
+        <activity android:name="com.trantec.app.com.trantec.yo.Enrollment"></activity>
         <activity
-            android:name=".ui.main.HomeActivity"
+            android:name="com.trantec.app.com.trantec.yo.ui.main.HomeActivity"
             android:label="Yo Presto">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
