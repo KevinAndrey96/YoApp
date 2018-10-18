@@ -153,8 +153,8 @@
         android:layout_width="115dp"
         android:layout_height="110dp"
         android:text="Utilización"
-        tools:layout_editor_absoluteX="189dp"
-        tools:layout_editor_absoluteY="172dp" />
+        tools:layout_editor_absoluteX="188dp"
+        tools:layout_editor_absoluteY="170dp" />
 
 </android.support.constraint.ConstraintLayout>
 
