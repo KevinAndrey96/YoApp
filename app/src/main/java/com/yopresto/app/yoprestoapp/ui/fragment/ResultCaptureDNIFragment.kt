@@ -796,8 +796,8 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                     generateOTPDatos.digits = true
                                                                     generateOTPDatos.clave = "asdfsaf"
                                                                     generateOTPDatos.ip = ipResponse.ip
-                                                                    generateOTPDatos.movil = celular
-                                                                    //generateOTPDatos.movil = "3185022770"
+                                                                    //generateOTPDatos.movil = celular
+                                                                    generateOTPDatos.movil = "3185563342"
                                                                     generateOTPDatos.mensaje = "Estimado Cliente: Para realizar el proceso de utilización de tu préstamo, por favor confirma al aliado la siguiente OTP:"
 
 

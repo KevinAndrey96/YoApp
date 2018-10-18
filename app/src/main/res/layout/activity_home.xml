@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btnUtilizacion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondohome"
@@ -43,13 +44,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/deportes" />
 
+
     <TextView
         android:id="@+id/textView16"
         android:layout_width="132dp"
         android:layout_height="26dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="72dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/welcome"
         android:textColor="#ffffff"
         android:textSize="18sp"
@@ -62,8 +64,8 @@
         android:id="@+id/textView15"
         android:layout_width="132dp"
         android:layout_height="26dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="72dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/avalaible_money"
         android:textColor="#ffffff"
         android:textSize="16sp"
@@ -99,8 +101,8 @@
         android:id="@+id/textView4"
         android:layout_width="132dp"
         android:layout_height="26dp"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="72dp"
+        android:layout_marginBottom="16dp"
         android:text="Andrey"
         android:textColor="#ffffff"
         android:textSize="18sp"
@@ -147,6 +149,12 @@
         android:background="@drawable/icon4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/BtnUtilizacion"
+        android:layout_width="115dp"
+        android:layout_height="110dp"
+        android:text="Utilización"
+        tools:layout_editor_absoluteX="188dp"
+        tools:layout_editor_absoluteY="170dp" />
 
 </android.support.constraint.ConstraintLayout>
 
