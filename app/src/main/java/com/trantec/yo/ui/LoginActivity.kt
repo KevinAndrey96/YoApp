@@ -27,7 +27,7 @@ import com.trantec.yo.utils.PhoneUtil
 import hundredthirtythree.sessionmanager.SessionManager
 import kotlinx.android.synthetic.main.activity_login.*
 import libs.mjn.prettydialog.PrettyDialog
-import net.hockeyapp.android.CrashManager
+//import net.hockeyapp.android.CrashManager
 
 import okhttp3.*
 import org.codehaus.jackson.map.ObjectMapper
@@ -74,12 +74,15 @@ class LoginActivity : AppCompatActivity() {
                 when {
                     editTextUser.text.toString().isNullOrEmpty() -> editTextUser.error = getString(R.string.error_field_required)
                     editTextPassword.text.toString().isNullOrEmpty() -> editTextPassword.error = getString(R.string.error_field_required)
-                    else -> SafetyNet.getClient(this@LoginActivity).verifyWithRecaptcha(getString(R.string.site_key))
+                    else ->
+
+                        SafetyNet.getClient(this@LoginActivity).verifyWithRecaptcha(getString(R.string.site_key))
                             .addOnSuccessListener {response ->
 
                                 val userResponseToken = response.tokenResult
 
                                 if (!userResponseToken.isEmpty()) {
+                                //if (1==1) {
                                     // Validate the user response token using the
                                     // reCAPTCHA siteverify API.
 
@@ -509,15 +512,15 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        checkForCrashes()
+        //checkForCrashes()
         context = this
 
     }
-
+/*
     private fun checkForCrashes() {
         CrashManager.register(this)
     }
-
+*/
 
     /**
      * Callback received when a permissions request has been completed.

@@ -22,8 +22,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="site_key" translatable="false">6LclFVgUAAAAAOOK8bV5fQTvnd-nQWDNn0LlkRnx</string>
-    <string name="secret_key" translatable="false">6LclFVgUAAAAAJS8hBZ3Jnro_ynR3iYuUBYqWnfT</string>
+    <string name="site_key" translatable="false">6LcevXUUAAAAANFMANOa4rATBc1TLK--uwvCkEfq</string>
+    <string name="secret_key" translatable="false">6LcevXUUAAAAAFIior7k3slr4fUyAVgBrjWOUdWV</string>
     <string name="sign_in">LogIn</string>
     <string name="user_hint">User</string>
     <string name="password_hint">Password</string>
@@ -60,11 +60,6 @@
     <string name="welcome">Welcome</string>
     <string name="avalaible_money">Avalaible money:</string>
     <string name="title_activity_stores" translatable="false">Map</string>
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-    </string-array>
+
 
 </resources>

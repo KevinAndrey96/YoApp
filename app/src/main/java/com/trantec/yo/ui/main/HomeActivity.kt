@@ -14,7 +14,9 @@ import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
+import com.trantec.yo.ui.LoginActivity
 import kotlinx.android.synthetic.main.app_bar_main.*
+//import net.hockeyapp.android.LoginActivity
 
 
 class HomeActivity : AppCompatActivity() {
@@ -27,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
         val utilization = findViewById<Button>(R.id.BtnUtilizacion)
 
         utilization.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 

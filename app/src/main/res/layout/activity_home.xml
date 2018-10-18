@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondohome"
-    tools:context="com.trantec.app.yo.ui.main.HomeActivity">
+    tools:context="com.trantec.yo.ui.main.HomeActivity">
 
     <ImageView
         android:id="@+id/BtnEnrollment"

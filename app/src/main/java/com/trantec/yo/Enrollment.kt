@@ -1,36 +1,34 @@
 package com.trantec.yo
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-
-
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
-
-/*import com.example.biometricbytte.morpho.face.BytteCaptureFace
+import com.example.biometricbytte.morpho.face.BytteCaptureFace
 import com.example.biometricbytte.morpho.huella.BytteFingerPrint
 import com.example.biometricbytte.morpho.license.BytteLicense
 import com.example.docbytte.BiometricCamera.ValuesBiometric
 import com.example.docbytte.helper.Util
 import com.example.docbytte.ui.CBackDocument
 import com.example.docbytte.ui.CFrontDocument
-import com.example.docbytte.ui.FrontDocPassport*/
+import com.example.docbytte.ui.FrontDocPassport
 import com.google.gson.Gson
 import com.microblink.activity.BaseScanActivity
-import com.trantec.yo.R
-import java.lang.Exception
+import kotlinx.android.synthetic.main.activity_enrollment.*
+
+
 import java.util.*
 
 
 class Enrollment : AppCompatActivity() {
 
-    val LICENSEMICROBLINK = "GACTCEV4-R32RV33Z-ZIHKHP5E-SFYGRCBL-7XYWBJJX-34LJDDPB-7PPRMMI4-YKE6P3U5"//esta licencia se debe solicitar a bytte para el funcionamiento en los documentos
+    val LICENSEMICROBLINK = "V76CKZT3-NONJVDPE-NT4KLLY5-5OOBC5AI-JZKZL23B-FLBJP77K-EH4NX33O-LF3REX3F"//esta licencia se debe solicitar a bytte para el funcionamiento en los documentos
     val MY_REQUEST_CODE_LISENCE = 1329
     val MY_REQUEST_CODE_FRONT = 1330
     val MY_REQUEST_CODE_BACK = 1331
@@ -45,8 +43,8 @@ class Enrollment : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enrollment)
 
-/*
-        button3.setOnClickListener {
+
+        btnCedula1.setOnClickListener {
             //captura de frente doc
             var intent = Intent(this@Enrollment, CFrontDocument::class.java)
             intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
@@ -96,7 +94,7 @@ class Enrollment : AppCompatActivity() {
         button9.setOnClickListener {
             Util.Eliminarimgaplicacion(this@Enrollment)
         }
-*/
+
         //Permisos en runtime
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
