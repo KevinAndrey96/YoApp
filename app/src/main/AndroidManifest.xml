@@ -112,7 +112,15 @@
         <activity
             android:name="com.trantec.yo.Stores"
             android:label="Mis Tiendas" />
+        <activity
+            android:name="com.trantec.yo.Reports"
+            android:label="Reportes" />
         <activity android:name="com.trantec.yo.Enrollment"></activity>
+        <activity android:name="com.trantec.yo.CaptureDocumentFront"></activity>
+        <activity android:name="com.trantec.yo.CaptureDocumentReverse"></activity>
+        <activity android:name="com.trantec.yo.ui.main.ImportantInformation"></activity>
+        <activity android:name="com.trantec.yo.Biometric"></activity>
+        <activity android:name="com.trantec.yo.ScannerFacial"></activity>
         <activity
             android:name="com.trantec.yo.ui.main.HomeActivity"
             android:label="Yo Presto">

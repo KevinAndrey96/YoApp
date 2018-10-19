@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondotono4"
+    tools:context=".ui.main.ImportantInformation">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="Informacion Importante"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Informacion Importante" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="291dp"
+                android:layout_height="289dp"
+                android:paddingTop="40dp"
+                android:text="Lorem ipsum dolor sit amet consectetur adipiscing elit nunc, facilisi etiam curabitur vulputate penatibus leo sagittis fames taciti, aliquet est senectus fusce inceptos facilisis himenaeos. Ultrices blandit platea nulla facilisis fames id nunc cursus, integer nascetur himenaeos semper vehicula aenean vestibulum posuere suspendisse, ante mollis bibendum quisque laoreet arcu enim." />
+
+            <Button
+                android:id="@+id/decline"
+                android:layout_width="161dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_button"
+                android:text="No acepto"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.506"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.134" />
+
+            <Button
+                android:id="@+id/accept"
+                android:layout_width="161dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="210dp"
+                android:background="@drawable/rounded_button"
+                android:text="Acepto"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.506"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.134" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
