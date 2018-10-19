@@ -32,7 +32,8 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        user = mapper.readValue(SessionManager.getString(SessionKeys.USER_SESSION.key, null), LoginDataresponse::class.java)
+
+        //user = mapper.readValue(SessionManager.getString(SessionKeys.USER_SESSION.key, null), LoginDataresponse::class.java)
         val utilization = findViewById<Button>(R.id.BtnUtilizacion)
         val enrolamiento = findViewById<Button>(R.id.BtnEnrollment)
         val tiendas = findViewById<Button>(R.id.BtnMyStores)
@@ -51,6 +52,7 @@ class HomeActivity : AppCompatActivity() {
 
         enrolamiento.setOnClickListener {
             val intent = Intent(this, CaptureDocumentReverse::class.java)
+            //val intent = Intent(this, ImportantInformation::class.java)
             startActivity(intent)
         }
 
