@@ -96,13 +96,13 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     //HockeyApp
-    implementation 'net.hockeyapp.android:HockeySDK:5.1.0'
+    //implementation 'net.hockeyapp.android:HockeySDK:5.1.0'
 
     //Enrollment
     implementation 'com.microblink:blinkid:3.18.0'
-    implementation(name: 'docbytte-3.0.5', ext: 'aar')
-    //implementation(name: 'biometricbytte-3.0.1', ext: 'aar')
-    //implementation 'com.google.code.gson:gson:2.8.5'
+    implementation(name: 'docbytte-3.0.7', ext: 'aar')
+    implementation(name: 'biometricbytte-3.0.3', ext: 'aar')
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation(name: 'lkms_core-1.2.5', ext: 'aar')
     implementation(name: 'AndroidBiometricSDK-4.7.0-biometry', ext: 'aar')
     implementation 'net.zetetic:android-database-sqlcipher:3.5.7'

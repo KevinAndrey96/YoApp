@@ -20,8 +20,8 @@ import hundredthirtythree.sessionmanager.SessionManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import libs.mjn.prettydialog.PrettyDialog
-import net.hockeyapp.android.CrashManager
-import net.hockeyapp.android.UpdateManager
+//import net.hockeyapp.android.CrashManager
+//import net.hockeyapp.android.UpdateManager
 import android.widget.TextView
 import com.trantec.yo.Enrollment
 import com.trantec.yo.Stores
@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
     override fun onResume() {
         super.onResume()
-        checkForCrashes()
-        checkForUpdates()
+        //checkForCrashes()
+        //checkForUpdates()
 
 
             if(user != null){
@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
     }
+    /*
     private fun checkForCrashes() {
         CrashManager.register(this)
     }
@@ -92,9 +93,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun unregisterManagers() {
         UpdateManager.unregister()
     }
+    */
     public override fun onDestroy() {
         super.onDestroy()
-        unregisterManagers()
+        //unregisterManagers()
     }
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
