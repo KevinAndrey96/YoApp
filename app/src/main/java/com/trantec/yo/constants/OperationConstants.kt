@@ -5,5 +5,6 @@ class OperationConstants {
     companion object {
         var LOGIN_OPERATION = "1"
         var SEARCH_BALANCE_OPERATION = "26"
+        var MAP_OPERATION = "16"
     }
 }

@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
         val utilization = findViewById<Button>(R.id.BtnUtilizacion)
         val enrolamiento = findViewById<Button>(R.id.BtnEnrollment)
         val tiendas = findViewById<Button>(R.id.BtnMyStores)
-        val reportes = findViewById<Button>(R.id.BtnReport)
+        val reportes = findViewById<Button>(R.id.BtnReports)
 
 
         utilization.setOnClickListener {
@@ -60,43 +60,6 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, Reports::class.java)
             startActivity(intent)
         }
-
-        if(user != null){
-            val txtName = findViewById<TextView>(R.id.textName)
-            val txtAmount = findViewById<TextView>(R.id.textAmount)
-            txtName.text = user!!.primernombre + " " +  user!!.primerapellido
-            txtAmount.text = user!!.saldo.toString()
-        }
-
-        //NAVDRAW START
-        val headerResult = AccountHeaderBuilder()
-                .withActivity(this)
-                //.withHeaderBackground(R.drawable.header)
-                .addProfiles(
-                        ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(resources.getDrawable(R.drawable.logoyopresto))
-                )
-                .withOnAccountHeaderListener(object : AccountHeader.OnAccountHeaderListener {
-                    override fun onProfileChanged(view: View, profile: IProfile<*>, currentProfile: Boolean): Boolean {
-                        return false
-                    }
-                })
-                .build()
-
-        var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Enrolamiento")
-
-        DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withDisplayBelowStatusBar(true)
-                .withTranslucentStatusBar(false)
-                .withActionBarDrawerToggle(true)
-                .withAccountHeader(headerResult)
-                .addDrawerItems(
-                        item1
-                )
-
-
-                .build()
     }
 
 }
