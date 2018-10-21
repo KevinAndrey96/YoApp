@@ -1,5 +1,6 @@
 package com.trantec.yo.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -27,6 +28,11 @@ import com.trantec.yo.Enrollment
 import com.trantec.yo.Stores
 import com.trantec.yo.dto.LoginDataresponse
 import org.codehaus.jackson.map.ObjectMapper
+import android.R.id.edit
+import com.google.android.gms.flags.impl.SharedPreferencesFactory.getSharedPreferences
+import android.content.SharedPreferences
+
+
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -161,6 +167,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             {
                                 SessionManager.removeKey(SessionKeys.USER_SESSION.key)
                                 SessionManager.putBoolean(SessionKeys.IS_LOGGED_IN.key, false)
+                                val settings = context!!.getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                                settings.edit().remove("nombre").commit()
+                                settings.edit().remove("apellido").commit()
+                                settings.edit().remove("cuenta").commit()
+                                settings.edit().remove("saldo").commit()
                                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
 
                                 finish()
