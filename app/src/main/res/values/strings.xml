@@ -60,6 +60,7 @@
     <string name="welcome">Welcome</string>
     <string name="avalaible_money">Avalaible money:</string>
     <string name="title_activity_stores" translatable="false">Map</string>
+    <string name="next" translatable="false">Next</string>
 
 
 </resources>

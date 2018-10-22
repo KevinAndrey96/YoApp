@@ -44,12 +44,7 @@
     <string name="avalaible_value">Mi cupo disponible</string>
     <string name="welcome">Bienvenido</string>
     <string name="avalaible_money">Tu dinero disponible:</string>
+    <string name="next" translatable="false">Siguiente</string>
 
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-    </string-array>
 
 </resources>
