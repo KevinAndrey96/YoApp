@@ -259,7 +259,7 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
 //
 
                                                                                     for (item in data_maps) {
-                                                                                        mHandler.post{
+                                                                                        /*mHandler.post{
                                                                                             run{
                                                                                                 stopProgess()
                                                                                                 PrettyDialog(this@Stores)
@@ -267,7 +267,7 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
                                                                                                         .setMessage("Nfdgfdg" + item.nombreestablecimiento)
                                                                                                         .show()
                                                                                             }
-                                                                                        }
+                                                                                        }*/
                                                                                     }
                                                                                 }
                                                                             }

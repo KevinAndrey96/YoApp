@@ -23,11 +23,14 @@ import com.trantec.yo.R
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
-
-
+import com.trantec.yo.enumeration.SessionKeys
+import hundredthirtythree.sessionmanager.SessionManager
+import libs.mjn.prettydialog.PrettyDialog
 
 
 class HomeActivity : AppCompatActivity() {
+
+    private var context: HomeActivity? = null
     var cuenta = ""
     var nombre = ""
 
@@ -114,15 +117,15 @@ class HomeActivity : AppCompatActivity() {
                 .withOnDrawerItemClickListener { view, position, drawerItem ->
                     when (drawerItem.identifier) {
                         item1.identifier -> {
-                            val intent = Intent(this, Stores::class.java)
+                            val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
                         }
                         item2.identifier -> {
-                            val intent = Intent(this, Enrollment::class.java)
+                            val intent = Intent(this, CaptureDocumentReverse::class.java)
                             startActivity(intent)
                         }
                         item3.identifier -> {
-                            val intent = Intent(this, Stores::class.java)
+                            val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                         }
                         item4.identifier -> {
@@ -133,6 +136,7 @@ class HomeActivity : AppCompatActivity() {
                             val intent = Intent(this, Reports::class.java)
                             startActivity(intent)
                         }
+
                     }
                     false
                 }
