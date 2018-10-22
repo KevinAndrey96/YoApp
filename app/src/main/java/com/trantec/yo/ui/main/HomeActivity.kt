@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.trantec.yo.*
@@ -16,9 +17,14 @@ import com.trantec.yo.ui.LoginActivity
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import com.trantec.yo.R
 import kotlinx.android.synthetic.main.app_bar_main.*
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
+
+
 
 
 class HomeActivity : AppCompatActivity() {
@@ -101,9 +107,36 @@ class HomeActivity : AppCompatActivity() {
                         item5
 
                 )
-
-
+                .withOnDrawerItemClickListener { view, position, drawerItem ->
+                    when (drawerItem.identifier) {
+                        item1.identifier -> {
+                            val intent = Intent(this, Stores::class.java)
+                            startActivity(intent)
+                        }
+                        item2.identifier -> {
+                            val intent = Intent(this, Enrollment::class.java)
+                            startActivity(intent)
+                        }
+                        item3.identifier -> {
+                            val intent = Intent(this, Stores::class.java)
+                            startActivity(intent)
+                        }
+                        item4.identifier -> {
+                            val intent = Intent(this, Stores::class.java)
+                            startActivity(intent)
+                        }
+                        item5.identifier -> {
+                            val intent = Intent(this, Reports::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                    false
+                }
                 .build()
+
+
+
     }
+
 }
 
