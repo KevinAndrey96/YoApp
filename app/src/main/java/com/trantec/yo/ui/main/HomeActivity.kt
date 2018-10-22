@@ -28,6 +28,8 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 
 
 class HomeActivity : AppCompatActivity() {
+    var cuenta = ""
+    var nombre = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,10 +66,11 @@ class HomeActivity : AppCompatActivity() {
 
         if (name != null){
             val lastname = prefs.getString("apellido", "")
-            val cuenta = prefs.getString("cuenta", "")
+            nombre = name +" "+ lastname
+            cuenta = prefs.getString("cuenta", "")
             val txtname = findViewById<TextView>(R.id.txtName)
             val txtaccount = findViewById<TextView>(R.id.txtAccount)
-            txtname.text = name +" "+ lastname
+            txtname.text = nombre
             txtaccount.text = cuenta
         }
 
@@ -75,9 +78,9 @@ class HomeActivity : AppCompatActivity() {
 
         val headerResult = AccountHeaderBuilder()
                 .withActivity(this)
-                //.withHeaderBackground(R.drawable.header)
+                .withHeaderBackground(R.color.colorAccent)
                 .addProfiles(
-                        ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(resources.getDrawable(R.drawable.logoyopresto))
+                        ProfileDrawerItem().withName(nombre).withEmail(cuenta).withIcon((R.drawable.logoyopresto))
                 )
                 .withOnAccountHeaderListener(object : AccountHeader.OnAccountHeaderListener {
                     override fun onProfileChanged(view: View, profile: IProfile<*>, currentProfile: Boolean): Boolean {
@@ -91,6 +94,7 @@ class HomeActivity : AppCompatActivity() {
         var item3 = PrimaryDrawerItem().withIdentifier(3).withName("Utilizacion")
         var item4 = PrimaryDrawerItem().withIdentifier(4).withName("Mis tiendas")
         var item5 = PrimaryDrawerItem().withIdentifier(5).withName("Reportes")
+        var item6 = PrimaryDrawerItem().withIdentifier(6).withName("Cerrar sesion")
 
         DrawerBuilder()
                 .withActivity(this)
@@ -104,8 +108,8 @@ class HomeActivity : AppCompatActivity() {
                         item2,
                         item3,
                         item4,
-                        item5
-
+                        item5,
+                        item6
                 )
                 .withOnDrawerItemClickListener { view, position, drawerItem ->
                     when (drawerItem.identifier) {
