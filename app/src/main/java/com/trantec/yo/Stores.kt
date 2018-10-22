@@ -68,6 +68,7 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -256,10 +257,17 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
                                                                                     val mapp = jacksonObjectMapper()
                                                                                     val data_maps: List<MapDataresponse> = mapp.readValue((mapResponse.response!!.dataresponse).toString())
 //
+
                                                                                     for (item in data_maps) {
-                                                                                        createMarker(item.latitud!!.toDouble(), item.longitud!!.toDouble(), item.nombreestablecimiento.toString());
-
-
+                                                                                        mHandler.post{
+                                                                                            run{
+                                                                                                stopProgess()
+                                                                                                PrettyDialog(this@Stores)
+                                                                                                        .setTitle("Información")
+                                                                                                        .setMessage("Nfdgfdg" + item.nombreestablecimiento)
+                                                                                                        .show()
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             }
@@ -376,11 +384,11 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun createMarker(latitude: Double, longitude: Double, title: String): Marker {
+    /*private fun createMarker(latitude: Double, longitude: Double, title: String): Marker {
 
         return mMap.addMarker(MarkerOptions()
                 .position(LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
                 .title(title))
-    }
+    }*/
 }
