@@ -36,6 +36,10 @@ import org.json.JSONObject
 import java.io.IOException
 import com.orhanobut.logger.Logger.json
 import com.yopresto.app.yoprestoapp.dto.MapDataresponse
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Marker
+
+
 
 
 class Stores : AppCompatActivity(), OnMapReadyCallback {
@@ -252,11 +256,11 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
                                                                                     val mapp = jacksonObjectMapper()
                                                                                     val data_maps: List<MapDataresponse> = mapp.readValue((mapResponse.response!!.dataresponse).toString())
 //
-                                                                                    /*for (item in data_maps) {
-                                                                                        val yopresto = LatLng(item.latitud!!.toDouble(), item.longitud!!.toDouble())
-                                                                                        val zoomLevel = 16.0f;
-                                                                                        mMap.addMarker(MarkerOptions().position(yopresto).title(item.nombreestablecimiento))
-                                                                                    }*/
+                                                                                    for (item in data_maps) {
+                                                                                        createMarker(item.latitud!!.toDouble(), item.longitud!!.toDouble(), item.nombreestablecimiento.toString());
+
+
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -370,5 +374,13 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
         }catch (ex: Exception){
             ex.printStackTrace()
         }
+    }
+
+    private fun createMarker(latitude: Double, longitude: Double, title: String): Marker {
+
+        return mMap.addMarker(MarkerOptions()
+                .position(LatLng(latitude, longitude))
+                .anchor(0.5f, 0.5f)
+                .title(title))
     }
 }
