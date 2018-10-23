@@ -67,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
         val name = prefs.getString("nombre", "")
 
-        if (name != null){
+        if (name != ""){
             val lastname = prefs.getString("apellido", "")
             nombre = name +" "+ lastname
             cuenta = prefs.getString("cuenta", "")
@@ -75,6 +75,9 @@ class HomeActivity : AppCompatActivity() {
             val txtaccount = findViewById<TextView>(R.id.txtAccount)
             txtname.text = nombre
             txtaccount.text = cuenta
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
         DrawerBuilder().withActivity(this).build()
@@ -136,13 +139,18 @@ class HomeActivity : AppCompatActivity() {
                             val intent = Intent(this, Reports::class.java)
                             startActivity(intent)
                         }
+                        item6.identifier -> {
+                            prefs.edit().remove("nombre").commit()
+                            prefs.edit().remove("apellido").commit()
+                            prefs.edit().remove("cuenta").commit()
+                            prefs.edit().remove("saldo").commit()
+                            startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
+                        }
 
                     }
                     false
                 }
                 .build()
-
-
 
     }
 

@@ -74,8 +74,12 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
 
         val yopresto = LatLng(4.676927, -74.129331)
         val zoomLevel = 16.0f;
-        mMap.addMarker(MarkerOptions().position(yopresto).title("Yo Presto"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(yopresto, zoomLevel))
+
+        mMap.addMarker(MarkerOptions()
+                .position(LatLng(4.676927, -74.129331))
+                .anchor(0.5f, 0.5f)
+                .title("Yo Presto"))
 
         try{
             val formBody = FormBody.Builder()
@@ -259,9 +263,11 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
 //
 
                                                                                     for (item in data_maps) {
+                                                                                        var address = LatLng(item.latitud!!, item.longitud!!)
+                                                                                        //mMap.addMarker(MarkerOptions().position(address).title(item.nombreestablecimiento))
                                                                                         /*mHandler.post{
                                                                                             run{
-                                                                                                stopProgess()
+                                                                                                stopProgess()ite
                                                                                                 PrettyDialog(this@Stores)
                                                                                                         .setTitle("Información")
                                                                                                         .setMessage("Nfdgfdg" + item.nombreestablecimiento)
