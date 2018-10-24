@@ -41,6 +41,22 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
+        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+        val name = prefs.getString("nombre", "")
+
+        if (name != "" || name == null){
+            val lastname = prefs.getString("apellido", "")
+            nombre = name +" "+ lastname
+            cuenta = prefs.getString("cuenta", "")
+            val txtname = findViewById<TextView>(R.id.txtName)
+            val txtaccount = findViewById<TextView>(R.id.txtAccount)
+            txtname.text = nombre
+            txtaccount.text = cuenta
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         val utilization = findViewById<Button>(R.id.BtnUtilizacion)
         val enrolamiento = findViewById<Button>(R.id.BtnEnrollment)
         val tiendas = findViewById<Button>(R.id.BtnMyStores)
@@ -64,22 +80,6 @@ class HomeActivity : AppCompatActivity() {
 
         reportes.setOnClickListener {
             val intent = Intent(this, Reports::class.java)
-            startActivity(intent)
-        }
-
-        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
-        val name = prefs.getString("nombre", "")
-
-        if (name != ""){
-            val lastname = prefs.getString("apellido", "")
-            nombre = name +" "+ lastname
-            cuenta = prefs.getString("cuenta", "")
-            val txtname = findViewById<TextView>(R.id.txtName)
-            val txtaccount = findViewById<TextView>(R.id.txtAccount)
-            txtname.text = nombre
-            txtaccount.text = cuenta
-        } else {
-            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 

@@ -23,12 +23,23 @@ import com.trantec.yo.dto.LoginDataresponse
 import com.trantec.yo.ui.LoginActivity
 import kotlinx.android.synthetic.main.app_bar_main.*
 import org.codehaus.jackson.map.ObjectMapper
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.materialdrawer.model.SectionDrawerItem
+import android.widget.Toast
+import com.trantec.yo.R.id.toolbar
+
+
+
+
 
 
 class MainActivity : AppCompatActivity() {
 
     var user: LoginDataresponse? = null
     val mapper = ObjectMapper()
+    var result: Drawer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
         val name = prefs.getString("nombre", "")
 
-        if (name != ""){
+        if (name != "" || name == null){
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
@@ -64,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Iniciar sesion")
         var item2 = PrimaryDrawerItem().withIdentifier(2).withName("Mis tiendas")
 
-        DrawerBuilder()
+        result = DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withDisplayBelowStatusBar(true)
@@ -78,6 +89,8 @@ class MainActivity : AppCompatActivity() {
                 .withOnDrawerItemClickListener { view, position, drawerItem ->
                     when (drawerItem.identifier) {
                         item1.identifier -> {
+                            //getSupportActionBar()!!.setDisplayHomeAsUpEnabled(false);
+                            //result!!.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                         }
@@ -88,7 +101,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     false
                 }
+
                 .build()
+
     }
 
 
