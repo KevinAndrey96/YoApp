@@ -10,18 +10,9 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.example.biometricbytte.morpho.face.BytteCaptureFace
-import com.example.biometricbytte.morpho.huella.BytteFingerPrint
-import com.example.biometricbytte.morpho.license.BytteLicense
-import com.example.docbytte.BiometricCamera.ValuesBiometric
-import com.example.docbytte.helper.Util
 import com.example.docbytte.ui.CBackDocument
-import com.example.docbytte.ui.CFrontDocument
-import com.example.docbytte.ui.FrontDocPassport
 import com.google.gson.Gson
 import com.microblink.activity.BaseScanActivity
-import com.trantec.yo.ui.LoginActivity
-import kotlinx.android.synthetic.main.activity_enrollment.*
 import kotlinx.android.synthetic.main.capture_document_reverse.*
 
 

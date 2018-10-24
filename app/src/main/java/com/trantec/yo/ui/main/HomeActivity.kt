@@ -63,7 +63,7 @@ class HomeActivity : AppCompatActivity() {
         val reportes = findViewById<Button>(R.id.BtnReports)
 
         utilization.setOnClickListener {
-            val intent = Intent(this, TakeDNICaptureActivity::class.java)
+            val intent = Intent(this, Utilization::class.java)
             startActivity(intent)
         }
 
@@ -73,7 +73,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         enrolamiento.setOnClickListener {
-            val intent = Intent(this, CaptureDocumentReverse::class.java)
+            val intent = Intent(this, ScannerQR::class.java)
             //val intent = Intent(this, ImportantInformation::class.java)
             startActivity(intent)
         }
@@ -91,11 +91,6 @@ class HomeActivity : AppCompatActivity() {
                 .addProfiles(
                         ProfileDrawerItem().withName(nombre).withEmail(cuenta).withIcon((R.drawable.logoyopresto))
                 )
-                .withOnAccountHeaderListener(object : AccountHeader.OnAccountHeaderListener {
-                    override fun onProfileChanged(view: View, profile: IProfile<*>, currentProfile: Boolean): Boolean {
-                        return false
-                    }
-                })
                 .build()
 
         var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Inicio")
@@ -127,11 +122,11 @@ class HomeActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                         item2.identifier -> {
-                            val intent = Intent(this, QR::class.java)
+                            val intent = Intent(this, ScannerQR::class.java)
                             startActivity(intent)
                         }
                         item3.identifier -> {
-                            val intent = Intent(this, TakeDNIPictureFragment::class.java)
+                            val intent = Intent(this, Utilization::class.java)
                             startActivity(intent)
                         }
                         item4.identifier -> {

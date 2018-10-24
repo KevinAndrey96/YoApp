@@ -56,10 +56,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        if(SessionManager.getBoolean(SessionKeys.IS_LOGGED_IN.key, false)){
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-            finish()
-        }
 
         editTextPassword.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -283,9 +279,6 @@ class LoginActivity : AppCompatActivity() {
 
                                                                                                                     if(loginDataresponse != null){
                                                                                                                         if(loginDataresponse.idusuario != null){
-
-                                                                                                                            SessionManager.putString(SessionKeys.USER_SESSION.key, mapper.writeValueAsString(loginDataresponse))
-                                                                                                                            SessionManager.putBoolean(SessionKeys.IS_LOGGED_IN.key, true)
 
                                                                                                                             val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
                                                                                                                             val editor = prefs.edit()

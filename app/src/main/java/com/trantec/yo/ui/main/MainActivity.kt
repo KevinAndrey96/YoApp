@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 .withDisplayBelowStatusBar(true)
                 .withTranslucentStatusBar(true)
                 .withActionBarDrawerToggle(true)
-                .withAccountHeader(headerResult)
+                //.withAccountHeader(headerResult)
                 .addDrawerItems(
                         item1,
                         item2
@@ -89,8 +89,6 @@ class MainActivity : AppCompatActivity() {
                 .withOnDrawerItemClickListener { view, position, drawerItem ->
                     when (drawerItem.identifier) {
                         item1.identifier -> {
-                            //getSupportActionBar()!!.setDisplayHomeAsUpEnabled(false);
-                            //result!!.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                         }
