@@ -35,7 +35,7 @@ import org.json.JSONObject
 import java.io.IOException
 import android.R.id.edit
 import android.content.SharedPreferences
-
+import com.trantec.yo.ui.main.HomeActivity
 
 
 /**
@@ -295,7 +295,7 @@ class LoginActivity : AppCompatActivity() {
                                                                                                                             editor.putString("cuenta", loginDataresponse.cuenta)
                                                                                                                             editor.commit()
 
-                                                                                                                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                                                                                                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                                                                                                                             finish()
                                                                                                                         }else{
 

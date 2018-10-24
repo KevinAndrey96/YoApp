@@ -4,6 +4,7 @@ package com.trantec.yo.ui.main
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -38,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         val utilization = findViewById<Button>(R.id.BtnUtilizacion)
         val enrolamiento = findViewById<Button>(R.id.BtnEnrollment)
@@ -146,6 +148,7 @@ class HomeActivity : AppCompatActivity() {
                             prefs.edit().remove("cuenta").commit()
                             prefs.edit().remove("saldo").commit()
                             startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
+                            finish()
                         }
 
                     }

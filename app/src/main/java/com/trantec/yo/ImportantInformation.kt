@@ -3,6 +3,7 @@ package com.trantec.yo.ui.main
 
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
@@ -42,6 +43,7 @@ class ImportantInformation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.important_information)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         val decline = findViewById<Button>(R.id.decline)
         val accept = findViewById<Button>(R.id.accept)
 

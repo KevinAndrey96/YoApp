@@ -2,6 +2,7 @@ package com.trantec.yo.ui.main
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
         val name = prefs.getString("nombre", "")
@@ -56,11 +58,7 @@ class MainActivity : AppCompatActivity() {
                 .addProfiles(
                         ProfileDrawerItem().withName("Yo Presto").withEmail("").withIcon((R.drawable.logoyopresto))
                 )
-                .withOnAccountHeaderListener(object : AccountHeader.OnAccountHeaderListener {
-                    override fun onProfileChanged(view: View, profile: IProfile<*>, currentProfile: Boolean): Boolean {
-                        return false
-                    }
-                })
+
                 .build()
 
         var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Iniciar sesion")
