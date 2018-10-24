@@ -127,7 +127,7 @@ class HomeActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                         item2.identifier -> {
-                            val intent = Intent(this, CaptureDocumentReverse::class.java)
+                            val intent = Intent(this, QR::class.java)
                             startActivity(intent)
                         }
                         item3.identifier -> {
