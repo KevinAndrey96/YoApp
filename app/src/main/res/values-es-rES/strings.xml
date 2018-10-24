@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">YoPresto</string>
+    <string name="app_name">Yo Presto</string>
     <string name="sign_in">Ingreso</string>
-    <string name="prompt_email">Correo</string>
+    <string name="prompt_email">Correo Electrónico</string>
     <string name="action_sign_in_short">Ingresar</string>
     <string name="action_settings">Configuraciones</string>
     <string name="user_hint">Usuario</string>
@@ -15,9 +15,9 @@
     <string name="error_field_required">Campo obligatorio</string>
     <string name="permission_rationale">Es necesario permitir el acceso a los contactos</string>
     <string name="title_activity_main_menu">Menu Principal</string>
-    <string name="title_activity_main">YoPresto Aliado</string>
-    <string name="title_activity_capture_dni">YoPresto Aliado</string>
-    <string name="use">Utilizacion</string>
+    <string name="title_activity_main">Yo Presto Aliado</string>
+    <string name="title_activity_capture_dni">Yo Presto Aliado</string>
+    <string name="use">Utilización</string>
     <string name="use_message">Realice la lectura del código de barras de la cédula de ciudadanía</string>
     <string name="dni">Cédula</string>
     <string name="available_amount">Monto disponible para retiro</string>
@@ -46,5 +46,6 @@
     <string name="avalaible_money">Tu dinero disponible:</string>
     <string name="next" translatable="false">Siguiente</string>
 
-
+    <string name="scan_qr_code">Escanear código QR</string>
+    <string name="result_not_found">Resultado no encontrado</string>
 </resources>
