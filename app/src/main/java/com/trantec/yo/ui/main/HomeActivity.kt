@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.trantec.yo.enumeration.SessionKeys
+import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
 import hundredthirtythree.sessionmanager.SessionManager
 import libs.mjn.prettydialog.PrettyDialog
 
@@ -44,7 +45,7 @@ class HomeActivity : AppCompatActivity() {
         val reportes = findViewById<Button>(R.id.BtnReports)
 
         utilization.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, TakeDNICaptureActivity::class.java)
             startActivity(intent)
         }
 
@@ -128,7 +129,7 @@ class HomeActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                         item3.identifier -> {
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, TakeDNIPictureFragment::class.java)
                             startActivity(intent)
                         }
                         item4.identifier -> {
