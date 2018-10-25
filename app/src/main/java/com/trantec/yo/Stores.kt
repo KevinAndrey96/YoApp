@@ -9,13 +9,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.trantec.yo.R
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Handler
 import android.os.Looper
 import com.afollestad.materialdialogs.MaterialDialog
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.*
 import com.trantec.yo.utils.JSONUtils
 import com.orhanobut.logger.Logger
@@ -35,12 +33,7 @@ import okhttp3.*
 import org.codehaus.jackson.map.ObjectMapper
 import org.json.JSONObject
 import java.io.IOException
-import com.orhanobut.logger.Logger.json
 import com.yopresto.app.yoprestoapp.dto.MapDataresponse
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.Marker
-
-
 
 
 class Stores : AppCompatActivity(), OnMapReadyCallback {
@@ -61,15 +54,7 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -80,6 +65,11 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
 
         mMap.addMarker(MarkerOptions()
                 .position(LatLng(4.676927, -74.129331))
+                .anchor(0.5f, 0.5f)
+                .title("Yo Presto"))
+
+        mMap.addMarker(MarkerOptions()
+                .position(LatLng(5.676927, -74.129331))
                 .anchor(0.5f, 0.5f)
                 .title("Yo Presto"))
 
@@ -256,29 +246,18 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
                                                                             Logger.d("Response Map")
                                                                             Logger.d(responseMapString)
 
-                                                                            if (JSONUtils.isJSONValid(responseMapString)) {
-                                                                                mapResponse =  mapper.readValue<MapResponse>(responseMapString, MapResponse::class.java)
+if (JSONUtils.isJSONValid(responseMapString)) {
+mapResponse =  mapper.readValue<MapResponse>(responseMapString, MapResponse::class.java)
 
-                                                                                if(mapResponse?.response != null && mapResponse.response!!.dataresponse != null){
-                                                                                    val mapp = jacksonObjectMapper()
-                                                                                    val data_maps: List<MapDataresponse> = mapp.readValue((mapResponse.response!!.dataresponse).toString())
-//
+if(mapResponse?.response != null && mapResponse.response!!.dataresponse != null){
+    val mapp = jacksonObjectMapper()
+    val data_maps: List<MapDataresponse> = mapp.readValue((mapResponse.response!!.dataresponse).toString())
 
-                                                                                    for (item in data_maps) {
-                                                                                        var address = LatLng(item.latitud!!, item.longitud!!)
-                                                                                        //mMap.addMarker(MarkerOptions().position(address).title(item.nombreestablecimiento))
-                                                                                        /*mHandler.post{
-                                                                                            run{
-                                                                                                stopProgess()ite
-                                                                                                PrettyDialog(this@Stores)
-                                                                                                        .setTitle("Información")
-                                                                                                        .setMessage("Nfdgfdg" + item.nombreestablecimiento)
-                                                                                                        .show()
-                                                                                            }
-                                                                                        }*/
-                                                                                    }
-                                                                                }
-                                                                            }
+    for (item in data_maps) {
+        AddMrk(item.latitud!!, item.longitud!!, item.nombreestablecimiento!!, item.direccion!!)
+    }
+}
+}
                                                                         }
                                                                     })
                                                                 }else{
@@ -356,7 +335,7 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
 
         }catch (ex: Exception){
             ex.printStackTrace()
-
+////// FIN CONSULTA
             mHandler.post{
                 run{
                     stopProgess()
@@ -369,6 +348,11 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    fun AddMrk(LAT: Double, LONG: Double, TITULO: String, SNIPPET: String) {
+        runOnUiThread {
+            mMap.addMarker(MarkerOptions().position(LatLng(LAT, LONG)).anchor(0.5f, 0.5f).title(TITULO).snippet(SNIPPET))
+        }
+    }
     private fun startProgress(){
         try{
             val builder = MaterialDialog.Builder(context!!).title(R.string.progress_dialog)
