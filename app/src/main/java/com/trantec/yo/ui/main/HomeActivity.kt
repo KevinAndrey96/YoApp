@@ -73,7 +73,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         enrolamiento.setOnClickListener {
-            val intent = Intent(this, ScannerQR::class.java)
+            val intent = Intent(this, Enrollment::class.java)
             //val intent = Intent(this, ImportantInformation::class.java)
             startActivity(intent)
         }
@@ -122,7 +122,7 @@ class HomeActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                         item2.identifier -> {
-                            val intent = Intent(this, ScannerQR::class.java)
+                            val intent = Intent(this, Enrollment::class.java)
                             startActivity(intent)
                         }
                         item3.identifier -> {
