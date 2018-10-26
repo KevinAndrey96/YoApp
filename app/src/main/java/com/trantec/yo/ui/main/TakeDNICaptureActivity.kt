@@ -68,7 +68,7 @@ class TakeDNICaptureActivity : AppCompatActivity() {
 
         } else {
             Logger.d("MainActivity", "Scanned")
-            //Toast.makeText(this@TakeDNICaptureActivity, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+            Toast.makeText(this@TakeDNICaptureActivity, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
             val codigo = result.contents
 
             val cedula = decodePdf417(codigo)

@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/ic_menu_camera"
                 android:text="Frente cedula" />
 
             <Button
@@ -65,12 +66,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="activar licencia biometric" />
+
             <Button
                 android:id="@+id/button9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Eliminar datos" />
+                android:text="Eliminar datos"
+                android:visibility="invisible" />
 
         </LinearLayout>
     </ScrollView>

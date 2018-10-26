@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.orhanobut.logger.Logger
 import com.trantec.yo.R
 import com.trantec.yo.constants.AppConstants
@@ -40,9 +41,9 @@ class TakeDNIPictureFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+Toast.makeText(context, "1", Toast.LENGTH_SHORT)
         if(requestCode == takePictureRequestCode){
-
+            Toast.makeText(context, "2", Toast.LENGTH_SHORT)
             if(resultCode == Activity.RESULT_OK){
                 Logger.d(data!!.extras.getLong(AppConstants.DNI_OBJECT_NAME))
                 //mainActivity = activity as MainActivity
