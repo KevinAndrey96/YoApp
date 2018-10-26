@@ -44,7 +44,7 @@ class Enrollment : AppCompatActivity() {
         setContentView(R.layout.activity_enrollment)
 
 
-        btnCedula1.setOnClickListener {
+        btnCedula.setOnClickListener {
             //captura de frente doc
             var intent = Intent(this@Enrollment, CFrontDocument::class.java)
             intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
@@ -60,13 +60,13 @@ class Enrollment : AppCompatActivity() {
             startActivityForResult(intent, MY_REQUEST_CODE_BACK)
         }
 
-        button6.setOnClickListener {
+        /*button6.setOnClickListener {
             //captura de Pasaporte
             var intent = Intent(this@Enrollment, FrontDocPassport::class.java)
             intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
             intent.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
             startActivityForResult(intent, MY_REQUEST_CODE_FRONTPAST)
-        }
+        }*/
 
         button4.setOnClickListener {
             //rostro
@@ -85,7 +85,7 @@ class Enrollment : AppCompatActivity() {
             startActivityForResult(intent, MY_REQUEST_CODE_BIOMETRIC)
         }
 
-        button8.setOnClickListener {
+        /*button8.setOnClickListener {
             val intent = Intent(this@Enrollment, BytteLicense::class.java)
             intent.putExtra("URLPETICION", URLPETICION)
             startActivityForResult(intent, MY_REQUEST_CODE_LISENCE)
@@ -93,7 +93,7 @@ class Enrollment : AppCompatActivity() {
 
         button9.setOnClickListener {
             Util.Eliminarimgaplicacion(this@Enrollment)
-        }
+        }*/
 
         //Permisos en runtime
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||

@@ -11,5 +11,10 @@ class AppConstants {
         var MAP_SCHEMA = "admin"
         var MAP_TABLA = "informacionmapa"
         var MAP_CAMPO = "*"
+        var REPORT_SCHEMA = "admin"
+        var REPORT_TABLA = "reportealiado_app"
+        var REPORT_CAMPO = "*"
+        var REPORT_STATE_ACTIVE = "estado=1"
+        var REPORT_STATE_FINISH = "estado=5"
     }
 }

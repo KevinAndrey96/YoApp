@@ -19,58 +19,54 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnCedula1"
-                android:layout_width="wrap_content"
+                android:id="@+id/scannQr"
+                android:layout_width="168dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_button"
+                android:text="Escanear QR" />
+
+            <Button
+                android:id="@+id/btnCedula"
+                android:layout_width="165dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_button"
+                android:drawableStart="@drawable/icono_cedula"
+                android:drawableLeft="@drawable/icono_cedula"
                 android:text="Frente cedula" />
 
             <Button
                 android:id="@+id/button7"
-                android:layout_width="wrap_content"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_button"
                 android:text="Back cedula" />
 
             <Button
-                android:id="@+id/button6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Pasaporte" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Pasaporte nfc" />
-
-            <Button
                 android:id="@+id/button4"
-                android:layout_width="wrap_content"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_button"
                 android:text="Rostro" />
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_button"
                 android:text="Huellas" />
+
             <Button
-                android:id="@+id/button8"
-                android:layout_width="wrap_content"
+                android:id="@+id/button"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="activar licencia biometric" />
-            <Button
-                android:id="@+id/button9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Eliminar datos" />
+                android:background="@drawable/rounded_button"
+                android:text="Enviar datos" />
 
         </LinearLayout>
     </ScrollView>
