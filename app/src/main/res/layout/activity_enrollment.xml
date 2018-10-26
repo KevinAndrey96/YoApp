@@ -23,7 +23,8 @@
                 android:layout_width="168dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button1"
+                android:drawableEnd="@drawable/codigo_qr"
                 android:text="Escanear QR" />
 
             <Button
@@ -31,8 +32,8 @@
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button"
-                android:drawableStart="@drawable/icono_cedula"
+                android:background="@drawable/rounded_button1"
+                android:drawableStart="@drawable/icono_front"
                 android:drawableLeft="@drawable/icono_cedula"
                 android:text="Frente cedula" />
 
@@ -41,7 +42,8 @@
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button1"
+                android:drawableEnd="@drawable/icono_cedula"
                 android:text="Back cedula" />
 
             <Button
@@ -49,7 +51,8 @@
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button1"
+                android:drawableStart="@drawable/reconocimiento_facial"
                 android:text="Rostro" />
 
             <Button
@@ -57,15 +60,16 @@
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button1"
+                android:drawableEnd="@drawable/huella"
                 android:text="Huellas" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnSend"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button1"
                 android:text="Enviar datos" />
 
         </LinearLayout>
