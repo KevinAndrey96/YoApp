@@ -61,7 +61,7 @@
         tools:node="remove" />
 
     <application
-        android:name="com.trantec.yo.YoPrestoApp"
+        android:name=".YoPrestoApp"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:hardwareAccelerated="true"
@@ -80,21 +80,19 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name="com.trantec.yo.ui.LoginActivity"
-            android:label="@string/app_name">
-
-        </activity>
+            android:name=".ui.LoginActivity"
+            android:label="@string/app_name" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
-            android:name="com.trantec.yo.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.trantec.yo.ui.main.TakeDNICaptureActivity"
+            android:name=".ui.main.TakeDNICaptureActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <!--
@@ -110,29 +108,42 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.trantec.yo.Stores"
+            android:name=".Stores"
             android:label="Mis Tiendas" />
         <activity
-            android:name="com.trantec.yo.Reports"
+            android:name=".Reports"
             android:label="Reportes" />
-        <activity android:name="com.trantec.yo.Enrollment"></activity>
-        <activity android:name="com.trantec.yo.CaptureDocumentFront"></activity>
-        <activity android:name="com.trantec.yo.CaptureDocumentReverse"></activity>
-        <activity android:name="com.trantec.yo.ui.main.ImportantInformation"></activity>
-        <activity android:name="com.trantec.yo.Biometric"></activity>
-        <activity android:name="com.trantec.yo.ScannerFacial"></activity>
-        <activity android:name="com.trantec.yo.Utilization"></activity>
-        <activity android:name="com.trantec.yo.ScannerQRSuccess"></activity>
-        <activity android:name="com.trantec.yo.ScannerQR"></activity>
+        <activity android:name=".Enrollment" />
+        <activity android:name=".CaptureDocumentFront" />
+        <activity android:name=".CaptureDocumentReverse" />
+        <activity android:name=".ui.main.ImportantInformation" />
+        <activity android:name=".Biometric" />
+        <activity android:name=".ScannerFacial" />
+        <activity android:name=".Utilization" />
+        <activity android:name=".ScannerQRSuccess" />
+        <activity android:name=".ScannerQR" />
         <activity
-            android:name="com.trantec.yo.ui.main.HomeActivity"
+            android:name=".ui.main.HomeActivity"
             android:label="Yo Presto"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity_report"
+            android:label="@string/title_activity_report"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_tab"
+            android:label="@string/title_activity_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Report"
+            android:label="@string/title_activity_report_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -246,18 +246,18 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
                                                                             Logger.d("Response Map")
                                                                             Logger.d(responseMapString)
 
-if (JSONUtils.isJSONValid(responseMapString)) {
-mapResponse =  mapper.readValue<MapResponse>(responseMapString, MapResponse::class.java)
+                                                                        if (JSONUtils.isJSONValid(responseMapString)) {
+                                                                        mapResponse =  mapper.readValue<MapResponse>(responseMapString, MapResponse::class.java)
 
-if(mapResponse?.response != null && mapResponse.response!!.dataresponse != null){
-    val mapp = jacksonObjectMapper()
-    val data_maps: List<MapDataresponse> = mapp.readValue((mapResponse.response!!.dataresponse).toString())
+                                                                        if(mapResponse?.response != null && mapResponse.response!!.dataresponse != null){
+                                                                            val mapp = jacksonObjectMapper()
+                                                                            val data_maps: List<MapDataresponse> = mapp.readValue((mapResponse.response!!.dataresponse).toString())
 
-    for (item in data_maps) {
-        AddMrk(item.latitud!!, item.longitud!!, item.nombreestablecimiento!!, item.direccion!!)
-    }
-}
-}
+                                                                            for (item in data_maps) {
+                                                                                AddMrk(item.latitud!!, item.longitud!!, item.nombreestablecimiento!!, item.direccion!!)
+                                                                            }
+                                                                        }
+                                                                        }
                                                                         }
                                                                     })
                                                                 }else{

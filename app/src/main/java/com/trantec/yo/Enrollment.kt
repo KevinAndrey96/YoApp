@@ -2,6 +2,7 @@ package com.trantec.yo
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -23,7 +24,10 @@ import com.example.docbytte.ui.FrontDocPassport
 import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
 import com.microblink.activity.BaseScanActivity
+import com.trantec.yo.dto.*
+import com.trantec.yo.utils.JSONUtils
 import kotlinx.android.synthetic.main.activity_enrollment.*
+import org.codehaus.jackson.map.ObjectMapper
 import org.json.JSONException
 
 
@@ -44,6 +48,29 @@ class Enrollment : AppCompatActivity() {
     val MY_REQUEST_CODE_NFCPAST = 1335
     val REQUEST_PERMISSION = 1433
     val URLPETICION = "https://portal.bytte.com.co/casb/SmartBio/SB/API/SmartBio/"//esta url se debe solicitar a bytte para licenciar el projecto
+
+    //Datos cedula
+    var _identidad: String? = null
+    var _idcleinte: Int? = null
+    var _accion: String? = null
+    var _numerotarjeta: String? = null
+    var _numerocedula: String? = null
+    var _primerapellido: String? = null
+    var _segundoapellido: String? = null
+    var _primernombre: String? = null
+    var _segundonombre: String? = null
+    var _nombrecompletos: String? = null
+    var _sexo: String? = null
+    var _fechanacimiento: String? = null
+    var _rh: String? = null
+    var _tipodedo: String? = null
+    var _versioncedula: String? = null
+    var _barcodebase: String? = null
+    var _pathimagen: String? = null
+    var _platafomra: String? = null
+
+    private val mapper = ObjectMapper()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,24 +159,26 @@ class Enrollment : AppCompatActivity() {
         val bitmap: Bitmap
         val gson = Gson()
         try {
+            //LICENCIA
             if (requestCode == MY_REQUEST_CODE_LISENCE && resultCode == Activity.RESULT_OK) {
                 results_biometric = data!!.extras!!.getString("License")
                 Log.d("TAG", results_biometric)
             } else if (requestCode == MY_REQUEST_CODE_LISENCE && resultCode == Activity.RESULT_CANCELED) {
                 results_biometric = data!!.extras!!.getString("License")
                 Log.d("TAG", results_biometric)
-            } else if (requestCode == MY_REQUEST_CODE_FRONTPAST && resultCode == BaseScanActivity.RESULT_OK) {
-                results_biometric = data?.extras?.getString("InfoFrontDoc")!!
+
+            //CEDULA FRONTAL
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_OK) {
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
+
                 val cedulafront = findViewById<Button>(R.id.btnCedula)
                 cedulafront.setEnabled(false)
+
+                Log.d("TAG_", results_biometric)
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
-            } else if (requestCode == MY_REQUEST_CODE_NFCPAST && resultCode == BaseScanActivity.RESULT_OK) {
-                results_biometric = data?.extras?.getString("NUMPASSPORT")!!
-                bitmap = data?.getParcelableExtra("Infofacechip")
-                bitmap.height
+
+            //RECONOCIMIENTO FACIAL
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_OK) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
                 val properties = gson.fromJson(results_biometric, Properties::class.java)
@@ -158,22 +187,50 @@ class Enrollment : AppCompatActivity() {
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
 
+            //HUELLAS
             } else if (requestCode == MY_REQUEST_CODE_BIOMETRIC && resultCode == BaseScanActivity.RESULT_OK) {//
                 results_biometric = data?.extras?.getString("InfoBiometric")!!
                 val escaner_huella = findViewById<Button>(R.id.button2)
                 escaner_huella.setEnabled(false)
+
+            //CEDULA REVERSO
             }else if (requestCode == MY_REQUEST_CODE_BACK && resultCode == BaseScanActivity.RESULT_OK) {//back del documento colombiano
                 results_biometric = data?.extras?.getString("InfoBackDoc")!!
-                val cedulaback = findViewById<Button>(R.id.button7)
-                cedulaback.setEnabled(false)
+
+                if (JSONUtils.isJSONValid(results_biometric)) {
+                    val escaner_back: EscanerBack
+                    val res_ = results_biometric.toLowerCase()
+
+                    escaner_back =  mapper.readValue<EscanerBack>(res_, EscanerBack::class.java)
+
+                    _numerotarjeta = escaner_back.numerotarjeta
+                    _numerocedula = escaner_back.numerocedula
+                    _primerapellido = escaner_back.primerapellido
+                    _segundoapellido = escaner_back.segundoapellido
+                    _primernombre = escaner_back.primernombre
+                    _segundonombre = escaner_back.segundonombre
+                    _nombrecompletos = escaner_back.nombrescompletos
+                    _sexo = escaner_back.sexo
+                    _fechanacimiento = escaner_back.fechanacimiento
+                    _rh = escaner_back.rh
+                    _tipodedo = escaner_back.tipodedo
+                    _versioncedula = escaner_back.versioncedula
+                    _barcodebase = escaner_back.barcodebase64
+                    //var _pathimagen: String? = null
+                    _platafomra = escaner_back.plataforma
+
+                    val cedulaback = findViewById<Button>(R.id.button7)
+                    cedulaback.setEnabled(false)
+                }
             }
 
-            Log.d("TAG", results_biometric)
+            //Log.d("TAG", results_biometric)
 
         } catch (e: Exception) {
 
         }
 
+        //CODIGO QR
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
 
@@ -192,6 +249,55 @@ class Enrollment : AppCompatActivity() {
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
-
     }
+
+    private fun enviarDatos(){
+        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+        val ip = prefs.getString("ip", "")
+        val idusuario = prefs.getString("idusuario", "")
+
+        //Informacion cedula
+        val infoDocument = EnrollmentDatosCedula()
+        infoDocument.idusuario = idusuario.toInt()
+        infoDocument.ip = ip
+        infoDocument.identidad
+        infoDocument.idcleinte
+        infoDocument.accion
+        infoDocument.numerotarjeta = _numerotarjeta
+        infoDocument.numerocedula = _numerocedula
+        infoDocument.primerapellido = _primerapellido
+        infoDocument.segundoapellido = _segundoapellido
+        infoDocument.primernombre = _primernombre
+        infoDocument.segundonombre = _segundonombre
+        infoDocument.nombrecompletos = _nombrecompletos
+        infoDocument.sexo = _sexo
+        infoDocument.fechanacimiento = _fechanacimiento
+        infoDocument.rh = _rh
+        infoDocument.tipodedo = _tipodedo
+        infoDocument.versioncedula = _versioncedula
+        infoDocument.barcodebase = _barcodebase
+        infoDocument.pathimagen
+        infoDocument.platafomra = _platafomra
+
+        //Cedula frontal
+        val infoDocumentFront = EnrollmentDocumentoFrontal()
+
+        //Huellas
+        val infoFingerPrints = EnrollmentHuellas()
+
+        //Cara
+        val infoFace = EnrollmentReconocimientoFacial()
+    }
+
+    /*val Mapa = MapRequest()
+        val _datos = MapDatos()
+
+
+        _datos.schema = AppConstants.MAP_SCHEMA
+        _datos.tabla = AppConstants.MAP_TABLA
+        _datos.campo = AppConstants.MAP_CAMPO
+
+        //Logger.d("Clave " + datos.clave)
+
+        Mapa.datos = _datos*/
 }

@@ -8,5 +8,5 @@ class ReportDatos : Serializable {
     var schema: String? = null
     var tabla: String? = null
     var campo: String? = null
-    var condicion: String? = null
+    var condiciones: String? = null
 }

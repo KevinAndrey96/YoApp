@@ -118,7 +118,7 @@ class HomeActivity : AppCompatActivity() {
                 .withOnDrawerItemClickListener { view, position, drawerItem ->
                     when (drawerItem.identifier) {
                         item1.identifier -> {
-                            val intent = Intent(this, Enrollment::class.java)
+                            val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
                         }
                         item2.identifier -> {

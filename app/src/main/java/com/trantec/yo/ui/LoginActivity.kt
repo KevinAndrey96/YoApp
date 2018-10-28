@@ -282,6 +282,8 @@ class LoginActivity : AppCompatActivity() {
 
                                                                                                                             val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
                                                                                                                             val editor = prefs.edit()
+                                                                                                                            editor.putString("ip", ipResponse.ip)
+                                                                                                                            editor.putString("idusuario", loginDataresponse.idusuario.toString())
                                                                                                                             editor.putString("nombre", loginDataresponse.primernombre)
                                                                                                                             editor.putString("apellido", loginDataresponse.primerapellido)
                                                                                                                             editor.putString("saldo", loginDataresponse.saldo.toString())
@@ -301,8 +303,6 @@ class LoginActivity : AppCompatActivity() {
                                                                                                                                             .show()
                                                                                                                                 }
                                                                                                                             }
-
-
                                                                                                                         }
                                                                                                                     }else{
                                                                                                                         mHandler.post{
