@@ -50,9 +50,6 @@ class Enrollment : AppCompatActivity() {
     val URLPETICION = "https://portal.bytte.com.co/casb/SmartBio/SB/API/SmartBio/"//esta url se debe solicitar a bytte para licenciar el projecto
 
     //Datos cedula
-    var _identidad: String? = null
-    var _idcleinte: Int? = null
-    var _accion: String? = null
     var _numerotarjeta: String? = null
     var _numerocedula: String? = null
     var _primerapellido: String? = null
@@ -66,8 +63,10 @@ class Enrollment : AppCompatActivity() {
     var _tipodedo: String? = null
     var _versioncedula: String? = null
     var _barcodebase: String? = null
-    var _pathimagen: String? = null
     var _platafomra: String? = null
+    //Datos cedula frontal
+    var _pathimagen: String? = null
+    var _statusoperacion: String? = null
 
     private val mapper = ObjectMapper()
 
@@ -100,14 +99,6 @@ class Enrollment : AppCompatActivity() {
             startActivityForResult(intent, MY_REQUEST_CODE_BACK)
         }
 
-        /*button6.setOnClickListener {
-            //captura de Pasaporte
-            var intent = Intent(this@Enrollment, FrontDocPassport::class.java)
-            intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
-            intent.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
-            startActivityForResult(intent, MY_REQUEST_CODE_FRONTPAST)
-        }*/
-
         button4.setOnClickListener {
             //rostro
             val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
@@ -128,10 +119,6 @@ class Enrollment : AppCompatActivity() {
             val intent = Intent(this@Enrollment, BytteLicense::class.java)
             intent.putExtra("URLPETICION", URLPETICION)
             startActivityForResult(intent, MY_REQUEST_CODE_LISENCE)
-        }*/
-
-        /*button9.setOnClickListener {
-            Util.Eliminarimgaplicacion(this@Enrollment)
         }*/
 
         //Permisos en runtime
@@ -171,8 +158,18 @@ class Enrollment : AppCompatActivity() {
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_OK) {
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
 
-                val cedulafront = findViewById<Button>(R.id.btnCedula)
-                cedulafront.setEnabled(false)
+                if (JSONUtils.isJSONValid(results_biometric)) {
+                    val escaner_front: EscanerFront
+                    val res_ = results_biometric.toLowerCase()
+
+                    escaner_front =  mapper.readValue<EscanerFront>(res_, EscanerFront::class.java)
+
+                    _pathimagen = escaner_front.pathimagen
+                    _statusoperacion = escaner_front.statusoperacion
+
+                    val cedulafront = findViewById<Button>(R.id.btnCedula)
+                    cedulafront.setEnabled(false)
+                }
 
                 Log.d("TAG_", results_biometric)
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_CANCELED) {
@@ -223,8 +220,6 @@ class Enrollment : AppCompatActivity() {
                     cedulaback.setEnabled(false)
                 }
             }
-
-            //Log.d("TAG", results_biometric)
 
         } catch (e: Exception) {
 
@@ -281,6 +276,13 @@ class Enrollment : AppCompatActivity() {
 
         //Cedula frontal
         val infoDocumentFront = EnrollmentDocumentoFrontal()
+        infoDocumentFront.idusuario = idusuario.toInt()
+        infoDocumentFront.ip = ip
+        infoDocumentFront.identidad
+        infoDocumentFront.idcleinte
+        infoDocumentFront.accion = 1
+        infoDocumentFront.estatusoperacion = _statusoperacion
+        infoDocumentFront.pathimagen = _pathimagen
 
         //Huellas
         val infoFingerPrints = EnrollmentHuellas()
@@ -288,16 +290,4 @@ class Enrollment : AppCompatActivity() {
         //Cara
         val infoFace = EnrollmentReconocimientoFacial()
     }
-
-    /*val Mapa = MapRequest()
-        val _datos = MapDatos()
-
-
-        _datos.schema = AppConstants.MAP_SCHEMA
-        _datos.tabla = AppConstants.MAP_TABLA
-        _datos.campo = AppConstants.MAP_CAMPO
-
-        //Logger.d("Clave " + datos.clave)
-
-        Mapa.datos = _datos*/
 }

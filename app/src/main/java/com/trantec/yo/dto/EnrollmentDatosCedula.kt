@@ -10,7 +10,7 @@ class EnrollmentDatosCedula : Serializable {
     var ip: String? = null
     var identidad: String? = null
     var idcleinte: Int? = null
-    var accion: String? = null
+    var accion: Int? = null
     var numerotarjeta: String? = null
     var numerocedula: String? = null
     var primerapellido: String? = null

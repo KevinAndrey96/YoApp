@@ -9,7 +9,7 @@ class EnrollmentDocumentoFrontal : Serializable {
     var ip: String? = null
     var identidad: String? = null
     var idcleinte: Int? = null
-    var accion: String? = null
+    var accion: Int? = null
     var estatusoperacion: String? = null
     var pathimagen: String? = null
 }
