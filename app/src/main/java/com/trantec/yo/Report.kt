@@ -27,9 +27,12 @@ class Report : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report_view)
 
+        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        container.adapter = mSectionsPagerAdapter
 
+        container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+        tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

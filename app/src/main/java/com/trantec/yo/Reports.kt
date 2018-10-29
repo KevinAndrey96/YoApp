@@ -45,14 +45,6 @@ class Reports : AppCompatActivity() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         ReportActive()
 
-        val add = ListReportActive()
-        add.nombre = "Pepe"
-        add.fecha = "Test"
-        add.valor = "50000"
-        listActive.add(add)
-
-
-
         //ReportFinish()
     }
 
@@ -264,7 +256,7 @@ class Reports : AppCompatActivity() {
                                                                                     Logger.d(""+data_reports)
 
                                                                                     for (item in data_reports) {
-                                                                                        adaptar(item.nombre.toString(),item.fecha.toString(),item.valor.toString())
+                                                                                        adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString())
                                                                                     }
                                                                                 }
                                                                             }
@@ -361,7 +353,7 @@ class Reports : AppCompatActivity() {
     fun adaptar(nombre:String, fecha:String, valor:String) {
         runOnUiThread {
             val add = ListReportActive()
-            add.nombre = nombre
+            add.nombre = nombre.toUpperCase()
             add.fecha = fecha
             add.valor = valor
 
