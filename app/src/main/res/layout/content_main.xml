@@ -15,4 +15,12 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="244dp" />
+
 </android.support.constraint.ConstraintLayout>

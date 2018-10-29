@@ -1,45 +1,39 @@
-package com.trantec.yo.ui.fragment
+package com.trantec.yo
 
-
+import android.app.DatePickerDialog
+import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.text.method.LinkMovementMethod
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.TextView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.orhanobut.logger.Logger
-
-import com.trantec.yo.R
-import com.trantec.yo.YoPrestoApp
+import com.trantec.yo.alerts.NoCredit
+import com.trantec.yo.alerts.SuccessfulTransaction
 import com.trantec.yo.constants.AppConstants
 import com.trantec.yo.constants.HttpObjectsConstants
 import com.trantec.yo.constants.OperationConstants
 import com.trantec.yo.constants.WebConstant
 import com.trantec.yo.dto.*
 import com.trantec.yo.enumeration.SessionKeys
+import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
+import com.trantec.yo.ui.main.HomeActivity
 import com.trantec.yo.utils.JSONUtils
+import dmax.dialog.SpotsDialog
 import hundredthirtythree.sessionmanager.SessionManager
-import kotlinx.android.synthetic.main.fragment_result_capture_dni.*
+import kotlinx.android.synthetic.main.activity_result_capture.*
+import libs.mjn.prettydialog.PrettyDialog
 import okhttp3.*
 import org.codehaus.jackson.map.ObjectMapper
 import org.json.JSONObject
 import java.io.IOException
-import java.util.*
-import android.app.DatePickerDialog
-import libs.mjn.prettydialog.PrettyDialog
 import java.text.SimpleDateFormat
-import dmax.dialog.SpotsDialog
-import com.afollestad.materialdialogs.MaterialDialog
+import java.util.*
 
-
-
-/**
- * A simple [Fragment] subclass.
- *
- */
-class ResultCaptureDNIFragment : Fragment(){
+class ResultCapture : AppCompatActivity() {
 
     private var yoprestoAliado: YoPrestoApp? = null
     private var client = OkHttpClient()
@@ -57,55 +51,21 @@ class ResultCaptureDNIFragment : Fragment(){
 
     private var progressDialog: MaterialDialog? ? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result_capture_dni, container, false)
-    }
-/*
-    var date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_result_capture)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        myCalendar.set(Calendar.YEAR, year)
-        myCalendar.set(Calendar.MONTH, monthOfYear)
-        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        updateLabel()
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        textViewDNINumber.text = arguments!!.getLong(AppConstants.DNI_OBJECT_NAME).toString()
-
-        documento = arguments!!.getLong(AppConstants.DNI_OBJECT_NAME).toString()
+        val textViewDNINumber = findViewById<TextView>(R.id.textViewDNINumber)
+        //textViewDNINumber2.text = arguments!!.getLong(AppConstants.DNI_OBJECT_NAME).toString()
+        //documento = arguments!!.getLong(AppConstants.DNI_OBJECT_NAME).toString()
         //documento = "80794978"
+        //documento=getIntent().getStringExtra("CedulaC")
+        documento=intent.getStringExtra(AppConstants.DNI_OBJECT_NAME).toString()
+        textViewDNINumber.text = documento
 
-        if(documento.isNullOrEmpty()){
-            try {
-                val dialog = PrettyDialog(context)
-                        .setTitle(getString(R.string.information))
-                        .setMessage("No se ha encontrado información del documento suministrado.")
-                        .setAnimationEnabled(true)
-
-
-
-                dialog.addButton(
-                        getString(android.R.string.ok), // button text
-                        R.color.pdlg_color_white, // button text color
-                        R.color.pdlg_color_green // button background color
-                ) // button OnClick listener
-                {
-                    val fragment = TakeDNIPictureFragment()
-                    val tx = fragmentManager!!.beginTransaction()
-                    tx.replace(R.id.main_fragment, fragment)
-                    tx.addToBackStack("TakeDNIPicFrg").commit()
-                }
-
-                dialog.show()
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
         sessionString = SessionManager.getString(SessionKeys.USER_SESSION.key, null)
-        yoprestoAliado = activity!!.applicationContext as YoPrestoApp?
+        //yoprestoAliado = activity!!.applicationContext as YoPrestoApp?
         loginDataresponse = mapper.readValue<LoginDataresponse>(sessionString, LoginDataresponse::class.java)
 
         getAvailableAmountForClient()
@@ -167,19 +127,25 @@ class ResultCaptureDNIFragment : Fragment(){
         editTextQuotaDate.setOnFocusChangeListener { v, hasFocus ->
 
             if(hasFocus) {
-                DatePickerDialog(activity, date, myCalendar
+                DatePickerDialog(this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show()
             }
         }
-
-        /*editTextQuotaDate.setOnClickListener {
-            DatePickerDialog(activity, date, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show()
-        }*/
-
     }
+
+    var date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+        myCalendar.set(Calendar.YEAR, year)
+        myCalendar.set(Calendar.MONTH, monthOfYear)
+        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        updateLabel()
+    }
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }*/
     private fun updateLabel() {
         val myFormat = "yyyy-MM-dd" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
@@ -206,9 +172,10 @@ class ResultCaptureDNIFragment : Fragment(){
                     .build()
 
             mHandler.post{
-                run{
+                runOnUiThread{
                     startProgress()
                 }
+
             }
 
 
@@ -218,9 +185,9 @@ class ResultCaptureDNIFragment : Fragment(){
 
                     e.printStackTrace()
                     mHandler.post{
-                        run{
+                        runOnUiThread{
                             stopProgess()
-                            PrettyDialog(activity!!)
+                            PrettyDialog(applicationContext)
                                     .setTitle("Información")
                                     .setMessage("Error consultando el cupo " + e.message)
                                     .show()
@@ -273,9 +240,9 @@ class ResultCaptureDNIFragment : Fragment(){
 
                                                 e.printStackTrace()
                                                 mHandler.post{
-                                                    run{
+                                                    runOnUiThread{
                                                         stopProgess()
-                                                        PrettyDialog(activity!!)
+                                                        PrettyDialog(applicationContext)
                                                                 .setTitle("Información")
                                                                 .setMessage("Error consultando el cupo " + e.message)
                                                                 .show()
@@ -348,7 +315,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                             mHandler.post {
                                                                                 run {
                                                                                     stopProgess()
-                                                                                    PrettyDialog(activity!!)
+                                                                                    PrettyDialog(applicationContext)
                                                                                             .setTitle("Información")
                                                                                             .setMessage("Error consultando la cedula " + e.message)
                                                                                             .show()
@@ -404,10 +371,18 @@ class ResultCaptureDNIFragment : Fragment(){
 
                                                                                                                 }else{
                                                                                                                     try{
-                                                                                                                        val dialog = PrettyDialog(context)
+
+
+                                                                                                                        val intent = Intent(applicationContext, NoCredit::class.java)
+                                                                                                                        startActivity(intent)
+                                                                                                                        finish()
+
+                                                                                                                        val dialog = PrettyDialog(applicationContext)
                                                                                                                                 .setTitle(getString(R.string.information))
                                                                                                                                 .setMessage("El usuario no tiene cupo disponible para retiro.")
                                                                                                                                 .setAnimationEnabled(true)
+
+
 
 
 
@@ -419,7 +394,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                                         {
                                                                                                                             val fragment = TakeDNIPictureFragment()
                                                                                                                             val tx = fragmentManager!!.beginTransaction()
-                                                                                                                            tx.replace(R.id.main_fragment, fragment)
+                                                                                                                            //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                                             tx.addToBackStack("TakeDNIPicFrg").commit()
                                                                                                                             dialog.dismiss()
                                                                                                                         }
@@ -433,7 +408,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                                 }
                                                                                                             }else{
                                                                                                                 try{
-                                                                                                                    val dialog = PrettyDialog(context)
+                                                                                                                    val dialog = PrettyDialog(applicationContext)
                                                                                                                             .setTitle(getString(R.string.information))
                                                                                                                             .setMessage("El usuario no tiene cupo disponible para retiro.")
                                                                                                                             .setAnimationEnabled(true)
@@ -448,7 +423,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                                     {
                                                                                                                         val fragment = TakeDNIPictureFragment()
                                                                                                                         val tx = fragmentManager!!.beginTransaction()
-                                                                                                                        tx.replace(R.id.main_fragment, fragment)
+                                                                                                                        //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                                         tx.addToBackStack("TakeDNIPicFrg").commit()
                                                                                                                         dialog.dismiss()
                                                                                                                     }
@@ -469,7 +444,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                     run {
                                                                                                         stopProgess()
                                                                                                         try{
-                                                                                                            val dialog = PrettyDialog(context)
+                                                                                                            val dialog = PrettyDialog(applicationContext)
                                                                                                                     .setTitle(getString(R.string.information))
                                                                                                                     .setMessage("No hay información para el documento.")
                                                                                                                     .setAnimationEnabled(true)
@@ -484,7 +459,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                             {
                                                                                                                 val fragment = TakeDNIPictureFragment()
                                                                                                                 val tx = fragmentManager!!.beginTransaction()
-                                                                                                                tx.replace(R.id.main_fragment, fragment)
+                                                                                                                //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                                 tx.addToBackStack("TakeDNIPicFrg").commit()
                                                                                                                 dialog.dismiss()
                                                                                                             }
@@ -505,7 +480,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                 run {
                                                                                                     stopProgess()
                                                                                                     try{
-                                                                                                        val dialog = PrettyDialog(context)
+                                                                                                        val dialog = PrettyDialog(applicationContext)
                                                                                                                 .setTitle(getString(R.string.information))
                                                                                                                 .setMessage("No hay información para el documento.")
                                                                                                                 .setAnimationEnabled(true)
@@ -520,7 +495,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                         {
                                                                                                             val fragment = TakeDNIPictureFragment()
                                                                                                             val tx = fragmentManager!!.beginTransaction()
-                                                                                                            tx.replace(R.id.main_fragment, fragment)
+                                                                                                            //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                             tx.addToBackStack("TakeDNIPicFrg").commit()
                                                                                                             dialog.dismiss()
                                                                                                         }
@@ -539,7 +514,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                             run {
                                                                                                 stopProgess()
                                                                                                 try{
-                                                                                                    val dialog = PrettyDialog(context)
+                                                                                                    val dialog = PrettyDialog(applicationContext)
                                                                                                             .setTitle(getString(R.string.information))
                                                                                                             .setMessage("No hay información para el documento.")
                                                                                                             .setAnimationEnabled(true)
@@ -554,7 +529,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                     {
                                                                                                         val fragment = TakeDNIPictureFragment()
                                                                                                         val tx = fragmentManager!!.beginTransaction()
-                                                                                                        tx.replace(R.id.main_fragment, fragment)
+                                                                                                        //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                         tx.addToBackStack("TakeDNIPicFrg").commit()
                                                                                                         dialog.dismiss()
                                                                                                     }
@@ -573,7 +548,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                         run {
                                                                                             stopProgess()
                                                                                             try{
-                                                                                                val dialog = PrettyDialog(context)
+                                                                                                val dialog = PrettyDialog(applicationContext)
                                                                                                         .setTitle(getString(R.string.information))
                                                                                                         .setMessage("El usuario no tiene cupo disponible para retiro.")
                                                                                                         .setAnimationEnabled(true)
@@ -588,7 +563,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                 {
                                                                                                     val fragment = TakeDNIPictureFragment()
                                                                                                     val tx = fragmentManager!!.beginTransaction()
-                                                                                                    tx.replace(R.id.main_fragment, fragment)
+                                                                                                    //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                     tx.addToBackStack("TakeDNIPicFrg").commit()
                                                                                                     dialog.dismiss()
                                                                                                 }
@@ -680,7 +655,7 @@ class ResultCaptureDNIFragment : Fragment(){
                     e.printStackTrace()
                     mHandler.post {
                         run {
-                            PrettyDialog(activity!!)
+                            PrettyDialog(applicationContext)
                                     .setTitle("Información")
                                     .setMessage("Error generando la OTP " + e.message)
                                     .show()
@@ -735,7 +710,7 @@ class ResultCaptureDNIFragment : Fragment(){
 
                                                 mHandler.post {
                                                     run {
-                                                        PrettyDialog(activity!!)
+                                                        PrettyDialog(applicationContext)
                                                                 .setTitle("Información")
                                                                 .setMessage("Error generando la OTP " + e.message)
                                                                 .show()
@@ -839,7 +814,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                         }else{
                                                                                             mHandler.post {
                                                                                                 run {
-                                                                                                    PrettyDialog(activity!!)
+                                                                                                    PrettyDialog(applicationContext)
                                                                                                             .setTitle("Información")
                                                                                                             .setMessage("Error generando la OTP, por favor de click en generar nueva OTP.")
                                                                                                             .show()
@@ -932,7 +907,7 @@ class ResultCaptureDNIFragment : Fragment(){
 
 
             mHandler.post{
-                run{
+                runOnUiThread{
                     startProgress()
                 }
             }
@@ -945,7 +920,7 @@ class ResultCaptureDNIFragment : Fragment(){
                     mHandler.post {
                         run {
                             stopProgess()
-                            PrettyDialog(activity!!)
+                            PrettyDialog(applicationContext)
                                     .setTitle("Información")
                                     .setMessage("Error realizando la transacción" + e.message)
                                     .show()
@@ -1000,7 +975,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                 mHandler.post {
                                                     run {
                                                         stopProgess()
-                                                        PrettyDialog(activity!!)
+                                                        PrettyDialog(applicationContext)
                                                                 .setTitle("Información")
                                                                 .setMessage("Error realizando la transacción" + e.message)
                                                                 .show()
@@ -1083,7 +1058,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                     makeUseTransactionDatos.entidaddestino = searchDataresponse!!.identidad.toString()
                                                                     //makeUseTransactionDatos.entidaddestino = "10266"
                                                                     makeUseTransactionDatos.fechapago = editTextQuotaDate.text.toString()
-                                                                    makeUseTransactionDatos.idperiodo = ""
+                                                                    makeUseTransactionDatos.idperiodo = 1
                                                                     makeUseTransactionDatos.observacion = ""
                                                                     makeUseTransactionDatos.otp = SessionManager.getString("OTP", null)
                                                                     // makeUseTransactionDatos.otp = "123456"
@@ -1117,9 +1092,9 @@ class ResultCaptureDNIFragment : Fragment(){
 
                                                                             e.printStackTrace()
                                                                             mHandler.post{
-                                                                                run{
+                                                                                runOnUiThread{
                                                                                     stopProgess()
-                                                                                    PrettyDialog(activity!!)
+                                                                                    PrettyDialog(applicationContext)
                                                                                             .setTitle("Información")
                                                                                             .setMessage("Error procesando la transacción" + e.message)
                                                                                             .show()
@@ -1157,7 +1132,7 @@ class ResultCaptureDNIFragment : Fragment(){
 
                                                                                                     sendPaymentPlanMail(makeUseTransactionResponse.response!!.dataresponse!!)
 
-                                                                                                    val dialog = PrettyDialog(context)
+                                                                                                    val dialog = PrettyDialog(applicationContext)
                                                                                                             .setTitle(getString(R.string.information))
                                                                                                             .setMessage("Transacción Exitosa. Desembolso realizado exitosamente.")
                                                                                                             .setAnimationEnabled(true)
@@ -1173,7 +1148,7 @@ class ResultCaptureDNIFragment : Fragment(){
 
                                                                                                         val fragment = TakeDNIPictureFragment()
                                                                                                         val tx = fragmentManager!!.beginTransaction()
-                                                                                                        tx.replace(R.id.main_fragment, fragment)
+                                                                                                        ///tx.replace(R.id.main_fragment, fragment)
                                                                                                         tx.addToBackStack("TakeDNIPicFrg").commit()
 
 
@@ -1182,7 +1157,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                                     dialog.setOnCancelListener {
                                                                                                         val fragment = TakeDNIPictureFragment()
                                                                                                         val tx = fragmentManager!!.beginTransaction()
-                                                                                                        tx.replace(R.id.main_fragment, fragment)
+                                                                                                        //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                         tx.addToBackStack("TakeDNIPicFrg").commit()
                                                                                                     }
 
@@ -1196,7 +1171,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                         mHandler.post {
                                                                                             run {
                                                                                                 stopProgess()
-                                                                                                PrettyDialog(activity!!)
+                                                                                                PrettyDialog(applicationContext)
                                                                                                         .setTitle("Información")
                                                                                                         .setMessage("Error realizando la transacción, intente nuevamente.")
                                                                                                         .show()
@@ -1207,7 +1182,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                     mHandler.post {
                                                                                         run {
                                                                                             stopProgess()
-                                                                                            PrettyDialog(activity!!)
+                                                                                            PrettyDialog(applicationContext)
                                                                                                     .setTitle("Información")
                                                                                                     .setMessage("Error realizando la transacción")
                                                                                                     .show()
@@ -1218,7 +1193,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                                 mHandler.post {
                                                                                     stopProgess()
                                                                                     run {
-                                                                                        PrettyDialog(activity!!)
+                                                                                        PrettyDialog(applicationContext)
                                                                                                 .setTitle("Información")
                                                                                                 .setMessage("Error realizando la transacción")
                                                                                                 .show()
@@ -1235,7 +1210,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                     mHandler.post {
                                                                         stopProgess()
                                                                         run {
-                                                                            PrettyDialog(activity!!)
+                                                                            PrettyDialog(applicationContext)
                                                                                     .setTitle("Información")
                                                                                     .setMessage("Error realizando la transacción")
                                                                                     .show()
@@ -1248,7 +1223,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                 mHandler.post {
                                                                     stopProgess()
                                                                     run {
-                                                                        PrettyDialog(activity!!)
+                                                                        PrettyDialog(applicationContext)
                                                                                 .setTitle("Información")
                                                                                 .setMessage("Error realizando la transacción")
                                                                                 .show()
@@ -1261,7 +1236,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                                             mHandler.post {
                                                                 stopProgess()
                                                                 run {
-                                                                    PrettyDialog(activity!!)
+                                                                    PrettyDialog(applicationContext)
                                                                             .setTitle("Información")
                                                                             .setMessage("Error realizando la transacción")
                                                                             .show()
@@ -1281,7 +1256,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                         mHandler.post {
                                             stopProgess()
                                             run {
-                                                PrettyDialog(activity!!)
+                                                PrettyDialog(applicationContext)
                                                         .setTitle("Información")
                                                         .setMessage("Error realizando la transacción")
                                                         .show()
@@ -1294,7 +1269,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                     mHandler.post {
                                         stopProgess()
                                         run {
-                                            PrettyDialog(activity!!)
+                                            PrettyDialog(applicationContext)
                                                     .setTitle("Información")
                                                     .setMessage("Error realizando la transacción")
                                                     .show()
@@ -1307,7 +1282,7 @@ class ResultCaptureDNIFragment : Fragment(){
                                 mHandler.post {
                                     stopProgess()
                                     run {
-                                        PrettyDialog(activity!!)
+                                        PrettyDialog(applicationContext)
                                                 .setTitle("Información")
                                                 .setMessage("Error realizando la transacción")
                                                 .show()
@@ -1328,7 +1303,7 @@ class ResultCaptureDNIFragment : Fragment(){
             mHandler.post {
                 stopProgess()
                 run {
-                    PrettyDialog(activity!!)
+                    PrettyDialog(applicationContext)
                             .setTitle("Información")
                             .setMessage("Error realizando la transacción")
                             .show()
@@ -1364,7 +1339,7 @@ class ResultCaptureDNIFragment : Fragment(){
                     e.printStackTrace()
                     mHandler.post {
                         run {
-                            PrettyDialog(activity!!)
+                            PrettyDialog(applicationContext)
                                     .setTitle("Información")
                                     .setMessage("Error generando la OTP " + e.message)
                                     .show()
@@ -1419,7 +1394,7 @@ class ResultCaptureDNIFragment : Fragment(){
 
                                                 mHandler.post {
                                                     run {
-                                                        PrettyDialog(activity!!)
+                                                        PrettyDialog(applicationContext)
                                                                 .setTitle("Información")
                                                                 .setMessage("Error generando la OTP " + e.message)
                                                                 .show()
@@ -1495,6 +1470,10 @@ class ResultCaptureDNIFragment : Fragment(){
                                                                             var getMessageString = response.body().toString()
                                                                             Logger.d(getMessageString)
 
+                                                                            //Toast.makeText(applicationContext, "La utilización se ha realizado con exito!", Toast.LENGTH_LONG)
+
+                                                                            val intent = Intent(applicationContext, SuccessfulTransaction::class.java)
+                                                                            startActivity(intent)
                                                                         }
                                                                     })
 
@@ -1583,7 +1562,7 @@ class ResultCaptureDNIFragment : Fragment(){
                     e.printStackTrace()
                     mHandler.post {
                         run {
-                            PrettyDialog(activity!!)
+                            PrettyDialog(applicationContext)
                                     .setTitle("Información")
                                     .setMessage("Error generando enviando el mensaje " + e.message)
                                     .show()
@@ -1611,7 +1590,7 @@ class ResultCaptureDNIFragment : Fragment(){
     }
     private fun startProgress(){
 
-        val builder = MaterialDialog.Builder(context!!).title(R.string.progress_dialog)
+        val builder = MaterialDialog.Builder(this).title(R.string.progress_dialog)
                 .content(R.string.please_wait)
                 .progress(true, 0)
 
@@ -1623,5 +1602,5 @@ class ResultCaptureDNIFragment : Fragment(){
             progressDialog!!.dismiss()
         }
     }
-*/
+
 }

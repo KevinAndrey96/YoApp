@@ -113,13 +113,17 @@
         <activity
             android:name=".Reports"
             android:label="Reportes" />
-        <activity android:name=".Enrollment" />
+        <activity android:name=".Enrollment"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ResultCapture" />
         <activity android:name=".CaptureDocumentFront" />
         <activity android:name=".CaptureDocumentReverse" />
         <activity android:name=".ui.main.ImportantInformation" />
         <activity android:name=".Biometric" />
         <activity android:name=".ScannerFacial" />
-        <activity android:name=".Utilization" />
+        <activity android:name=".Utilization"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ScannerQRSuccess" />
         <activity android:name=".ScannerQR" />
         <activity
@@ -144,6 +148,9 @@
             android:name=".Report"
             android:label="@string/title_activity_report_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <activity android:name=".alerts.NoCredit" />
     </application>
 
 </manifest>

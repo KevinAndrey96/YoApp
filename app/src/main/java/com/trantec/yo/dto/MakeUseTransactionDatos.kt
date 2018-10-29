@@ -18,7 +18,7 @@ class MakeUseTransactionDatos : Serializable {
     var documento: String? = null
     var otp: String? = null
     var valorcuota: String? = null
-    var idperiodo: String? = null
+    var idperiodo: Int? = null
     var fechapago: String? = null
 
 }

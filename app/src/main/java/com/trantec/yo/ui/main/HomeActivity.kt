@@ -39,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
         val name = prefs.getString("nombre", "")
@@ -74,6 +74,7 @@ class HomeActivity : AppCompatActivity() {
 
         enrolamiento.setOnClickListener {
             val intent = Intent(this, Enrollment::class.java)
+            //intent.putExtra("Cedula","1032485")
             //val intent = Intent(this, ImportantInformation::class.java)
             startActivity(intent)
         }

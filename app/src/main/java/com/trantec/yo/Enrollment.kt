@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -32,6 +33,7 @@ import org.json.JSONException
 
 
 import java.util.*
+import com.orhanobut.logger.Logger
 
 
 class Enrollment : AppCompatActivity() {
@@ -74,6 +76,12 @@ class Enrollment : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enrollment)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+
+        val intent = Intent(this@Enrollment, BytteLicense::class.java)
+        intent.putExtra("URLPETICION", URLPETICION)
+        startActivityForResult(intent, MY_REQUEST_CODE_LISENCE)
 
         val btnScan = findViewById<Button>(R.id.scannQr)
         btnScan!!.setOnClickListener { performAction() }

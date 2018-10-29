@@ -53,7 +53,7 @@ Toast.makeText(context, "1", Toast.LENGTH_SHORT)
 
                 val tx = fragmentManager!!.beginTransaction()
                 val fragment = ResultCaptureDNIFragment()
-                fragment.arguments = data!!.extras
+                fragment.arguments = data.extras
                 tx.replace(R.id.main_fragment, fragment)
                 tx.commit()
 
@@ -62,7 +62,7 @@ Toast.makeText(context, "1", Toast.LENGTH_SHORT)
 
                 PrettyDialog(activity!!)
                         .setTitle("Información")
-                        .setMessage(data!!.extras.getString(AppConstants.DNI_CAPTURE_OBJECT_MESSAGE))
+                        .setMessage(data.extras.getString(AppConstants.DNI_CAPTURE_OBJECT_MESSAGE))
                         .show()
             }
         }
