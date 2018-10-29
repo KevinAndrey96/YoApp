@@ -2,6 +2,7 @@ package com.trantec.yo.ui.fragment
 
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -23,28 +25,29 @@ import com.trantec.yo.dto.IPResponse
 import com.trantec.yo.dto.TokenResponse
 import com.trantec.yo.enumeration.SessionKeys
 import com.trantec.yo.utils.JSONUtils
-import com.yopresto.app.yoprestoapp.dto.ReportDataresponse
-import com.yopresto.app.yoprestoapp.dto.ReportDatos
-import com.yopresto.app.yoprestoapp.dto.ReportRequest
-import com.yopresto.app.yoprestoapp.dto.ReportResponse
+import com.yopresto.app.yoprestoapp.dto.*
 import hundredthirtythree.sessionmanager.SessionManager
 import libs.mjn.prettydialog.PrettyDialog
 import okhttp3.*
 import org.codehaus.jackson.map.ObjectMapper
 import org.json.JSONObject
 import java.io.IOException
+import CustomAdapter
 
 class PayFragment : Fragment() {
 
     private var progressDialog: MaterialDialog? = null
     var mHandler =  Handler(Looper.getMainLooper())
-    //var context: Context? = null
+    var contexto: Context? = null
     private var client = OkHttpClient()
     private val mapper = ObjectMapper()
+    var listActive = ArrayList<ListReportActive>()
+    var adapter: CustomAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_tab_to_pay, container, false)
+       //ReportActive()
     }
 
     private fun startProgress(){
@@ -70,7 +73,8 @@ class PayFragment : Fragment() {
         }
     }
 
-    /*private fun ReportActive() {
+/*    private fun ReportActive() {
+        Logger.d("Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         try{
             val formBody = FormBody.Builder()
                     .add("username", AppConstants.TOKEN_USERNAME)
@@ -101,7 +105,7 @@ class PayFragment : Fragment() {
                     mHandler.post{
                         run{
                             stopProgess()
-                            PrettyDialog(this@PayFragment)
+                            PrettyDialog(contexto)
                                     .setTitle("Información")
                                     .setMessage("Error. " + e.message)
                                     .show()
@@ -154,7 +158,7 @@ class PayFragment : Fragment() {
                                                 mHandler.post{
                                                     run{
                                                         stopProgess()
-                                                        PrettyDialog(this@Report)
+                                                        PrettyDialog(contexto)
                                                                 .setTitle("Información")
                                                                 .setMessage("Error al cargar reportes " + e.message)
                                                                 .show()
@@ -197,7 +201,7 @@ class PayFragment : Fragment() {
                                                                     _datos.schema = AppConstants.REPORT_SCHEMA
                                                                     _datos.tabla = AppConstants.REPORT_TABLA
                                                                     _datos.campo = AppConstants.REPORT_CAMPO
-                                                                    //_datos.condicion = AppConstants.REPORT_STATE_FINISH
+                                                                    _datos.condiciones = AppConstants.REPORT_STATE_ACTIVE
 
                                                                     //Logger.d("Clave " + datos.clave)
 
@@ -226,7 +230,7 @@ class PayFragment : Fragment() {
                                                                             mHandler.post{
                                                                                 run{
                                                                                     stopProgess()
-                                                                                    PrettyDialog(this@Reports)
+                                                                                    PrettyDialog(contexto)
                                                                                             .setTitle("Información")
                                                                                             .setMessage("Error. " + e.message)
                                                                                             .show()
@@ -252,10 +256,10 @@ class PayFragment : Fragment() {
                                                                                     val mapp = jacksonObjectMapper()
                                                                                     val result_report = reportResponse.response!!.dataresponse!!.toLowerCase()
                                                                                     val data_reports: List<ReportDataresponse> = mapp.readValue((result_report))
-                                                                                    Logger.d("bubv"+data_reports)
+                                                                                    Logger.d(""+data_reports)
 
                                                                                     for (item in data_reports) {
-
+                                                                                        adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString())
                                                                                     }
                                                                                 }
                                                                             }
@@ -266,7 +270,7 @@ class PayFragment : Fragment() {
                                                                     mHandler.post{
                                                                         run{
                                                                             stopProgess()
-                                                                            PrettyDialog(this@Reports)
+                                                                            PrettyDialog(contexto)
                                                                                     .setTitle("Información")
                                                                                     .setMessage("Error al cargar reportes.")
                                                                                     .show()
@@ -279,7 +283,7 @@ class PayFragment : Fragment() {
                                                                 mHandler.post{
                                                                     run{
                                                                         stopProgess()
-                                                                        PrettyDialog(this@Reports)
+                                                                        PrettyDialog(contexto)
                                                                                 .setTitle("Información")
                                                                                 .setMessage("Error al cargar reportes.")
                                                                                 .show()
@@ -292,7 +296,7 @@ class PayFragment : Fragment() {
                                                             mHandler.post{
                                                                 run{
                                                                     stopProgess()
-                                                                    PrettyDialog(this@Reports)
+                                                                    PrettyDialog(contexto)
                                                                             .setTitle("Información")
                                                                             .setMessage("No se pudo cargar el mapa.")
                                                                             .show()
@@ -336,16 +340,30 @@ class PayFragment : Fragment() {
 
         }catch (ex: Exception){
             ex.printStackTrace()
-////// FIN CONSULTA
             mHandler.post{
                 run{
                     stopProgess()
-                    PrettyDialog(this@Reports)
+                    PrettyDialog(contexto)
                             .setTitle("Información")
                             .setMessage("Error ingresando")
                             .show()
                 }
             }
+        }
+    }
+
+    fun adaptar(nombre:String, fecha:String, valor:String) {
+        getActivity()!!.runOnUiThread {
+            val add = ListReportActive()
+            add.nombre = nombre.toUpperCase()
+            add.fecha = fecha
+            add.valor = valor
+
+            listActive.add(add)
+
+            val list = getView()!!.findViewById<ListView>(R.id.list1)
+            adapter = CustomAdapter(this)
+            list.adapter = adapter
         }
     }*/
 }

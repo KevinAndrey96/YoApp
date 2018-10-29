@@ -79,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         reportes.setOnClickListener {
-            val intent = Intent(this, Report::class.java)
+            val intent = Intent(this, Reports::class.java)
             startActivity(intent)
         }
 

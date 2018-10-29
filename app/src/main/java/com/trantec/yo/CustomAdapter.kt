@@ -1,3 +1,4 @@
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +7,12 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.trantec.yo.R
 import com.trantec.yo.Reports
+import com.trantec.yo.ui.fragment.PayFragment
 import com.yopresto.app.yoprestoapp.dto.ListReportActive
 import com.trantec.yo.ui.main.MainActivity
+import java.security.AccessController.getContext
+import android.R.attr.resource
+
 
 
 
@@ -34,11 +39,19 @@ class CustomAdapter internal constructor(internal var main: Reports) : BaseAdapt
         var valor: TextView? = null
     }
 
+   /* private var mcontext: Context? = null
+    fun CustomAdapter(context: Context) {
+        this.mcontext = context
+    }*/
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         var holder = ViewHolderItem()
         if (convertView == null) {
+
+            //val inflater = mcontext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val inflater = main.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            //val inflater = getLayoutInflater().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = inflater.inflate(R.layout.cell, null)
 
             holder.fecha = convertView!!.findViewById(R.id.fecha) as TextView
