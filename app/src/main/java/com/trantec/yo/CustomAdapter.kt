@@ -4,14 +4,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-
-import com.trantec.yo.ui.main.MainActivity
-
-import android.R.attr.name
 import com.trantec.yo.R
 import com.trantec.yo.Reports
+import com.yopresto.app.yoprestoapp.dto.ListReportActive
+import com.trantec.yo.ui.main.MainActivity
+
+
 
 class CustomAdapter internal constructor(internal var main: Reports) : BaseAdapter() {
+
+    //var reportsList:ArrayList<ListReportActive>? = null
+
 
     override fun getCount(): Int {
         return main.listActive.size

@@ -257,7 +257,7 @@ class Enrollment : AppCompatActivity() {
         infoDocument.ip = ip
         infoDocument.identidad
         infoDocument.idcleinte
-        infoDocument.accion
+        infoDocument.accion = 1
         infoDocument.numerotarjeta = _numerotarjeta
         infoDocument.numerocedula = _numerocedula
         infoDocument.primerapellido = _primerapellido
@@ -280,7 +280,7 @@ class Enrollment : AppCompatActivity() {
         infoDocumentFront.ip = ip
         infoDocumentFront.identidad
         infoDocumentFront.idcleinte
-        infoDocumentFront.accion = 1
+        infoDocumentFront.accion = 2
         infoDocumentFront.estatusoperacion = _statusoperacion
         infoDocumentFront.pathimagen = _pathimagen
 

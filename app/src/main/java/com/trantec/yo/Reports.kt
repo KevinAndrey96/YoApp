@@ -26,7 +26,8 @@ import okhttp3.*
 import org.codehaus.jackson.map.ObjectMapper
 import org.json.JSONObject
 import java.io.IOException
-
+import CustomAdapter
+import android.support.v7.app.AlertDialog
 
 class Reports : AppCompatActivity() {
 
@@ -35,19 +36,25 @@ class Reports : AppCompatActivity() {
     var context: Context? = null
     private var client = OkHttpClient()
     private val mapper = ObjectMapper()
-    var list: ListView? = null
+    //var list: ListView? = null
     var listActive = ArrayList<ListReportActive>()
-    //var adapter: CustomAdapter? = null
+    var adapter: CustomAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reports)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         ReportActive()
-        //list = findViewById(R.id.list);
 
-        //adapter = new ListAdapter(this);
-        //list.setAdapter(adapter);
+        val add = ListReportActive()
+        add.nombre = "Pepe"
+        add.fecha = "Test"
+        add.valor = "50000"
+        listActive.add(add)
+
+        val list = findViewById<ListView>(R.id.list)
+        adapter = CustomAdapter(this)
+        list.adapter = adapter
         //ReportFinish()
     }
     private fun startProgress(){
@@ -255,17 +262,10 @@ class Reports : AppCompatActivity() {
                                                                                     val mapp = jacksonObjectMapper()
                                                                                     val result_report = reportResponse.response!!.dataresponse!!.toLowerCase()
                                                                                     val data_reports: List<ReportDataresponse> = mapp.readValue((result_report))
-                                                                                    Logger.d("bubv"+data_reports)
+                                                                                    Logger.d(""+data_reports)
 
                                                                                     for (item in data_reports) {
-                                                                                        Logger.d("busdvsdv:"+item.nombre)
-                                                                                        val add = ListReportActive()
-                                                                                        add.nombre = item.nombre
-                                                                                        add.fecha = item.fecha
-                                                                                        add.valor = item.valor.toString()
-
-                                                                                        listActive.add(add)
-
+                                                                                        adaptar(item.nombre.toString(),item.fecha.toString(),item.valor.toString())
                                                                                     }
                                                                                 }
                                                                             }
@@ -358,6 +358,17 @@ class Reports : AppCompatActivity() {
         }
     }
 
+
+    fun adaptar(nombre:String, fecha:String, valor:String) {
+        runOnUiThread {
+            val add = ListReportActive()
+            add.nombre = nombre
+            add.fecha = fecha
+            add.valor = valor
+
+            listActive.add(add)
+        }
+    }
     /*private fun ReportFinish() {
         try{
             val formBody = FormBody.Builder()
