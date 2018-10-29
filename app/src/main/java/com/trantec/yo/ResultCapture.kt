@@ -375,7 +375,7 @@ class ResultCapture : AppCompatActivity() {
 
                                                                                                                         val intent = Intent(applicationContext, NoCredit::class.java)
                                                                                                                         startActivity(intent)
-                                                                                                                        finish()
+                                                                                                                        //finish()
 
                                                                                                                         val dialog = PrettyDialog(applicationContext)
                                                                                                                                 .setTitle(getString(R.string.information))

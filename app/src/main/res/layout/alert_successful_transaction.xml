@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/fondotono2"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -11,12 +13,32 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
+        <ImageButton
+            android:id="@+id/btnexitoclose"
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="95dp"
+            android:layout_marginTop="194dp"
+            android:background="@drawable/img7"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="105dp"
+            tools:layout_editor_absoluteY="201dp" />
+
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="La transacción se ha completado con exito" />
+            android:layout_marginTop="89dp"
+            android:text="¡Transacción exitosa!"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="81dp" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

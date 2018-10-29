@@ -68,7 +68,7 @@ class CaptureDocumentFront : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         var results_biometric = ""
         val bitmap: Bitmap
-        val gson = Gson()
+        //val gson = Gson()
         try {
             if (requestCode == MY_REQUEST_CODE_LISENCE && resultCode == Activity.RESULT_OK) {
                 results_biometric = data!!.extras!!.getString("License")
@@ -83,7 +83,7 @@ class CaptureDocumentFront : AppCompatActivity() {
                 startActivity(intent)
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
-                bitmap = data?.getParcelableExtra("Infofacechip")
+                bitmap = data.getParcelableExtra("Infofacechip")
                 bitmap.height
             }
             Log.d("TAG", results_biometric)

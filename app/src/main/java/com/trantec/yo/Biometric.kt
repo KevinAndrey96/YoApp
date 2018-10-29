@@ -64,8 +64,8 @@ class Biometric : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         var results_biometric = ""
-        val bitmap: Bitmap
-        val gson = Gson()
+        //val bitmap: Bitmap
+        //val gson = Gson()
         try {
             if (requestCode == MY_REQUEST_CODE_LISENCE && resultCode == Activity.RESULT_OK) {
                 results_biometric = data!!.extras!!.getString("License")
