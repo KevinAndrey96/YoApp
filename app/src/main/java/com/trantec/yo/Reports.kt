@@ -36,7 +36,6 @@ class Reports : AppCompatActivity() {
     var context: Context? = null
     private var client = OkHttpClient()
     private val mapper = ObjectMapper()
-    //var list: ListView? = null
     var listActive = ArrayList<ListReportActive>()
     var adapter: CustomAdapter? = null
 
@@ -52,11 +51,11 @@ class Reports : AppCompatActivity() {
         add.valor = "50000"
         listActive.add(add)
 
-        val list = findViewById<ListView>(R.id.list)
-        adapter = CustomAdapter(this)
-        list.adapter = adapter
+
+
         //ReportFinish()
     }
+
     private fun startProgress(){
         try{
             val builder = MaterialDialog.Builder(context!!).title(R.string.progress_dialog)
@@ -367,6 +366,10 @@ class Reports : AppCompatActivity() {
             add.valor = valor
 
             listActive.add(add)
+
+            val list = findViewById<ListView>(R.id.list)
+            adapter = CustomAdapter(this)
+            list.adapter = adapter
         }
     }
     /*private fun ReportFinish() {
