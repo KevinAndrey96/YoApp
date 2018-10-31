@@ -114,8 +114,7 @@
         <activity
             android:name=".Reports"
             android:label="Reportes" />
-        <activity android:name=".Enrollment"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Enrollment" />
         <activity android:name=".ResultCapture" />
         <activity android:name=".CaptureDocumentFront" />
         <activity android:name=".CaptureDocumentReverse" />
