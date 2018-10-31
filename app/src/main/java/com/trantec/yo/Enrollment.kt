@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
@@ -22,6 +23,8 @@ import com.example.docbytte.helper.Util
 import com.example.docbytte.ui.CBackDocument
 import com.example.docbytte.ui.CFrontDocument
 import com.example.docbytte.ui.FrontDocPassport
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
 import com.microblink.activity.BaseScanActivity
@@ -34,6 +37,7 @@ import org.json.JSONException
 
 import java.util.*
 import com.orhanobut.logger.Logger
+import com.yopresto.app.yoprestoapp.dto.MapDataresponse
 
 
 class Enrollment : AppCompatActivity() {
@@ -169,14 +173,25 @@ class Enrollment : AppCompatActivity() {
 
                     cedulafront.setBackgroundResource(R.drawable.rounded_button2)
 
-                    Toast.makeText(this, "Escaneo exitoso", Toast.LENGTH_SHORT)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Atencion")
+                    builder.setMessage("Escaneo exitoso")
+                    builder.setPositiveButton("OK", null)
+                    builder.create()
+                    builder.show()
                 }
 
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
-                Toast.makeText(this, "Intentelo de nuevo", Toast.LENGTH_LONG)
 
-            //RECONOCIMIENTO FACIAL
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Atencion")
+                builder.setMessage("Intentelo de nuevo")
+                builder.setPositiveButton("OK", null)
+                builder.create()
+                builder.show()
+
+                //RECONOCIMIENTO FACIAL
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_OK) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
                 val properties = gson.fromJson(results_biometric, Properties::class.java)
@@ -187,23 +202,55 @@ class Enrollment : AppCompatActivity() {
                 reconocimientofacial.setEnabled(false)
 
                 reconocimientofacial.setBackgroundResource(R.drawable.rounded_button2)
-                Toast.makeText(this, "Escaneo exitoso", Toast.LENGTH_SHORT)
+
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Atencion")
+                builder.setMessage("Escaneo exitoso")
+                builder.setPositiveButton("OK", null)
+                builder.create()
+                builder.show()
 
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
-                Toast.makeText(this, "Intentelo de nuevo", Toast.LENGTH_LONG)
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Atencion")
+                builder.setMessage("Intentelo de nuevo")
+                builder.setPositiveButton("OK", null)
+                builder.create()
+                builder.show()
 
-            //HUELLAS
+                //HUELLAS
             } else if (requestCode == MY_REQUEST_CODE_BIOMETRIC && resultCode == BaseScanActivity.RESULT_OK) {//
                 results_biometric = data?.extras?.getString("InfoBiometric")!!
+                Log.d("Huellas", results_biometric)
 
                 val escaner_huella = findViewById<Button>(R.id.button2)
                 escaner_huella.setEnabled(false)
 
                 escaner_huella.setBackgroundResource(R.drawable.rounded_button2)
-                Toast.makeText(this, "Escaneo exitoso", Toast.LENGTH_SHORT)
 
-            //CEDULA REVERSO
+                if (JSONUtils.isJSONValid(results_biometric)) {
+                    val scanner_huella: ScannerHuellas
+                    val res_ = results_biometric.toLowerCase()
+
+                    scanner_huella =  mapper.readValue<ScannerHuellas>(res_, ScannerHuellas::class.java)
+                    Log.d("Huellasqqqq", ""+scanner_huella)
+                    val mapp = jacksonObjectMapper()
+                    val huellas: List<Fingers> = mapp.readValue((scanner_huella.fingerprintsobjects).toString())
+
+                    for (item in huellas) {
+
+                    }
+                }
+
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Atencion")
+                builder.setMessage("Escaneo exitoso")
+                builder.setPositiveButton("OK", null)
+                builder.create()
+                builder.show()
+
+                //CEDULA REVERSO
             }else if (requestCode == MY_REQUEST_CODE_BACK && resultCode == BaseScanActivity.RESULT_OK) {//back del documento colombiano
                 results_biometric = data?.extras?.getString("InfoBackDoc")!!
 
@@ -233,7 +280,13 @@ class Enrollment : AppCompatActivity() {
                     cedulaback.setEnabled(false)
 
                     cedulaback.setBackgroundResource(R.drawable.rounded_button2)
-                    Toast.makeText(this, "Escaneo exitoso", Toast.LENGTH_SHORT)
+
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Atencion")
+                    builder.setMessage("Escaneo exitoso")
+                    builder.setPositiveButton("OK", null)
+                    builder.create()
+                    builder.show()
                 }
             }
 
