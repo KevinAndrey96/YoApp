@@ -12,5 +12,6 @@ class ReportDataresponse : Serializable{
     var movimiento: String? = null
     var utilizacion: Double? = null
     var valor: Double? = null
-
+    var cedula: Int? = null
+    var idaliado: Int? = null
 }

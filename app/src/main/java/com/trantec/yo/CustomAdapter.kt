@@ -37,6 +37,7 @@ class CustomAdapter internal constructor(internal var main: Reports) : BaseAdapt
         var fecha: TextView? = null
         var nombre: TextView? = null
         var valor: TextView? = null
+        var nombre_persona: TextView? = null
     }
 
    /* private var mcontext: Context? = null
@@ -57,6 +58,7 @@ class CustomAdapter internal constructor(internal var main: Reports) : BaseAdapt
             holder.fecha = convertView!!.findViewById(R.id.fecha) as TextView
             holder.nombre = convertView.findViewById(R.id.nombre) as TextView
             holder.valor = convertView.findViewById(R.id.valor) as TextView
+            holder.nombre_persona = convertView.findViewById(R.id.name) as TextView
 
             convertView.tag = holder
         } else {
@@ -67,6 +69,7 @@ class CustomAdapter internal constructor(internal var main: Reports) : BaseAdapt
         holder.nombre!!.setText(this.main.listActive.get(position).nombre)
         holder.fecha!!.setText(this.main.listActive.get(position).fecha)
         holder.valor!!.setText(this.main.listActive.get(position).valor)
+        holder.nombre_persona!!.setText(this.main.listActive.get(position).nombre_persona)
 
         return convertView
     }

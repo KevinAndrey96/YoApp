@@ -8,4 +8,5 @@ class ListReportActive : Serializable {
     var nombre: String? = null
     var fecha: String? = null
     var valor: String? = null
+    var nombre_persona: String? = null
 }

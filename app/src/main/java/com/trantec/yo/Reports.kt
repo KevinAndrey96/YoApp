@@ -243,21 +243,23 @@ class Reports : AppCompatActivity() {
                                                                             val responseMapString = response.body()!!.string()
                                                                             val reportResponse: ReportResponse
 
-                                                                            Logger.d("Response Map")
                                                                             Logger.d(responseMapString)
 
                                                                             if (JSONUtils.isJSONValid(responseMapString)) {
                                                                                 reportResponse =  mapper.readValue<ReportResponse>(responseMapString, ReportResponse::class.java)
                                                                                 Logger.d(reportResponse)
                                                                                 if(reportResponse.status == true && reportResponse.response!!.dataresponse != null){
-                                                                                    Logger.d(reportResponse.status)
                                                                                     val mapp = jacksonObjectMapper()
                                                                                     val result_report = reportResponse.response!!.dataresponse!!.toLowerCase()
                                                                                     val data_reports: List<ReportDataresponse> = mapp.readValue((result_report))
-                                                                                    Logger.d(""+data_reports)
 
                                                                                     for (item in data_reports) {
-                                                                                        adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString())
+                                                                                        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                                                                                        val cedula = prefs.getString("cuenta", "")
+
+                                                                                        if(cedula == item.cedula.toString()){
+                                                                                            adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString(), item.nombre.toString())
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             }
@@ -351,12 +353,13 @@ class Reports : AppCompatActivity() {
     }
 
 
-    fun adaptar(nombre:String, fecha:String, valor:String) {
+    fun adaptar(nombre:String, fecha:String, valor:String, name:String) {
         runOnUiThread {
             val add = ListReportActive()
             add.nombre = nombre.toUpperCase()
             add.fecha = fecha
             add.valor = valor
+            add.nombre_persona = name.toUpperCase()
 
             listActive.add(add)
 
