@@ -104,7 +104,8 @@ class Reports : AppCompatActivity() {
                             stopProgess()
                             PrettyDialog(this@Reports)
                                     .setTitle("Información")
-                                    .setMessage("Error. " + e.message)
+                                    //.setMessage("Error. " + e.message)
+                                    .setMessage("Verifique su conexión a internet e intentelo de nuevo")
                                     .show()
                         }
                     }

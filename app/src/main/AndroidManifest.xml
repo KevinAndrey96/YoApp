@@ -29,7 +29,9 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <permission
+        android:name="com.trantec.yo.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
     <!-- Define new permissions -->
     <permission
         android:name="com.biometric.usosdkbytte.NEW_READ_LKMS_LICENSE_PROVIDER"
