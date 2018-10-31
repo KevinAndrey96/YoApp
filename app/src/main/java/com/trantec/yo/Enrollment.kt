@@ -318,14 +318,14 @@ class Enrollment : AppCompatActivity() {
                     QR2 = parts[1]
                     //QR3 = parts[2]
                     YoPrestoQR = parts[3]
-
+/*
                     Toast.makeText(this, "1."+DocumentoQR, Toast.LENGTH_LONG).show()
                     Toast.makeText(this, "2."+QR1, Toast.LENGTH_LONG).show()
                     Toast.makeText(this, "3."+QR2, Toast.LENGTH_LONG).show()
                     Toast.makeText(this, "4."+QR3, Toast.LENGTH_LONG).show()
                     Toast.makeText(this, "5."+YoPrestoQR, Toast.LENGTH_LONG).show()
 
-
+*/
 
                     val scannQr = findViewById<Button>(R.id.scannQr)
                     scannQr.setEnabled(false)
