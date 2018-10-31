@@ -177,26 +177,42 @@ class Enrollment : AppCompatActivity() {
 
                     val cedulafront = findViewById<Button>(R.id.btnCedula)
                     cedulafront.setEnabled(false)
+
+                    cedulafront.setBackgroundResource(R.drawable.rounded_button2)
+
+                    Toast.makeText(this, "Escaneo exitoso", Toast.LENGTH_SHORT)
                 }
 
-                Log.d("TAG_", results_biometric)
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
+                Toast.makeText(this, "Intentelo de nuevo", Toast.LENGTH_LONG)
 
             //RECONOCIMIENTO FACIAL
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_OK) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
                 val properties = gson.fromJson(results_biometric, Properties::class.java)
+
+                Log.d("ReconocimientoFacial", results_biometric)
+
                 val reconocimientofacial = findViewById<Button>(R.id.button4)
                 reconocimientofacial.setEnabled(false)
+
+                reconocimientofacial.setBackgroundResource(R.drawable.rounded_button2)
+                Toast.makeText(this, "Escaneo exitoso", Toast.LENGTH_SHORT)
+
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
+                Toast.makeText(this, "Intentelo de nuevo", Toast.LENGTH_LONG)
 
             //HUELLAS
             } else if (requestCode == MY_REQUEST_CODE_BIOMETRIC && resultCode == BaseScanActivity.RESULT_OK) {//
                 results_biometric = data?.extras?.getString("InfoBiometric")!!
+
                 val escaner_huella = findViewById<Button>(R.id.button2)
                 escaner_huella.setEnabled(false)
+
+                escaner_huella.setBackgroundResource(R.drawable.rounded_button2)
+                Toast.makeText(this, "Escaneo exitoso", Toast.LENGTH_SHORT)
 
             //CEDULA REVERSO
             }else if (requestCode == MY_REQUEST_CODE_BACK && resultCode == BaseScanActivity.RESULT_OK) {//back del documento colombiano
@@ -226,6 +242,9 @@ class Enrollment : AppCompatActivity() {
 
                     val cedulaback = findViewById<Button>(R.id.button7)
                     cedulaback.setEnabled(false)
+
+                    cedulaback.setBackgroundResource(R.drawable.rounded_button2)
+                    Toast.makeText(this, "Escaneo exitoso", Toast.LENGTH_SHORT)
                 }
             }
 
