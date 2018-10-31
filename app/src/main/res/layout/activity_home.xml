@@ -137,4 +137,15 @@
         android:background="@drawable/celulares"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing" />
+
+    <Button
+        android:id="@+id/BtnToggle"
+        android:layout_width="42dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/transparent"
+        android:drawableStart="@android:drawable/ic_menu_sort_by_size" />
 </RelativeLayout>
