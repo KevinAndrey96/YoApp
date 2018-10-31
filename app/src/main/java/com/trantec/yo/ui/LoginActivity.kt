@@ -288,6 +288,7 @@ class LoginActivity : AppCompatActivity() {
                                                                                                                             editor.putString("apellido", loginDataresponse.primerapellido)
                                                                                                                             editor.putString("saldo", loginDataresponse.saldo.toString())
                                                                                                                             editor.putString("cuenta", loginDataresponse.cuenta)
+                                                                                                                            editor.putString("identidad", loginDataresponse.identidad.toString())
                                                                                                                             editor.commit()
 
                                                                                                                             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))

@@ -48,7 +48,7 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stores)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
@@ -105,7 +105,8 @@ class Stores : AppCompatActivity(), OnMapReadyCallback {
                             stopProgess()
                             PrettyDialog(this@Stores)
                                     .setTitle("Información")
-                                    .setMessage("Error. " + e.message)
+                                    //.setMessage("Error. ggggg" + e.message)
+                                    .setMessage("Por favor verifique su conexión a internet e intentelo de nuevo")
                                     .show()
                         }
                     }

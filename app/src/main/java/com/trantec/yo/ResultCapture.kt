@@ -32,6 +32,10 @@ import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.R.attr.minDate
+import android.R.attr.maxDate
+import android.content.Context
+
 
 class ResultCapture : AppCompatActivity() {
 
@@ -48,7 +52,8 @@ class ResultCapture : AppCompatActivity() {
     var searchDataresponse: SearchDataresponse? = null
     var myCalendar = Calendar.getInstance()
     var dialog: SpotsDialog? = null
-
+    var identidad: String? = null
+    var idusuario: String? = null
     private var progressDialog: MaterialDialog? ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +71,11 @@ class ResultCapture : AppCompatActivity() {
 
         sessionString = SessionManager.getString(SessionKeys.USER_SESSION.key, null)
         //yoprestoAliado = activity!!.applicationContext as YoPrestoApp?
-        loginDataresponse = mapper.readValue<LoginDataresponse>(sessionString, LoginDataresponse::class.java)
+        //loginDataresponse = mapper.readValue<LoginDataresponse>(sessionString, LoginDataresponse::class.java)
+
+        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+        idusuario = prefs.getString("idusuario", "")
+        identidad = prefs.getString("identidad", "")
 
         getAvailableAmountForClient()
 
@@ -123,13 +132,18 @@ class ResultCapture : AppCompatActivity() {
 
         }
 
+        /*val pickerDialog = DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH))
+        //pickerDialog.datePicker.maxDate = maxDate.toLong()
+        pickerDialog.datePicker.minDate = myCalendar.getTimeInMillis()
+*/
+
+
 
         editTextQuotaDate.setOnFocusChangeListener { v, hasFocus ->
 
             if(hasFocus) {
-                DatePickerDialog(this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+                //pickerDialog.show()
+                DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show()
             }
         }
     }
@@ -284,7 +298,7 @@ class ResultCapture : AppCompatActivity() {
 
                                                                     searchDatos.accion = "1"
                                                                     searchDatos.ip = ipResponse.ip
-                                                                    searchDatos.idusuario = loginDataresponse!!.idusuario.toString()
+                                                                    searchDatos.idusuario = idusuario
                                                                     searchDatos.documento = documento
 
 
@@ -408,10 +422,12 @@ class ResultCapture : AppCompatActivity() {
                                                                                                                 }
                                                                                                             }else{
                                                                                                                 try{
+                                                                                                                    startActivity(Intent(this@ResultCapture, HomeActivity::class.java))
                                                                                                                     val dialog = PrettyDialog(applicationContext)
                                                                                                                             .setTitle(getString(R.string.information))
                                                                                                                             .setMessage("El usuario no tiene cupo disponible para retiro.")
                                                                                                                             .setAnimationEnabled(true)
+
 
 
 
@@ -1051,9 +1067,10 @@ class ResultCapture : AppCompatActivity() {
 
                                                                     makeUseTransactionDatos.accion = "3"
                                                                     makeUseTransactionDatos.ip = ipResponse.ip
-                                                                    makeUseTransactionDatos.idusuario = loginDataresponse!!.idusuario.toString()
+                                                                    makeUseTransactionDatos.idusuario = idusuario
+                                                                    makeUseTransactionDatos.idusuario = idusuario
                                                                     makeUseTransactionDatos.documento = documento
-                                                                    makeUseTransactionDatos.entidadorigen = loginDataresponse!!.identidad.toString()
+                                                                    makeUseTransactionDatos.entidadorigen = identidad
                                                                     //makeUseTransactionDatos.entidadorigen = "10003"
                                                                     makeUseTransactionDatos.entidaddestino = searchDataresponse!!.identidad.toString()
                                                                     //makeUseTransactionDatos.entidaddestino = "10266"
