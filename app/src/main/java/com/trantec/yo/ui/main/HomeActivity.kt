@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
         val name = prefs.getString("nombre", "")
 
-        if (name != "" || name == null){
+        if (name != ""){
             val lastname = prefs.getString("apellido", "")
             nombre = name +" "+ lastname
             cuenta = prefs.getString("cuenta", "")
@@ -76,6 +76,8 @@ class HomeActivity : AppCompatActivity() {
         var item5 = PrimaryDrawerItem().withIdentifier(5).withName("Reportes")
         var item6 = PrimaryDrawerItem().withIdentifier(6).withName("Cerrar sesion")
 
+        DrawerBuilder().withActivity(this).build()
+
         val headerResult = AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.color.colorAccent)
@@ -84,7 +86,7 @@ class HomeActivity : AppCompatActivity() {
                 )
                 .build()
 
-        val result = DrawerBuilder()
+        var result = DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withDisplayBelowStatusBar(true)
@@ -135,6 +137,8 @@ class HomeActivity : AppCompatActivity() {
                 }
                 .build()
 
+
+
         utilization.setOnClickListener {
             val intent = Intent(this, Utilization::class.java)
             startActivity(intent)
@@ -161,7 +165,8 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        DrawerBuilder().withActivity(this).build()
+
+
 
 
         //Permisos en runtime
