@@ -254,8 +254,12 @@ class Reports : AppCompatActivity() {
                                                                                     val data_reports: List<ReportDataresponse> = mapp.readValue((result_report))
 
                                                                                     for (item in data_reports) {
+                                                                                        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                                                                                        val cedula = prefs.getString("cuenta", "")
 
-                                                                                        adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString())
+                                                                                        if(cedula == item.cedula.toString()){
+                                                                                            adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString(), item.nombre.toString())
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             }
@@ -349,12 +353,13 @@ class Reports : AppCompatActivity() {
     }
 
 
-    fun adaptar(nombre:String, fecha:String, valor:String) {
+    fun adaptar(nombre:String, fecha:String, valor:String, name:String) {
         runOnUiThread {
             val add = ListReportActive()
             add.nombre = nombre.toUpperCase()
             add.fecha = fecha
             add.valor = valor
+            add.nombre_persona = name.toUpperCase()
 
             listActive.add(add)
 
