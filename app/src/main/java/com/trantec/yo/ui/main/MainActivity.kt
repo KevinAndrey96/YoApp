@@ -61,6 +61,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val toggle = findViewById<Button>(R.id.btnToggleMain)
+
+        toggle.setOnClickListener {
+            result!!.openDrawer()
+        }
+
         DrawerBuilder().withActivity(this).build()
 
         val headerResult = AccountHeaderBuilder()
