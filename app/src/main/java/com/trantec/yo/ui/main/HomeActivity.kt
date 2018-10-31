@@ -67,6 +67,7 @@ class HomeActivity : AppCompatActivity() {
         val enrolamiento = findViewById<Button>(R.id.BtnEnrollment)
         val tiendas = findViewById<Button>(R.id.BtnMyStores)
         val reportes = findViewById<Button>(R.id.BtnReports)
+        val toggle = findViewById<Button>(R.id.BtnToggle)
 
         var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Inicio")
         var item2 = PrimaryDrawerItem().withIdentifier(2).withName("Enrolamiento")
@@ -140,8 +141,11 @@ class HomeActivity : AppCompatActivity() {
         }
 
         tiendas.setOnClickListener {
-            //val intent = Intent(this, Stores::class.java)
-            //startActivity(intent)
+            val intent = Intent(this, Stores::class.java)
+            startActivity(intent)
+
+        }
+        toggle.setOnClickListener {
             result.openDrawer()
         }
 
