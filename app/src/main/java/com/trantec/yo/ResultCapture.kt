@@ -132,18 +132,18 @@ class ResultCapture : AppCompatActivity() {
 
         }
 
-        /*val pickerDialog = DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH))
+        val pickerDialog = DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH))
         //pickerDialog.datePicker.maxDate = maxDate.toLong()
         pickerDialog.datePicker.minDate = myCalendar.getTimeInMillis()
-*/
+
 
 
 
         editTextQuotaDate.setOnFocusChangeListener { v, hasFocus ->
 
             if(hasFocus) {
-                //pickerDialog.show()
-                DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+                pickerDialog.show()
+                //DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show()
             }
         }
     }
@@ -422,7 +422,7 @@ class ResultCapture : AppCompatActivity() {
                                                                                                                 }
                                                                                                             }else{
                                                                                                                 try{
-                                                                                                                    startActivity(Intent(this@ResultCapture, HomeActivity::class.java))
+                                                                                                                    startActivity(Intent(this@ResultCapture, NoCredit::class.java))
                                                                                                                     val dialog = PrettyDialog(applicationContext)
                                                                                                                             .setTitle(getString(R.string.information))
                                                                                                                             .setMessage("El usuario no tiene cupo disponible para retiro.")
@@ -774,8 +774,8 @@ class ResultCapture : AppCompatActivity() {
                                                                     generateOTPDatos.digits = true
                                                                     generateOTPDatos.clave = "asdfsaf"
                                                                     generateOTPDatos.ip = ipResponse.ip
-                                                                    //generateOTPDatos.movil = celular
-                                                                    generateOTPDatos.movil = "3185563342"
+                                                                    generateOTPDatos.movil = celular
+                                                                    //generateOTPDatos.movil = "3185563342"
                                                                     generateOTPDatos.mensaje = "Estimado Cliente: Para realizar el proceso de utilización de tu préstamo, por favor confirma al aliado la siguiente OTP:"
 
 

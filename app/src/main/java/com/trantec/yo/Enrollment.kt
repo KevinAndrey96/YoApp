@@ -76,6 +76,11 @@ class Enrollment : AppCompatActivity() {
 
     private val mapper = ObjectMapper()
 
+    var DocumentoQR: String? = null
+    var YoPrestoQR: String? = null
+    var QR1: String? = null
+    var QR2: String? = null
+    var QR3: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -174,7 +179,7 @@ class Enrollment : AppCompatActivity() {
                     cedulafront.setBackgroundResource(R.drawable.rounded_button2)
 
                     val builder = AlertDialog.Builder(this)
-                    builder.setTitle("Atencion")
+                    builder.setTitle("Atención")
                     builder.setMessage("Escaneo exitoso")
                     builder.setPositiveButton("OK", null)
                     builder.create()
@@ -185,8 +190,8 @@ class Enrollment : AppCompatActivity() {
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
 
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Atencion")
-                builder.setMessage("Intentelo de nuevo")
+                builder.setTitle("Atención")
+                builder.setMessage("Inténtelo de nuevo")
                 builder.setPositiveButton("OK", null)
                 builder.create()
                 builder.show()
@@ -204,7 +209,7 @@ class Enrollment : AppCompatActivity() {
                 reconocimientofacial.setBackgroundResource(R.drawable.rounded_button2)
 
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Atencion")
+                builder.setTitle("Atención")
                 builder.setMessage("Escaneo exitoso")
                 builder.setPositiveButton("OK", null)
                 builder.create()
@@ -213,8 +218,8 @@ class Enrollment : AppCompatActivity() {
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Atencion")
-                builder.setMessage("Intentelo de nuevo")
+                builder.setTitle("Atención")
+                builder.setMessage("Inténtelo de nuevo")
                 builder.setPositiveButton("OK", null)
                 builder.create()
                 builder.show()
@@ -244,7 +249,7 @@ class Enrollment : AppCompatActivity() {
                 }
 
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Atencion")
+                builder.setTitle("Atención")
                 builder.setMessage("Escaneo exitoso")
                 builder.setPositiveButton("OK", null)
                 builder.create()
@@ -282,7 +287,7 @@ class Enrollment : AppCompatActivity() {
                     cedulaback.setBackgroundResource(R.drawable.rounded_button2)
 
                     val builder = AlertDialog.Builder(this)
-                    builder.setTitle("Atencion")
+                    builder.setTitle("Atención")
                     builder.setMessage("Escaneo exitoso")
                     builder.setPositiveButton("OK", null)
                     builder.create()
@@ -302,12 +307,31 @@ class Enrollment : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.result_not_found), Toast.LENGTH_LONG).show()
             } else {
                 try {
-                    Toast.makeText(this, result.contents, Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this, result.contents, Toast.LENGTH_LONG).show()
+
+
+                    val string = result.contents
+                    val parts = string.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    DocumentoQR = parts[0]
+                    //val parts2 = parts[1].split("|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    QR1 = parts[1]
+                    QR2 = parts[1]
+                    //QR3 = parts[2]
+                    YoPrestoQR = parts[3]
+
+                    Toast.makeText(this, "1."+DocumentoQR, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "2."+QR1, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "3."+QR2, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "4."+QR3, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "5."+YoPrestoQR, Toast.LENGTH_LONG).show()
+
+
+
                     val scannQr = findViewById<Button>(R.id.scannQr)
                     scannQr.setEnabled(false)
                 } catch (e: JSONException) {
                     e.printStackTrace()
-                    Toast.makeText(this, "Hubo un error, por favor intentelo de nuevo", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Hubo un error, por favor inténtelo de nuevo", Toast.LENGTH_LONG).show()
                 }
             }
         } else {
