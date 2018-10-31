@@ -242,20 +242,18 @@ class Reports : AppCompatActivity() {
                                                                             val responseMapString = response.body()!!.string()
                                                                             val reportResponse: ReportResponse
 
-                                                                            Logger.d("Response Map")
                                                                             Logger.d(responseMapString)
 
                                                                             if (JSONUtils.isJSONValid(responseMapString)) {
                                                                                 reportResponse =  mapper.readValue<ReportResponse>(responseMapString, ReportResponse::class.java)
                                                                                 Logger.d(reportResponse)
                                                                                 if(reportResponse.status == true && reportResponse.response!!.dataresponse != null){
-                                                                                    Logger.d(reportResponse.status)
                                                                                     val mapp = jacksonObjectMapper()
                                                                                     val result_report = reportResponse.response!!.dataresponse!!.toLowerCase()
                                                                                     val data_reports: List<ReportDataresponse> = mapp.readValue((result_report))
-                                                                                    Logger.d(""+data_reports)
 
                                                                                     for (item in data_reports) {
+
                                                                                         adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString())
                                                                                     }
                                                                                 }
