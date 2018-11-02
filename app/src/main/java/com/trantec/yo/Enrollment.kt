@@ -90,7 +90,9 @@ class Enrollment : AppCompatActivity() {
 
         val intent = Intent(this@Enrollment, BytteLicense::class.java)
         intent.putExtra("URLPETICION", URLPETICION)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivityForResult(intent, MY_REQUEST_CODE_LISENCE)
+
 
         val btnScan = findViewById<Button>(R.id.scannQr)
         btnScan!!.setOnClickListener { performAction() }
