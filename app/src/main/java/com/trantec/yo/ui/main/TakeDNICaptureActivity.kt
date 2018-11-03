@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.orhanobut.logger.Logger
 import com.trantec.yo.R
+import com.trantec.yo.ResultCapture
 import com.trantec.yo.constants.AppConstants
 
 class TakeDNICaptureActivity : AppCompatActivity() {
@@ -23,7 +24,7 @@ class TakeDNICaptureActivity : AppCompatActivity() {
 
 
         integrator.setDesiredBarcodeFormats(IntentIntegrator.PDF_417)
-        integrator.setPrompt("Inicie la captura del documento")
+        integrator.setPrompt("Yo Presto - Escaneando documento")
         integrator.setOrientationLocked(false)
         integrator.setBeepEnabled(true)
         integrator.initiateScan()
@@ -39,7 +40,10 @@ class TakeDNICaptureActivity : AppCompatActivity() {
         finish()
     }
 
+fun Chao(cedula:String)
+{
 
+}
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode != initScanRequestCode && requestCode != IntentIntegrator.REQUEST_CODE) {
             // This is important, otherwise the result will not be passed to the fragment
@@ -70,17 +74,22 @@ class TakeDNICaptureActivity : AppCompatActivity() {
             Logger.d("MainActivity", "Scanned")
             //Toast.makeText(this@TakeDNICaptureActivity, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
             val codigo = result.contents
-
             val cedula = decodePdf417(codigo)
-
             Logger.d(cedula)
-
+/*
             val intentResult = Intent()
             val bundle = Bundle()
             bundle.putLong(AppConstants.DNI_OBJECT_NAME, cedula!!)
             intentResult.putExtras(bundle)
-
             setResult(Activity.RESULT_OK, intentResult)
+*/
+            ////
+            //Toast.makeText(applicationContext, ""+cedula, Toast.LENGTH_LONG)
+            val intent2 = Intent(this, ResultCapture::class.java)
+
+            intent2.putExtra(AppConstants.DNI_OBJECT_NAME, ""+cedula)
+            startActivity(intent2)
+            ////
             finish()
         }
     }

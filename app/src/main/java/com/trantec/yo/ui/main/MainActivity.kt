@@ -1,206 +1,116 @@
 package com.trantec.yo.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import com.orhanobut.logger.Logger
 import com.trantec.yo.R
 import com.trantec.yo.enumeration.SessionKeys
-import com.trantec.yo.ui.LoginActivity
-import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
 import hundredthirtythree.sessionmanager.SessionManager
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import libs.mjn.prettydialog.PrettyDialog
-//import net.hockeyapp.android.CrashManager
-//import net.hockeyapp.android.UpdateManager
-import android.widget.TextView
-import com.trantec.yo.Enrollment
+import com.mikepenz.materialdrawer.AccountHeader
+import com.mikepenz.materialdrawer.AccountHeaderBuilder
+import com.mikepenz.materialdrawer.DrawerBuilder
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import com.trantec.yo.Stores
 import com.trantec.yo.dto.LoginDataresponse
+import com.trantec.yo.ui.LoginActivity
+import kotlinx.android.synthetic.main.app_bar_main.*
 import org.codehaus.jackson.map.ObjectMapper
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.materialdrawer.model.SectionDrawerItem
+import android.widget.Toast
+import com.trantec.yo.R.id.toolbar
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private var context: MainActivity? = null
+
+
+
+class MainActivity : AppCompatActivity() {
+
     var user: LoginDataresponse? = null
     val mapper = ObjectMapper()
-
+    var result: Drawer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)//Primera Vista
+        setContentView(R.layout.activity_main)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
-        setSupportActionBar(toolbar)
+        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+        val name = prefs.getString("nombre", "")
 
-        val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        nav_view.setNavigationItemSelectedListener(this)
-
-        Logger.d(SessionManager.getString(SessionKeys.USER_SESSION.key, null))
-
-        context = this
-
-        val fragment = TakeDNIPictureFragment()
-        //val fragment = HomeActivity()
-        val tx = supportFragmentManager.beginTransaction()
-        tx.replace(R.id.main_fragment, fragment)
-        tx.addToBackStack("WelcomeFrg").commit()
-
-        user = mapper.readValue(SessionManager.getString(SessionKeys.USER_SESSION.key, null), LoginDataresponse::class.java)
-
-
-    }
-    override fun onResume() {
-        super.onResume()
-        //checkForCrashes()
-        //checkForUpdates()
-
-
-            if(user != null){
-
-                val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
-                navigationView.setNavigationItemSelectedListener(this)
-                val txtProfileName = navigationView.getHeaderView(0).findViewById(R.id.textViewName) as TextView
-                val txtProfileDetail = navigationView.getHeaderView(0).findViewById(R.id.textViewDetail) as TextView
-                txtProfileName.text = user!!.primernombre + " " +  user!!.primerapellido
-                txtProfileDetail.text = user!!.cuenta
-            }
-
-    }
-    /*
-    private fun checkForCrashes() {
-        CrashManager.register(this)
-    }
-    private fun checkForUpdates() {
-        // Remove this for store builds!
-        UpdateManager.register(this)
-    }
-    private fun unregisterManagers() {
-        UpdateManager.unregister()
-    }
-    */
-    public override fun onDestroy() {
-        super.onDestroy()
-        //unregisterManagers()
-    }
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
+        if (name != "" || name == null){
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
         }
-    }
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+
+        val tiendas = findViewById<Button>(R.id.BtnMystores)
+
+        tiendas.setOnClickListener {
+            val intent = Intent(this, Stores::class.java)
+            startActivity(intent)
         }
-    }
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_use_transaction -> {
-                val fragment = TakeDNIPictureFragment()
-                val tx = supportFragmentManager.beginTransaction()
-                tx.replace(R.id.main_fragment, fragment)
-                tx.addToBackStack("TakeDNIPicFrg").commit()
-            }
-            R.id.nav_stores -> {
-                val intent = Intent(this, Stores::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_enrollment -> {
-                val intent = Intent(this, Enrollment::class.java)
-                startActivity(intent)
-            }
 
-            R.id.nav_home -> {
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-            }
+        val toggle = findViewById<Button>(R.id.btnToggleMain)
 
-            R.id.nav_close_session -> {
+        toggle.setOnClickListener {
+            result!!.openDrawer()
+        }
 
+        DrawerBuilder().withActivity(this).build()
 
-                try{
-                    val dialog = PrettyDialog(context)
-                            .setTitle(getString(R.string.information))
-                            .setMessage(getString(R.string.close_session_ask))
-                            .setAnimationEnabled(true)
+        val headerResult = AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.color.colorAccent)
+                .addProfiles(
+                        ProfileDrawerItem().withName("Yo Presto").withEmail("").withIcon((R.drawable.logoyopresto))
+                )
 
+                .build()
 
+        var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Iniciar sesion")
+        var item2 = PrimaryDrawerItem().withIdentifier(2).withName("Mis tiendas")
 
-                    dialog.addButton(
-                                    getString(android.R.string.ok), // button text
-                                    R.color.pdlg_color_white, // button text color
-                                    R.color.pdlg_color_green // button background color
-                            ) // button OnClick listener
-                            {
-                                SessionManager.removeKey(SessionKeys.USER_SESSION.key)
-                                SessionManager.putBoolean(SessionKeys.IS_LOGGED_IN.key, false)
-                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-
-                                finish()
-                            }
-
-                    dialog.addButton(
-                            getString(android.R.string.cancel),
-                            R.color.pdlg_color_white,
-                            R.color.pdlg_color_red
-                    )
-                    {
-                        dialog.dismiss()
+        result = DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withDisplayBelowStatusBar(true)
+                .withTranslucentStatusBar(true)
+                .withActionBarDrawerToggle(true)
+                //.withAccountHeader(headerResult)
+                .addDrawerItems(
+                        item1,
+                        item2
+                )
+                .withOnDrawerItemClickListener { view, position, drawerItem ->
+                    when (drawerItem.identifier) {
+                        item1.identifier -> {
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                        item2.identifier -> {
+                            val intent = Intent(this, Stores::class.java)
+                            startActivity(intent)
+                        }
                     }
-
-                    dialog.show()
-                }catch (ex: Exception){
-                    ex.printStackTrace()
+                    false
                 }
 
+                .build()
 
-            }
-
-
-        }
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
     }
-    fun changeFragment(fragment: Fragment, bundle: Bundle){
 
-        val tx = supportFragmentManager.beginTransaction()
-        fragment.arguments = bundle
-        tx.replace(R.id.main_fragment, fragment)
-        tx.addToBackStack("TakeDNIPicFrg").commit()
-    }
-    companion object {
-        fun getContext(mainActivity: MainActivity): MainActivity? {
-            return mainActivity.context
-        }
-    }
+
 
 
 }

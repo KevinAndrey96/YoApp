@@ -33,6 +33,10 @@ import okhttp3.*
 import org.codehaus.jackson.map.ObjectMapper
 import org.json.JSONObject
 import java.io.IOException
+import android.R.id.edit
+import android.content.SharedPreferences
+import com.trantec.yo.ui.main.HomeActivity
+
 
 /**
  * A login screen that offers login via email/password.
@@ -52,10 +56,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        if(SessionManager.getBoolean(SessionKeys.IS_LOGGED_IN.key, false)){
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-            finish()
-        }
 
         editTextPassword.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -280,10 +280,18 @@ class LoginActivity : AppCompatActivity() {
                                                                                                                     if(loginDataresponse != null){
                                                                                                                         if(loginDataresponse.idusuario != null){
 
-                                                                                                                            SessionManager.putString(SessionKeys.USER_SESSION.key, mapper.writeValueAsString(loginDataresponse))
-                                                                                                                            SessionManager.putBoolean(SessionKeys.IS_LOGGED_IN.key, true)
+                                                                                                                            val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                                                                                                                            val editor = prefs.edit()
+                                                                                                                            editor.putString("ip", ipResponse.ip)
+                                                                                                                            editor.putString("idusuario", loginDataresponse.idusuario.toString())
+                                                                                                                            editor.putString("nombre", loginDataresponse.primernombre)
+                                                                                                                            editor.putString("apellido", loginDataresponse.primerapellido)
+                                                                                                                            editor.putString("saldo", loginDataresponse.saldo.toString())
+                                                                                                                            editor.putString("cuenta", loginDataresponse.cuenta)
+                                                                                                                            editor.putString("identidad", loginDataresponse.identidad.toString())
+                                                                                                                            editor.commit()
 
-                                                                                                                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                                                                                                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                                                                                                                             finish()
                                                                                                                         }else{
 
@@ -296,8 +304,6 @@ class LoginActivity : AppCompatActivity() {
                                                                                                                                             .show()
                                                                                                                                 }
                                                                                                                             }
-
-
                                                                                                                         }
                                                                                                                     }else{
                                                                                                                         mHandler.post{

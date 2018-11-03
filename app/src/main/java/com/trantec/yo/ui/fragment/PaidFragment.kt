@@ -13,12 +13,12 @@ import com.trantec.yo.R
  * A simple [Fragment] subclass.
  *
  */
-class WelcomeFragment : Fragment() {
+class PaidFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false)
+        return inflater.inflate(R.layout.fragment_tab_paid, container, false)
     }
 
 

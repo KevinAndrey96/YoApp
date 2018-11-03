@@ -21,6 +21,5 @@ class LoginDataresponse : Serializable{
     var segundoapellido: String? = null
     var saldo: Double? = null
     var identidad: Int? = null
-
-
+    
 }

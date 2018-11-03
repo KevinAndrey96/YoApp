@@ -41,7 +41,6 @@ import com.afollestad.materialdialogs.MaterialDialog
  */
 class ResultCaptureDNIFragment : Fragment(){
 
-
     private var yoprestoAliado: YoPrestoApp? = null
     private var client = OkHttpClient()
     var mHandler =  Handler(Looper.getMainLooper())
@@ -63,8 +62,7 @@ class ResultCaptureDNIFragment : Fragment(){
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_result_capture_dni, container, false)
     }
-
-
+/*
     var date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
         myCalendar.set(Calendar.YEAR, year)
@@ -72,7 +70,6 @@ class ResultCaptureDNIFragment : Fragment(){
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
         updateLabel()
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -183,19 +180,12 @@ class ResultCaptureDNIFragment : Fragment(){
         }*/
 
     }
-
-
-
-
-
     private fun updateLabel() {
         val myFormat = "yyyy-MM-dd" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
 
         editTextQuotaDate.setText(sdf.format(myCalendar.time))
     }
-
-
     private fun getAvailableAmountForClient(){
 
         try{
@@ -663,9 +653,6 @@ class ResultCaptureDNIFragment : Fragment(){
             ex.printStackTrace()
         }
     }
-
-
-
     fun generateOTP(){
         try{
             val formBody = FormBody.Builder()
@@ -920,14 +907,11 @@ class ResultCaptureDNIFragment : Fragment(){
 
         }
     }
-
-
     fun convertStandardJSONString(datajson: String): String {
         var datajson = datajson
         datajson = datajson.replace("@", "")
         return datajson
     }
-
     private fun makeUseAmount(){
         try{
             val formBody = FormBody.Builder()
@@ -1352,9 +1336,6 @@ class ResultCaptureDNIFragment : Fragment(){
             }
         }
     }
-
-
-
     fun sendSMSSuccessTransaction(){
 
         try{
@@ -1561,8 +1542,6 @@ class ResultCaptureDNIFragment : Fragment(){
             ex.printStackTrace()
         }
     }
-
-
     fun sendPaymentPlanMail(idtransaccion: String){
         try{
             /*val formBody = FormBody.Builder()
@@ -1630,7 +1609,6 @@ class ResultCaptureDNIFragment : Fragment(){
             ex.printStackTrace()
         }
     }
-
     private fun startProgress(){
 
         val builder = MaterialDialog.Builder(context!!).title(R.string.progress_dialog)
@@ -1640,11 +1618,10 @@ class ResultCaptureDNIFragment : Fragment(){
         progressDialog = builder.build()
         progressDialog!!.show()
     }
-
     private fun stopProgess(){
         if(progressDialog != null){
             progressDialog!!.dismiss()
         }
     }
-
+*/
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:largeHeap="true"
     package="com.trantec.yo">
 
     <!-- permissions -->
@@ -28,7 +29,9 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <permission
+        android:name="com.trantec.yo.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
     <!-- Define new permissions -->
     <permission
         android:name="com.biometric.usosdkbytte.NEW_READ_LKMS_LICENSE_PROVIDER"
@@ -61,11 +64,11 @@
         tools:node="remove" />
 
     <application
-        android:name="com.trantec.yo.YoPrestoApp"
+        android:name=".YoPrestoApp"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/icon"
@@ -73,28 +76,23 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="allowBackup">
         <meta-data
-            android:name="net.hockeyapp.android.appIdentifier"
-            android:value="a22fc240470e4094806b6ae404fbf8e2" />
-        <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name="com.trantec.yo.ui.LoginActivity"
-            android:label="@string/app_name">
-
-        </activity>
+            android:name=".ui.LoginActivity"
+            android:label="@string/app_name" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
-            android:name="com.trantec.yo.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.trantec.yo.ui.main.TakeDNICaptureActivity"
+            android:name=".ui.main.TakeDNICaptureActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <!--
@@ -110,17 +108,63 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.trantec.yo.Stores"
+            android:name=".Stores"
             android:label="Mis Tiendas" />
-        <activity android:name="com.trantec.yo.Enrollment"></activity>
         <activity
-            android:name="com.trantec.yo.ui.main.HomeActivity"
-            android:label="Yo Presto">
+            android:name=".Reports"
+            android:label="Reportes" />
+        <activity android:name=".Enrollment" />
+        <activity android:name=".ResultCapture" />
+        <activity android:name=".CaptureDocumentFront"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".CaptureDocumentReverse"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.main.ImportantInformation" />
+        <activity android:name=".Biometric"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ScannerFacial"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Utilization"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ScannerQRSuccess" />
+        <activity android:name=".ScannerQR"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.main.HomeActivity"
+            android:label="Yo Presto"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity_report"
+            android:label="@string/title_activity_report"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_tab"
+            android:label="@string/title_activity_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Report"
+            android:label="@string/title_activity_report_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <activity android:name=".alerts.NoCredit"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".alerts.SuccessfulTransaction"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
