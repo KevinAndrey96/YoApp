@@ -76,9 +76,6 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="allowBackup">
         <meta-data
-            android:name="net.hockeyapp.android.appIdentifier"
-            android:value="a22fc240470e4094806b6ae404fbf8e2" />
-        <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
@@ -97,19 +94,9 @@
         <activity
             android:name=".ui.main.TakeDNICaptureActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <activity
             android:name=".Stores"
             android:label="Mis Tiendas" />
@@ -118,19 +105,22 @@
             android:label="Reportes" />
         <activity android:name=".Enrollment" />
         <activity android:name=".ResultCapture" />
-        <activity android:name=".CaptureDocumentFront" />
-        <activity android:name=".CaptureDocumentReverse" />
+        <activity android:name=".CaptureDocumentFront"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CaptureDocumentReverse"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.main.ImportantInformation" />
-        <activity android:name=".Biometric" />
-        <activity android:name=".ScannerFacial" />
+        <activity android:name=".Biometric"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ScannerFacial"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Utilization"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".ScannerQRSuccess" />
-        <activity android:name=".ScannerQR" />
+        <activity android:name=".ScannerQR"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.main.HomeActivity"
-            android:label="Yo Presto"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -150,14 +140,10 @@
             android:name=".Report"
             android:label="@string/title_activity_report_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
-
         <activity android:name=".alerts.NoCredit"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".alerts.SuccessfulTransaction"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

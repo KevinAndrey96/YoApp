@@ -90,7 +90,9 @@ class Enrollment : AppCompatActivity() {
 
         val intent = Intent(this@Enrollment, BytteLicense::class.java)
         intent.putExtra("URLPETICION", URLPETICION)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivityForResult(intent, MY_REQUEST_CODE_LISENCE)
+
 
         val btnScan = findViewById<Button>(R.id.scannQr)
         btnScan!!.setOnClickListener { performAction() }
@@ -315,17 +317,17 @@ class Enrollment : AppCompatActivity() {
                     DocumentoQR = parts[0]
                     //val parts2 = parts[1].split("|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                     QR1 = parts[1]
-                    QR2 = parts[1]
+                    QR2 = parts[2]
                     //QR3 = parts[2]
                     YoPrestoQR = parts[3]
-
+/*
                     Toast.makeText(this, "1."+DocumentoQR, Toast.LENGTH_LONG).show()
                     Toast.makeText(this, "2."+QR1, Toast.LENGTH_LONG).show()
                     Toast.makeText(this, "3."+QR2, Toast.LENGTH_LONG).show()
                     Toast.makeText(this, "4."+QR3, Toast.LENGTH_LONG).show()
                     Toast.makeText(this, "5."+YoPrestoQR, Toast.LENGTH_LONG).show()
 
-
+*/
 
                     val scannQr = findViewById<Button>(R.id.scannQr)
                     scannQr.setEnabled(false)

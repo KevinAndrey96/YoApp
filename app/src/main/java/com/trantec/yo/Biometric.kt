@@ -39,6 +39,10 @@ class Biometric : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.biometric)
+        val intent = Intent(this@Biometric, BytteLicense::class.java)
+        intent.putExtra("URLPETICION", URLPETICION)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivityForResult(intent, MY_REQUEST_CODE_LISENCE)
 
         BtnBiometric.setOnClickListener {
             //Huellas
@@ -69,11 +73,9 @@ class Biometric : AppCompatActivity() {
         try {
             if (requestCode == MY_REQUEST_CODE_LISENCE && resultCode == Activity.RESULT_OK) {
                 results_biometric = data!!.extras!!.getString("License")
-                Log.d("TAG", results_biometric)
 
             } else if (requestCode == MY_REQUEST_CODE_LISENCE && resultCode == Activity.RESULT_CANCELED) {
                 results_biometric = data!!.extras!!.getString("License")
-                Log.d("TAG", results_biometric)
             } else if (requestCode == MY_REQUEST_CODE_BIOMETRIC && resultCode == BaseScanActivity.RESULT_OK) {//
                 results_biometric = data?.extras?.getString("InfoBiometric")!!
                 val intent = Intent(this, ScannerFacial::class.java)
@@ -85,7 +87,5 @@ class Biometric : AppCompatActivity() {
         } catch (e: Exception) {
 
         }
-
-
     }
 }
