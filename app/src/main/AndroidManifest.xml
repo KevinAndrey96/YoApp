@@ -106,6 +106,7 @@
         <activity android:name=".Enrollment" />
         <activity android:name=".ResultCapture" />
         <activity android:name=".CaptureDocumentFront"
+<<<<<<< HEAD
             android:screenOrientation="portrait"/>
         <activity android:name=".CaptureDocumentReverse"
             android:screenOrientation="portrait"/>
@@ -114,11 +115,30 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ScannerFacial"
             android:screenOrientation="portrait"/>
+=======
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".CaptureDocumentReverse"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.main.ImportantInformation" />
+        <activity android:name=".Biometric"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ScannerFacial"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+>>>>>>> 8950570e331fdc7ae35a3eafef6220898635e815
         <activity android:name=".Utilization"
             android:screenOrientation="portrait"/>
         <activity android:name=".ScannerQRSuccess" />
         <activity android:name=".ScannerQR"
+<<<<<<< HEAD
             android:screenOrientation="portrait"/>
+=======
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+>>>>>>> 8950570e331fdc7ae35a3eafef6220898635e815
         <activity
             android:name=".ui.main.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
