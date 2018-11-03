@@ -317,7 +317,7 @@ class Enrollment : AppCompatActivity() {
                     DocumentoQR = parts[0]
                     //val parts2 = parts[1].split("|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                     QR1 = parts[1]
-                    QR2 = parts[1]
+                    QR2 = parts[2]
                     //QR3 = parts[2]
                     YoPrestoQR = parts[3]
 /*
