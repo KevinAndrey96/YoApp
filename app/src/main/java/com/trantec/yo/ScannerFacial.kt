@@ -72,12 +72,13 @@ class ScannerFacial : AppCompatActivity() {
 
 
         btnScanner.setOnClickListener {
+            enviarDatos()
             //rostro
-            val intent = Intent(this@ScannerFacial, BytteCaptureFace::class.java)
+            /*val intent = Intent(this@ScannerFacial, BytteCaptureFace::class.java)
             intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "2")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
             intent.putExtra("TIPO_CAMERA", "0")//0 capara frontal 1 camara posterior
             intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
-            startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
+            startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)*/
         }
 
         //Permisos en runtime
@@ -285,6 +286,10 @@ class ScannerFacial : AppCompatActivity() {
                                                                     _datos.nombreimagenfrontal = ""
                                                                     _datos.nombreimagentracera = ""
                                                                     _datos.ruta = ""
+                                                                    _datos.escaneo = ""
+                                                                    _datos.templatecc = ""
+                                                                    _datos.templatefrontal = ""
+                                                                    _datos.templatetracera = ""
 
                                                                     enrollment.datos = _datos
                                                                     Logger.d("Datos:"+enrollment.datos)
@@ -327,47 +332,63 @@ class ScannerFacial : AppCompatActivity() {
                                                                             Logger.d("Resp:"+response)
 
                                                                             val responseMapString = response.body()!!.string()
+                                                                                    .replace("\"response\": {\"dataresponse\":{\"@nil\":\"true\"},\"response\":\"LA ENTIDAD YA SE ENCUENTRA ENROLADA EXITOSAMENTE\",\"idresponse\":78},","")
                                                                             val enrollmentResponse: EnrollmentResponse
 
-                                                                            Logger.d(responseMapString)
-                                                                            mHandler.post{
-                                                                                run{
-                                                                                    stopProgess()
-                                                                                    PrettyDialog(this@ScannerFacial)
-                                                                                            .setTitle("Información")
-                                                                                            .setMessage("No existe entidad para la persona.")
-                                                                                            .show()
+                                                                            Logger.d("Respu:"+responseMapString)
+
+                                                                            if (JSONUtils.isJSONValid(responseMapString)) {
+
+                                                                                enrollmentResponse =  mapper.readValue<EnrollmentResponse>(responseMapString, EnrollmentResponse::class.java)
+
+                                                                                if(enrollmentResponse?.response != null){
+                                                                                    if (enrollmentResponse.response!!.dataresponse != null){
+                                                                                        val enrollDataresponse: EnrollmentDataResponse = mapper.readValue<EnrollmentDataResponse>(enrollmentResponse.response!!.dataresponse, EnrollmentDataResponse::class.java)
+
+                                                                                        if(enrollmentResponse.status!! && enrollDataresponse != null){
+                                                                                            mHandler.post{
+                                                                                                run{
+                                                                                                    stopProgess()
+                                                                                                    PrettyDialog(this@ScannerFacial)
+                                                                                                            .setTitle("Información")
+                                                                                                            .setMessage("Se ha hecho el enrolamiento exitosamente")
+                                                                                                            .show()
+                                                                                                }
+                                                                                            }
+                                                                                        } else {
+                                                                                            mHandler.post{
+                                                                                                run{
+                                                                                                    stopProgess()
+                                                                                                    PrettyDialog(this@ScannerFacial)
+                                                                                                            .setTitle("Información")
+                                                                                                            .setMessage(enrollmentResponse.message)
+                                                                                                            .show()
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    } else {
+                                                                                        mHandler.post{
+                                                                                            run{
+                                                                                                stopProgess()
+                                                                                                PrettyDialog(this@ScannerFacial)
+                                                                                                        .setTitle("Información")
+                                                                                                        .setMessage(enrollmentResponse.message)
+                                                                                                        .show()
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                } else {
+                                                                                    mHandler.post{
+                                                                                        run{
+                                                                                            stopProgess()
+                                                                                            PrettyDialog(this@ScannerFacial)
+                                                                                                    .setTitle("Información")
+                                                                                                    .setMessage("Ha ocurrido un error, por favor intente de nuevo.")
+                                                                                                    .show()
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
-
-
-//
-//                                                                            if (JSONUtils.isJSONValid(responseMapString)) {
-//                                                                                enrollmentResponse =  mapper.readValue<EnrollmentResponse>(responseMapString, EnrollmentResponse::class.java)
-//                                                                                Logger.d(enrollmentResponse)
-//                                                                                if(enrollmentResponse.status == true ){
-//                                                                                    mHandler.post{
-//                                                                                        run{
-//                                                                                            stopProgess()
-//                                                                                            PrettyDialog(this@ScannerFacial)
-//                                                                                                    .setTitle("Información")
-//                                                                                                    .setMessage("Enrolamiento exitoso.")
-//                                                                                                    .show()
-//                                                                                        }
-//                                                                                    }
-//
-//                                                                                } else {
-//                                                                                    mHandler.post{
-//                                                                                        run{
-//                                                                                            stopProgess()
-//                                                                                            PrettyDialog(this@ScannerFacial)
-//                                                                                                    .setTitle("Información")
-//                                                                                                    .setMessage("Error" + enrollmentResponse.message)
-//                                                                                                    .show()
-//                                                                                        }
-//                                                                                    }
-//                                                                                }
-//                                                                            }
                                                                         }
                                                                     })
                                                                 }else{

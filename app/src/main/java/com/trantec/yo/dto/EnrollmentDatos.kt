@@ -26,5 +26,9 @@ class EnrollmentDatos : Serializable {
     var nombreimagenfrontal: String? = null
     var nombreimagentracera: String? = null
     var ruta: String? = null
+    var escaneo: String? = null
+    var templatecc: String? = null
+    var templatefrontal: String? = null
+    var templatetracera: String? = null
 
 }

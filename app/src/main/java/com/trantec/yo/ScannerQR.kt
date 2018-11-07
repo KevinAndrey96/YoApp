@@ -56,7 +56,6 @@ class ScannerQR : AppCompatActivity() {
                     identidad = QR2
 
                     if(YoPrestoQR == "yopresto"){
-                        Toast.makeText(this, idinformacionpersona, Toast.LENGTH_LONG).show()
                         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
                         val editor = prefs.edit()
                         editor.putString("enrollment_idinformacionpersona", idinformacionpersona)

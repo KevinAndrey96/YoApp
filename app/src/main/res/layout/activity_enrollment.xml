@@ -66,11 +66,12 @@
 
             <Button
                 android:id="@+id/btnSend"
-                android:layout_width="165dp"
-                android:layout_height="wrap_content"
+                android:layout_width="223dp"
+                android:layout_height="31dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button1"
-                android:text="Enviar datos" />
+                android:background="@drawable/rounded_button"
+                android:text="Enviar datos"
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
     </ScrollView>

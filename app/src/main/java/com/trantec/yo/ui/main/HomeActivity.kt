@@ -109,7 +109,7 @@ class HomeActivity : AppCompatActivity() {
                         }
                         item2.identifier -> {
                             //val intent = Intent(this, Enrollment::class.java)
-                            val intent = Intent(this, ScannerQR::class.java)
+                            val intent = Intent(this, Enrollment::class.java)
                             startActivity(intent)
                         }
                         item3.identifier -> {
@@ -158,7 +158,7 @@ class HomeActivity : AppCompatActivity() {
             //val intent = Intent(this, Enrollment::class.java)
             //intent.putExtra("Cedula","1032485")
             //val intent = Intent(this, ImportantInformation::class.java)
-            val intent = Intent(this, ScannerQR::class.java)
+            val intent = Intent(this, Enrollment::class.java)
             startActivity(intent)
         }
 
