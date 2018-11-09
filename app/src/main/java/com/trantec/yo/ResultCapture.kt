@@ -84,13 +84,14 @@ class ResultCapture : AppCompatActivity() {
             updateLabel()
         }
         val pickerDialog = DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH))
-        pickerDialog.datePicker.minDate = myCalendar.timeInMillis
-        val now = System.currentTimeMillis() - 1000
 
+        val now = System.currentTimeMillis() - 1000
+        pickerDialog.datePicker.minDate = now
 
         if(idperiodos == "1")
         {
-            pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
+            //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
+            pickerDialog.datePicker.maxDate = now + 2592000000
             //pickerDialog.datePicker.maxDate()
             textViewDNINumber.text = "uno "+idperiodos
             //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
@@ -1210,10 +1211,10 @@ class ResultCapture : AppCompatActivity() {
                                                                                         mHandler.post {
                                                                                             run {
                                                                                                 stopProgess()
-                                                                                                PrettyDialog(applicationContext)
+                                                                                                /*PrettyDialog(this@ResultCapture)
                                                                                                         .setTitle("Información")
                                                                                                         .setMessage("Error realizando la transacción, intente nuevamente.")
-                                                                                                        .show()
+                                                                                                        .show()*/
                                                                                             }
                                                                                         }
                                                                                     }

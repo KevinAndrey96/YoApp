@@ -359,44 +359,56 @@ class Enrollment : AppCompatActivity() {
             } else {
                 try {
                     val string = result.contents
-                    val parts = string.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    DocumentoQR = parts[0]
-                    QR1 = parts[1]
-                    QR2 = parts[2]
-                    YoPrestoQR = parts[3]
-                    idinformacionpersona = parts[1].substring(6,11)
-                    identidad = QR2
+                    val tam = string.length
 
-                    if(YoPrestoQR == "yopresto"){
-                        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
-                        val editor = prefs.edit()
-                        editor.putString("enrollment_idinformacionpersona", idinformacionpersona)
-                        editor.putString("enrollment_identidad", identidad)
-                        editor.putString("enrollment_doc_val", DocumentoQR)
-                        editor.commit()
+                    if (tam > 30){
 
-                        /*val intent = Intent(this, ScannerQRSuccess::class.java)
-                        startActivity(intent)*/
-                        Toast.makeText(this, "Se ha escaneado el codigo exitosamente.", Toast.LENGTH_LONG).show()
+                        YoPrestoQR = string.substring(tam-8, tam)
 
-                        val cedulafront = findViewById<Button>(R.id.btnCedula)
-                        val reconocimientofacial = findViewById<Button>(R.id.button4)
-                        val escaner_huella = findViewById<Button>(R.id.button2)
-                        val cedulaback = findViewById<Button>(R.id.button7)
-                        cedulaback.setEnabled(true)
-                        cedulafront.setEnabled(true)
-                        reconocimientofacial.setEnabled(true)
-                        escaner_huella.setEnabled(true)
+                        if(YoPrestoQR == "yopresto"){
+                            val parts = string.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                            DocumentoQR = parts[0]
+                            QR1 = parts[1]
+                            QR2 = parts[2]
+                            idinformacionpersona = parts[1].substring(6,11)
+                            identidad = QR2
 
-                        val btnScan = findViewById<Button>(R.id.scannQr)
-                        btnScan.setBackgroundResource(R.drawable.rounded_button2)
+                            val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                            val editor = prefs.edit()
+                            editor.putString("enrollment_idinformacionpersona", idinformacionpersona)
+                            editor.putString("enrollment_identidad", identidad)
+                            editor.putString("enrollment_doc_val", DocumentoQR)
+                            editor.commit()
 
-                        aux = aux!! + 1
-                        validarDatos()
+                            /*val intent = Intent(this, ScannerQRSuccess::class.java)
+                            startActivity(intent)*/
+                            Toast.makeText(this, "Se ha escaneado el codigo exitosamente.", Toast.LENGTH_LONG).show()
 
+                            val cedulafront = findViewById<Button>(R.id.btnCedula)
+                            val reconocimientofacial = findViewById<Button>(R.id.button4)
+                            val escaner_huella = findViewById<Button>(R.id.button2)
+                            val cedulaback = findViewById<Button>(R.id.button7)
+                            cedulaback.setEnabled(true)
+                            cedulafront.setEnabled(true)
+                            reconocimientofacial.setEnabled(true)
+                            escaner_huella.setEnabled(true)
+
+                            val btnScan = findViewById<Button>(R.id.scannQr)
+                            btnScan.setBackgroundResource(R.drawable.rounded_button2)
+                            btnScan.setEnabled(false)
+
+                            aux = aux!! + 1
+                            validarDatos()
+
+                        } else {
+                            Toast.makeText(this, "Hubo un error, por favor inténtelo de nuevo", Toast.LENGTH_LONG).show()
+                        }
                     } else {
                         Toast.makeText(this, "Hubo un error, por favor inténtelo de nuevo", Toast.LENGTH_LONG).show()
                     }
+
+
+
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     Toast.makeText(this, "Hubo un error, por favor inténtelo de nuevo", Toast.LENGTH_LONG).show()

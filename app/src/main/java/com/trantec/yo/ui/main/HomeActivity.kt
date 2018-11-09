@@ -71,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
 
         var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Inicio")
         var item2 = PrimaryDrawerItem().withIdentifier(2).withName("Enrolamiento")
-        var item3 = PrimaryDrawerItem().withIdentifier(3).withName("Utilizacion")
+        var item3 = PrimaryDrawerItem().withIdentifier(3).withName("Utilización")
         var item4 = PrimaryDrawerItem().withIdentifier(4).withName("Mis tiendas")
         var item5 = PrimaryDrawerItem().withIdentifier(5).withName("Reportes")
         var item6 = PrimaryDrawerItem().withIdentifier(6).withName("Cerrar sesion")
