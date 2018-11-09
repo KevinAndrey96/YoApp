@@ -36,6 +36,7 @@ import android.R.attr.minDate
 import android.R.attr.maxDate
 import android.content.Context
 import android.widget.Toast
+import java.lang.Long.MAX_VALUE
 
 
 class ResultCapture : AppCompatActivity() {
@@ -89,18 +90,20 @@ class ResultCapture : AppCompatActivity() {
 
         if(idperiodos == "1")
         {
+            pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
+            //pickerDialog.datePicker.maxDate()
             textViewDNINumber.text = "uno "+idperiodos
-            pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 7//30 días
+            //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
         }
         if(idperiodos == "2")
         {
             textViewDNINumber.text = "dos "+idperiodos
-            pickerDialog.datePicker.maxDate = now!! + 1000 * 60 * 60 * 24 * 15//15 días
+            pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 15//15 días
         }
         if(idperiodos == "3")
         {
             textViewDNINumber.text = "tres "+idperiodos
-            pickerDialog.datePicker.maxDate = now!! + 1000 * 60 * 60 * 24 * 7//7 días
+            pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 7//7 días
         }
 
 
