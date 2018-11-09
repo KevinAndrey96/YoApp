@@ -128,19 +128,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+        <!--<activity
             android:name=".activity_report"
             android:label="@string/title_activity_report"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity_tab"
             android:label="@string/title_activity_tab"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".Report"
             android:label="@string/title_activity_report_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".alerts.NoCredit"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EscaneoOk"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".alerts.EnrollmentOk"
             android:screenOrientation="portrait"/>
         <activity android:name=".alerts.SuccessfulTransaction"
             android:screenOrientation="portrait"/>

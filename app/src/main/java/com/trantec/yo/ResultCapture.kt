@@ -35,6 +35,7 @@ import java.util.*
 import android.R.attr.minDate
 import android.R.attr.maxDate
 import android.content.Context
+import android.widget.Toast
 
 
 class ResultCapture : AppCompatActivity() {
@@ -54,6 +55,8 @@ class ResultCapture : AppCompatActivity() {
     var dialog: SpotsDialog? = null
     var identidad: String? = null
     var idusuario: String? = null
+    var idperiodo: Int? = null
+
     private var progressDialog: MaterialDialog? ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,29 +65,50 @@ class ResultCapture : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val textViewDNINumber = findViewById<TextView>(R.id.textViewDNINumber)
-        //textViewDNINumber2.text = arguments!!.getLong(AppConstants.DNI_OBJECT_NAME).toString()
-        //documento = arguments!!.getLong(AppConstants.DNI_OBJECT_NAME).toString()
-        //documento = "80794978"
-        //documento=getIntent().getStringExtra("CedulaC")
-        documento=intent.getStringExtra(AppConstants.DNI_OBJECT_NAME).toString()
-        textViewDNINumber.text = documento
-
         sessionString = SessionManager.getString(SessionKeys.USER_SESSION.key, null)
-        //yoprestoAliado = activity!!.applicationContext as YoPrestoApp?
-        //loginDataresponse = mapper.readValue<LoginDataresponse>(sessionString, LoginDataresponse::class.java)
-
         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
         idusuario = prefs.getString("idusuario", "")
         identidad = prefs.getString("identidad", "")
-
+        documento=intent.getStringExtra(AppConstants.DNI_OBJECT_NAME).toString()
+        var idperiodos=intent.getStringExtra(AppConstants.IDP_OBJECT_NAME).toString()
         getAvailableAmountForClient()
+        //textViewDNINumber.text = "Hey -> "+idperiodos
+        //textViewDNINumber.text = documento
+
+        val date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+            myCalendar.set(Calendar.YEAR, year)
+            myCalendar.set(Calendar.MONTH, monthOfYear)
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateLabel()
+        }
+        val pickerDialog = DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH))
+        pickerDialog.datePicker.minDate = myCalendar.timeInMillis
+        val now = System.currentTimeMillis() - 1000
+
+
+        if(idperiodos == "1")
+        {
+            textViewDNINumber.text = "uno "+idperiodos
+            pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 7//30 días
+        }
+        if(idperiodos == "2")
+        {
+            textViewDNINumber.text = "dos "+idperiodos
+            pickerDialog.datePicker.maxDate = now!! + 1000 * 60 * 60 * 24 * 15//15 días
+        }
+        if(idperiodos == "3")
+        {
+            textViewDNINumber.text = "tres "+idperiodos
+            pickerDialog.datePicker.maxDate = now!! + 1000 * 60 * 60 * 24 * 7//7 días
+        }
+
+
 
         textViewGenerateOTP.movementMethod = LinkMovementMethod.getInstance()
-
         textViewGenerateOTP.setOnClickListener {
             generateOTP()
         }
-
         buttonAcceptUse.setOnClickListener {
 
             if(editTextAmount.text.toString().isEmpty()){
@@ -131,30 +155,18 @@ class ResultCapture : AppCompatActivity() {
 
 
         }
-
-        val pickerDialog = DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH))
-        //pickerDialog.datePicker.maxDate = maxDate.toLong()
-        pickerDialog.datePicker.minDate = myCalendar.getTimeInMillis()
-
-
-
-
         editTextQuotaDate.setOnFocusChangeListener { v, hasFocus ->
 
             if(hasFocus) {
+
                 pickerDialog.show()
                 //DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show()
             }
         }
     }
 
-    var date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-        myCalendar.set(Calendar.YEAR, year)
-        myCalendar.set(Calendar.MONTH, monthOfYear)
-        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        updateLabel()
-    }
+
     /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -163,7 +175,6 @@ class ResultCapture : AppCompatActivity() {
     private fun updateLabel() {
         val myFormat = "yyyy-MM-dd" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-
         editTextQuotaDate.setText(sdf.format(myCalendar.time))
     }
     private fun getAvailableAmountForClient(){
@@ -381,6 +392,14 @@ class ResultCapture : AppCompatActivity() {
                                                                                                                     textViewAvailableBalance.text = searchDataresponse!!.saldo.toString()
                                                                                                                     editTextQuotaDate.isEnabled = searchDataresponse!!.verfecha == 1
                                                                                                                     celular = searchDataresponse!!.celular
+                                                                                                                    idperiodo = searchDataresponse!!.idperiodo
+
+                                                                                                                    //pickerDialog.datePicker.maxDate = maxDate.toLong()
+
+                                                                                                                    /*if(idperiodo==1) {
+                                                                                                                        pickerDialog!!?.datePicker.maxDate = now!! + 1000 * 60 * 60 * 24 * 7//7 días
+                                                                                                                    }*/
+
                                                                                                                     generateOTP()
 
                                                                                                                 }else{
@@ -1075,7 +1094,7 @@ class ResultCapture : AppCompatActivity() {
                                                                     makeUseTransactionDatos.entidaddestino = searchDataresponse!!.identidad.toString()
                                                                     //makeUseTransactionDatos.entidaddestino = "10266"
                                                                     makeUseTransactionDatos.fechapago = editTextQuotaDate.text.toString()
-                                                                    makeUseTransactionDatos.idperiodo = 1
+                                                                    makeUseTransactionDatos.idperiodo = idperiodo
                                                                     makeUseTransactionDatos.observacion = ""
                                                                     makeUseTransactionDatos.otp = SessionManager.getString("OTP", null)
                                                                     // makeUseTransactionDatos.otp = "123456"

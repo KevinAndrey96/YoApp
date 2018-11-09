@@ -40,11 +40,13 @@ import org.json.JSONException
 
 import java.util.*
 import com.orhanobut.logger.Logger
+import com.trantec.yo.alerts.EnrollmentOk
 import com.trantec.yo.constants.AppConstants
 import com.trantec.yo.constants.HttpObjectsConstants
 import com.trantec.yo.constants.OperationConstants
 import com.trantec.yo.constants.WebConstant
 import com.trantec.yo.enumeration.SessionKeys
+import com.trantec.yo.ui.main.HomeActivity
 import com.yopresto.app.yoprestoapp.dto.EnrollmentDataResponse
 import com.yopresto.app.yoprestoapp.dto.EnrollmentRequest
 import com.yopresto.app.yoprestoapp.dto.EnrollmentResponse
@@ -132,9 +134,13 @@ class Enrollment : AppCompatActivity() {
         btnScan!!.setOnClickListener { performAction() }
 
         qrScanIntegrator = IntentIntegrator(this)
+        qrScanIntegrator?.setPrompt("Realice la lectura del código generado en la plataforma administrativa.")
 
         btnSend.setOnClickListener {
-            enviarDatos()
+            //enviarDatos()
+            val intent = Intent(this, EnrollmentOk::class.java)
+            startActivity(intent)
+            finish()
         }
 
         btnCedula.setOnClickListener {

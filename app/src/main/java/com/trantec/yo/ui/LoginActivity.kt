@@ -212,6 +212,7 @@ class LoginActivity : AppCompatActivity() {
 
                                                                                             datos.cuenta = editTextUser.text.toString()
                                                                                             datos.clave = PhoneUtil.getSHA512(editTextPassword.text.toString())
+
                                                                                             datos.ip = ipResponse.ip
 
                                                                                             Logger.d("Clave " + datos.clave)

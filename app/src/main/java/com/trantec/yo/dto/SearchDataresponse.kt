@@ -22,5 +22,6 @@ class SearchDataresponse : Serializable{
     var celular: String? = null
     var verfecha: Int? = null
     var status: Boolean? = null
+    var idperiodo: Int? = null
 
 }

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import com.orhanobut.logger.Logger
+import com.trantec.yo.EscaneoOk
 import com.trantec.yo.R
 import com.trantec.yo.ResultCapture
 import com.trantec.yo.constants.AppConstants
@@ -85,7 +86,7 @@ fun Chao(cedula:String)
 */
             ////
             //Toast.makeText(applicationContext, ""+cedula, Toast.LENGTH_LONG)
-            val intent2 = Intent(this, ResultCapture::class.java)
+            val intent2 = Intent(this, EscaneoOk::class.java)
 
             intent2.putExtra(AppConstants.DNI_OBJECT_NAME, ""+cedula)
             startActivity(intent2)
