@@ -74,7 +74,7 @@ class ResultCapture : AppCompatActivity() {
         var idperiodos=intent.getStringExtra(AppConstants.IDP_OBJECT_NAME).toString()
         getAvailableAmountForClient()
         //textViewDNINumber.text = "Hey -> "+idperiodos
-        //textViewDNINumber.text = documento
+        textViewDNINumber.text = documento
 
         val date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
@@ -93,18 +93,17 @@ class ResultCapture : AppCompatActivity() {
             //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
             pickerDialog.datePicker.maxDate = now + 2592000000
             //pickerDialog.datePicker.maxDate()
-            textViewDNINumber.text = "uno "+idperiodos
+
             //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
         }
         if(idperiodos == "2")
         {
-            textViewDNINumber.text = "dos "+idperiodos
+
             pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 15//15 días
         }
         if(idperiodos == "3")
         {
-            textViewDNINumber.text = "tres "+idperiodos
-            pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 7//7 días
+            pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 15//7 días
         }
 
 

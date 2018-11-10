@@ -44,7 +44,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_button1"
                 android:drawableEnd="@drawable/icono_cedula"
-                android:text="Back cedula" />
+                android:text="Posterior\ncedula" />
 
             <Button
                 android:id="@+id/button4"

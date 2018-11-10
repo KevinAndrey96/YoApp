@@ -62,7 +62,7 @@ class Enrollment : AppCompatActivity() {
 
     internal var btnScan: Button? = null
     internal var qrScanIntegrator: IntentIntegrator? = null
-    val LICENSEMICROBLINK = "V76CKZT3-NONJVDPE-NT4KLLY5-5OOBC5AI-JZKZL23B-FLBJP77K-EH4NX33O-LF3REX3F"//esta licencia se debe solicitar a bytte para el funcionamiento en los documentos
+    val LICENSEMICROBLINK = "XBHOQRTB-HZ3XE3FF-K4FNTNCU-TTVWNPNM-JNYKDZO2-JUAXOZJH-3A74S463-I7KKLSOW"//esta licencia se debe solicitar a bytte para el funcionamiento en los documentos
     val MY_REQUEST_CODE_LISENCE = 1329
     val MY_REQUEST_CODE_FRONT = 1330
     val MY_REQUEST_CODE_BACK = 1331
