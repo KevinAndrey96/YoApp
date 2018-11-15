@@ -39,6 +39,7 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.widget.Toast
 import java.lang.Long.MAX_VALUE
+import java.text.DateFormat
 import java.text.DecimalFormat
 
 
@@ -91,18 +92,22 @@ class ResultCapture : AppCompatActivity() {
         val now = System.currentTimeMillis() - 1000
         pickerDialog.datePicker.minDate = now
 
-        if(idperiodos == "1")
+        if(idperiodos == "0")
         {
             //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
             //pickerDialog.datePicker.maxDate = now + 2592000000
             //editTextQuotaDate.visibility = INVISIBLE
 
+            //val s = DateFormat.getDateInstance().format("MMMM d, yyyy ")
+
+            //editTextQuotaDate.setText(s)
             textView9.visibility = INVISIBLE
+            editTextQuotaDate.visibility = INVISIBLE
             //pickerDialog.datePicker.maxDate()
 
             //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
         }
-        if(idperiodos == "0")
+        if(idperiodos == "1")
         {
             //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
             pickerDialog.datePicker.maxDate = now + 2592000000
@@ -438,7 +443,7 @@ class ResultCapture : AppCompatActivity() {
 
                                                                                                                         val intent = Intent(applicationContext, NoCredit::class.java)
                                                                                                                         startActivity(intent)
-                                                                                                                        //finish()
+                                                                                                                        finish()
 
                                                                                                                         val dialog = PrettyDialog(applicationContext)
                                                                                                                                 .setTitle(getString(R.string.information))
@@ -472,6 +477,7 @@ class ResultCapture : AppCompatActivity() {
                                                                                                             }else{
                                                                                                                 try{
                                                                                                                     startActivity(Intent(this@ResultCapture, NoCredit::class.java))
+                                                                                                                    finish()
                                                                                                                     val dialog = PrettyDialog(applicationContext)
                                                                                                                             .setTitle(getString(R.string.information))
                                                                                                                             .setMessage("El usuario no tiene cupo disponible para retiro.")
