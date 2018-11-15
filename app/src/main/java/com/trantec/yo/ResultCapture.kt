@@ -37,6 +37,7 @@ import android.R.attr.maxDate
 import android.content.Context
 import android.widget.Toast
 import java.lang.Long.MAX_VALUE
+import java.text.NumberFormat
 
 
 class ResultCapture : AppCompatActivity() {
@@ -392,7 +393,15 @@ class ResultCapture : AppCompatActivity() {
                                                                                                             if(searchResponse!!.status!!) {
 
                                                                                                                 if(searchDataresponse!!.saldo!! > 0) {
-                                                                                                                    textViewAvailableBalance.text = searchDataresponse!!.saldo.toString()
+
+                                                                                                                    //textViewAvailableBalance.text = NumberFormat.getNumberInstance(Locale.US).format(searchDataresponse!!.saldo.toString())
+                                                                                                                    var saldo = searchDataresponse!!.saldo.toString()
+
+                                                                                                                    saldo = saldo.substring(0, saldo.length-2)
+                                                                                                                    //NumberFormat.getNumberInstance(Locale.US).format(saldo);
+
+                                                                                                                    textViewAvailableBalance.text = "%.0f".format(saldo)
+
                                                                                                                     editTextQuotaDate.isEnabled = searchDataresponse!!.verfecha == 1
                                                                                                                     celular = searchDataresponse!!.celular
                                                                                                                     idperiodo = searchDataresponse!!.idperiodo
