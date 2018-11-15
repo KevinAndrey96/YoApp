@@ -137,10 +137,10 @@ class Enrollment : AppCompatActivity() {
         qrScanIntegrator?.setPrompt("Realice la lectura del código generado en la plataforma administrativa.")
 
         btnSend.setOnClickListener {
-            //enviarDatos()
-            val intent = Intent(this, EnrollmentOk::class.java)
+            enviarDatos()
+            /*val intent = Intent(this, EnrollmentOk::class.java)
             startActivity(intent)
-            finish()
+            finish()*/
         }
 
         btnCedula.setOnClickListener {

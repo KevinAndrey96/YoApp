@@ -42,7 +42,7 @@ class Reports : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reports)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         ReportActive()
 
         //ReportFinish()
@@ -261,6 +261,10 @@ class Reports : AppCompatActivity() {
                                                                                             adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString(), item.nombre.toString())
                                                                                         }
                                                                                     }
+                                                                                }else
+                                                                                {
+                                                                                    Logger.d(reportResponse.status)
+                                                                                    Logger.d(reportResponse.response!!.dataresponse)
                                                                                 }
                                                                             }
                                                                         }
