@@ -20,7 +20,6 @@ import com.trantec.yo.constants.WebConstant
 import com.trantec.yo.dto.*
 import com.trantec.yo.enumeration.SessionKeys
 import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
-import com.trantec.yo.ui.main.HomeActivity
 import com.trantec.yo.utils.JSONUtils
 import dmax.dialog.SpotsDialog
 import hundredthirtythree.sessionmanager.SessionManager
@@ -32,14 +31,8 @@ import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import android.R.attr.minDate
-import android.R.attr.maxDate
 import android.content.Context
-import android.view.View
 import android.view.View.INVISIBLE
-import android.widget.Toast
-import java.lang.Long.MAX_VALUE
-import java.text.DateFormat
 import java.text.DecimalFormat
 
 
@@ -68,7 +61,7 @@ class ResultCapture : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result_capture)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
+        textViewAvailableBalance.visibility = INVISIBLE
         val textViewDNINumber = findViewById<TextView>(R.id.textViewDNINumber)
         sessionString = SessionManager.getString(SessionKeys.USER_SESSION.key, null)
         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
@@ -422,8 +415,8 @@ class ResultCapture : AppCompatActivity() {
 
 
                                                                                                                     //NumberFormat.getNumberInstance(Locale.US).format(saldo);
-
-                                                                                                                    textViewAvailableBalance.text = "$$formattedNumber"
+                                                                                                                    txtSaldo.text = "$$formattedNumber"
+                                                                                                                    textViewAvailableBalance.text = searchDataresponse!!.saldo.toString()
 
                                                                                                                     editTextQuotaDate.isEnabled = searchDataresponse!!.verfecha == 1
                                                                                                                     celular = searchDataresponse!!.celular
