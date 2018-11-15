@@ -99,6 +99,7 @@ class Enrollment : AppCompatActivity() {
     var QR3: String? = null
     var idinformacionpersona: String? = null
     var identidad: String? = null
+    var idusuario: String? = null
 
     private var progressDialog: MaterialDialog? = null
     var mHandler =  Handler(Looper.getMainLooper())
@@ -137,10 +138,7 @@ class Enrollment : AppCompatActivity() {
         qrScanIntegrator?.setPrompt("Realice la lectura del código generado en la plataforma administrativa.")
 
         btnSend.setOnClickListener {
-            //enviarDatos()
-            val intent = Intent(this, EnrollmentOk::class.java)
-            startActivity(intent)
-            finish()
+            enviarDatos()
         }
 
         btnCedula.setOnClickListener {
@@ -370,14 +368,15 @@ class Enrollment : AppCompatActivity() {
                             DocumentoQR = parts[0]
                             QR1 = parts[1]
                             QR2 = parts[2]
+                            idusuario = parts[1].substring(0,5)
                             idinformacionpersona = parts[1].substring(6,11)
                             identidad = QR2
-
                             val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
                             val editor = prefs.edit()
                             editor.putString("enrollment_idinformacionpersona", idinformacionpersona)
                             editor.putString("enrollment_identidad", identidad)
                             editor.putString("enrollment_doc_val", DocumentoQR)
+                            editor.putString("enrollment_idusuario", idusuario)
                             editor.commit()
 
                             /*val intent = Intent(this, ScannerQRSuccess::class.java)
@@ -497,11 +496,11 @@ class Enrollment : AppCompatActivity() {
     private fun enviarDatos() {
         Logger.d("Test")
         try{
-            val formBody = FormBody.Builder()
-                    .add("username", AppConstants.TOKEN_USERNAME)
-                    .add("password", AppConstants.TOKEN_PASSWORD)
-                    .add("grant_type", AppConstants.TOKEN_GRANT_TYPE)
-                    .build()
+                val formBody = FormBody.Builder()
+                        .add("username", AppConstants.TOKEN_USERNAME)
+                        .add("password", AppConstants.TOKEN_PASSWORD)
+                        .add("grant_type", AppConstants.TOKEN_GRANT_TYPE)
+                        .build()
 
             val builderToken = Request.Builder()
             builderToken.url(WebConstant.TOKEN_URL)
@@ -622,7 +621,7 @@ class Enrollment : AppCompatActivity() {
                                                                     val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
                                                                     val name = prefs.getString("nombre", "")
 
-                                                                    _datos.idusuario = prefs.getString("idusuario", "")
+                                                                    _datos.idusuario = prefs.getString("enrollment_idusuario", "")
                                                                     _datos.ip = prefs.getString("ip", "")
                                                                     _datos.accion = "1"
                                                                     _datos.tipodocumento = "CC"

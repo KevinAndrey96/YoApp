@@ -73,7 +73,6 @@ class ResultCapture : AppCompatActivity() {
         documento=intent.getStringExtra(AppConstants.DNI_OBJECT_NAME).toString()
         var idperiodos=intent.getStringExtra(AppConstants.IDP_OBJECT_NAME).toString()
         getAvailableAmountForClient()
-
         //textViewDNINumber.text = "Hey -> "+idperiodos
         textViewDNINumber.text = documento
 
@@ -1205,6 +1204,7 @@ class ResultCapture : AppCompatActivity() {
 
                                                                                                     sendPaymentPlanMail(makeUseTransactionResponse.response!!.dataresponse!!)
 
+
                                                                                                     val dialog = PrettyDialog(applicationContext)
                                                                                                             .setTitle(getString(R.string.information))
                                                                                                             .setMessage("Transacción Exitosa. Desembolso realizado exitosamente.")
@@ -1473,8 +1473,6 @@ class ResultCapture : AppCompatActivity() {
                                                                 .show()
                                                     }
                                                 }
-
-
                                             }
 
                                             @Throws(IOException::class)
@@ -1598,38 +1596,23 @@ class ResultCapture : AppCompatActivity() {
     }
     fun sendPaymentPlanMail(idtransaccion: String){
         try{
-            /*val formBody = FormBody.Builder()
+            val formBody = FormBody.Builder()
                     .add("idtransaccion", idtransaccion)
                     .build()
 
             val builderToken = Request.Builder()
             builderToken.url(WebConstant.SEND_MAIL_ENDPOINT)
-            Logger.d(WebConstant.SEND_MAIL_ENDPOINT)*/
-            val sendMail = SendMail()
-            sendMail.idtransaccion = idtransaccion
+            Logger.d(WebConstant.SEND_MAIL_ENDPOINT)
 
-            Logger.d("To send idtransaction")
-            Logger.d(sendMail.idtransaccion)
 
-            val body = RequestBody.create(HttpObjectsConstants.jsonMediaType, mapper.writeValueAsString(sendMail))
-
-            /*val request = builderToken
-                    .header("Content-Type", "application/x-www-form-urlencoded")
+            val request = builderToken
+                    .header("Content-Type", "application/json")
                     .post(formBody)
-                    .build()*/
+                    .build()
 
             val builder = Request.Builder()
             builder.url(WebConstant.SEND_MAIL_ENDPOINT)
             Logger.d(WebConstant.SEND_MAIL_ENDPOINT)
-
-            val request = builder
-                    .header("Content-Type", "application/json; charset=UTF-8")
-                    .header("Accept", "application/json")
-                    .post(body)
-                    .build()
-
-
-
 
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -1639,7 +1622,7 @@ class ResultCapture : AppCompatActivity() {
                         run {
                             PrettyDialog(applicationContext)
                                     .setTitle("Información")
-                                    .setMessage("Error generando enviando el mensaje " + e.message)
+                                    .setMessage("Error enviando el mensaje " + e.message)
                                     .show()
                         }
                     }
@@ -1648,25 +1631,19 @@ class ResultCapture : AppCompatActivity() {
 
                 @Throws(IOException::class)
                 override fun onResponse(call: Call, response: Response) {
-
-
                     val responseEmail = response.body()!!.string()
-                    Logger.d("Send image response")
+                    Logger.d("Send email response")
                     Logger.d(responseEmail)
-
-
                 }
             })
-
 
         }catch (ex: Exception){
             ex.printStackTrace()
         }
     }
+
     private fun sendSms(celular: String, monto: String, fecha: String){
-        Logger.d("Entro1")
         try{
-            Logger.d("Entro2")
             val builderToken = Request.Builder()
             val url = "http://api.yopresto.co:80/api/v1/sms/send/"+celular+"/Su%20pago en Yo Presto se realizo con exito por un valor de $"+monto+" el dia "+fecha+". Gracias por utilizar nuestros servicios."
             builderToken.url(url)
