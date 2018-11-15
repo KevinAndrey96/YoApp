@@ -9,6 +9,6 @@ class WebConstant {
         var WEB_URL = "/api/web/v1.0.0"
         var OTP_URL = "/api/otp/v1.0.0"
         var TOKEN_URL = "http://35.192.216.238:8280/token"
-        var SEND_MAIL_ENDPOINT = "http://yoprestoapi.bigchange.com.co/mail/plainofPay"
+        var SEND_MAIL_ENDPOINT = "http://api.yopresto.co:80/mail/plainofPay"
     }
 }

@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Context
 import android.view.View.INVISIBLE
+import com.yopresto.app.yoprestoapp.dto.SendSmsResponse
 import java.text.DecimalFormat
 
 
@@ -46,6 +47,8 @@ class ResultCapture : AppCompatActivity() {
     var sessionString: String? = null
     var loginDataresponse: LoginDataresponse? = null
     var celular: String? = null
+    var fecha: String? = null
+    var amount: String? = null
     var otp: String? = null
     var searchResponse: SearchResponse? = null
     var searchDataresponse: SearchDataresponse? = null
@@ -72,6 +75,8 @@ class ResultCapture : AppCompatActivity() {
         getAvailableAmountForClient()
         //textViewDNINumber.text = "Hey -> "+idperiodos
         textViewDNINumber.text = documento
+
+
 
         val date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
@@ -432,7 +437,6 @@ class ResultCapture : AppCompatActivity() {
 
                                                                                                                 }else{
                                                                                                                     try{
-
 
                                                                                                                         val intent = Intent(applicationContext, NoCredit::class.java)
                                                                                                                         startActivity(intent)
@@ -1131,6 +1135,9 @@ class ResultCapture : AppCompatActivity() {
                                                                     makeUseTransactionDatos.valorcuota = editTextQuota.text.toString()
                                                                     makeUseTransactionDatos.idtipomovimientoproducto = "5"
 
+                                                                    fecha = editTextQuotaDate.text.toString()
+                                                                    amount = editTextQuota.text.toString()
+
 
                                                                     makeUseTransactionRequest.datos = makeUseTransactionDatos
 
@@ -1196,6 +1203,7 @@ class ResultCapture : AppCompatActivity() {
                                                                                                     sendSMSSuccessTransaction()
 
                                                                                                     sendPaymentPlanMail(makeUseTransactionResponse.response!!.dataresponse!!)
+
 
                                                                                                     val dialog = PrettyDialog(applicationContext)
                                                                                                             .setTitle(getString(R.string.information))
@@ -1465,8 +1473,6 @@ class ResultCapture : AppCompatActivity() {
                                                                 .show()
                                                     }
                                                 }
-
-
                                             }
 
                                             @Throws(IOException::class)
@@ -1537,6 +1543,8 @@ class ResultCapture : AppCompatActivity() {
 
                                                                             //Toast.makeText(applicationContext, "La utilización se ha realizado con exito!", Toast.LENGTH_LONG)
 
+                                                                            sendSms(celular.toString(), amount.toString(), fecha.toString())
+
                                                                             val intent = Intent(applicationContext, SuccessfulTransaction::class.java)
                                                                             startActivity(intent)
                                                                         }
@@ -1588,38 +1596,23 @@ class ResultCapture : AppCompatActivity() {
     }
     fun sendPaymentPlanMail(idtransaccion: String){
         try{
-            /*val formBody = FormBody.Builder()
+            val formBody = FormBody.Builder()
                     .add("idtransaccion", idtransaccion)
                     .build()
 
             val builderToken = Request.Builder()
             builderToken.url(WebConstant.SEND_MAIL_ENDPOINT)
-            Logger.d(WebConstant.SEND_MAIL_ENDPOINT)*/
-            val sendMail = SendMail()
-            sendMail.idtransaccion = idtransaccion
+            Logger.d(WebConstant.SEND_MAIL_ENDPOINT)
 
-            Logger.d("To send idtransaction")
-            Logger.d(sendMail.idtransaccion)
 
-            val body = RequestBody.create(HttpObjectsConstants.jsonMediaType, mapper.writeValueAsString(sendMail))
-
-            /*val request = builderToken
-                    .header("Content-Type", "application/x-www-form-urlencoded")
+            val request = builderToken
+                    .header("Content-Type", "application/json")
                     .post(formBody)
-                    .build()*/
+                    .build()
 
             val builder = Request.Builder()
             builder.url(WebConstant.SEND_MAIL_ENDPOINT)
             Logger.d(WebConstant.SEND_MAIL_ENDPOINT)
-
-            val request = builder
-                    .header("Content-Type", "application/json; charset=UTF-8")
-                    .header("Accept", "application/json")
-                    .post(body)
-                    .build()
-
-
-
 
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -1629,7 +1622,7 @@ class ResultCapture : AppCompatActivity() {
                         run {
                             PrettyDialog(applicationContext)
                                     .setTitle("Información")
-                                    .setMessage("Error generando enviando el mensaje " + e.message)
+                                    .setMessage("Error enviando el mensaje " + e.message)
                                     .show()
                         }
                     }
@@ -1638,17 +1631,56 @@ class ResultCapture : AppCompatActivity() {
 
                 @Throws(IOException::class)
                 override fun onResponse(call: Call, response: Response) {
-
-
                     val responseEmail = response.body()!!.string()
-                    Logger.d("Send image response")
+                    Logger.d("Send email response")
                     Logger.d(responseEmail)
-
-
                 }
             })
 
+        }catch (ex: Exception){
+            ex.printStackTrace()
+        }
+    }
 
+    private fun sendSms(celular: String, monto: String, fecha: String){
+        try{
+            val builderToken = Request.Builder()
+            val url = "http://api.yopresto.co:80/api/v1/sms/send/"+celular+"/Su%20pago en Yo Presto se realizo con exito por un valor de $"+monto+" el dia "+fecha+". Gracias por utilizar nuestros servicios."
+            builderToken.url(url)
+            Logger.d(url)
+
+            val request = builderToken
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .header("Accept", "application/json")
+                    .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                    e.printStackTrace()
+                    mHandler.post {
+                        run {
+                            PrettyDialog(applicationContext)
+                                    .setTitle("Información")
+                                    .setMessage("Error enviando mensaje de texto " + e.message)
+                                    .show()
+                        }
+                    }
+                }
+
+                @Throws(IOException::class)
+                override fun onResponse(call: Call, response: Response) {
+
+                    val responseString = response.body()!!.string()
+                    val smsJSONObject: JSONObject
+                    val smsResponse: SendSmsResponse
+
+                    if (responseString != null) {
+                        Logger.d("Send sms response")
+                        Logger.d(responseString)
+                    }
+                }
+            })
         }catch (ex: Exception){
             ex.printStackTrace()
         }
