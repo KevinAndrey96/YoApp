@@ -35,9 +35,11 @@ import java.util.*
 import android.R.attr.minDate
 import android.R.attr.maxDate
 import android.content.Context
+import android.view.View
+import android.view.View.INVISIBLE
 import android.widget.Toast
 import java.lang.Long.MAX_VALUE
-import java.text.NumberFormat
+import java.text.DecimalFormat
 
 
 class ResultCapture : AppCompatActivity() {
@@ -90,6 +92,17 @@ class ResultCapture : AppCompatActivity() {
         pickerDialog.datePicker.minDate = now
 
         if(idperiodos == "1")
+        {
+            //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
+            //pickerDialog.datePicker.maxDate = now + 2592000000
+            //editTextQuotaDate.visibility = INVISIBLE
+
+            textView9.visibility = INVISIBLE
+            //pickerDialog.datePicker.maxDate()
+
+            //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
+        }
+        if(idperiodos == "0")
         {
             //pickerDialog.datePicker.maxDate = now + 1000 * 60 * 60 * 24 * 30//30 días
             pickerDialog.datePicker.maxDate = now + 2592000000
@@ -354,6 +367,7 @@ class ResultCapture : AppCompatActivity() {
                                                                         }
 
                                                                         @Throws(IOException::class)
+
                                                                         override fun onResponse(call: Call, response: Response) {
 
 
@@ -395,12 +409,16 @@ class ResultCapture : AppCompatActivity() {
                                                                                                                 if(searchDataresponse!!.saldo!! > 0) {
 
                                                                                                                     //textViewAvailableBalance.text = NumberFormat.getNumberInstance(Locale.US).format(searchDataresponse!!.saldo.toString())
-                                                                                                                    var saldo = searchDataresponse!!.saldo.toString()
+                                                                                                                    var saldo = searchDataresponse!!.saldo.toString().toDouble()
+                                                                                                                    //saldo = saldo.substring(0, saldo.length-2)
+                                                                                                                    val formatter = DecimalFormat("#,###")
+                                                                                                                    //val myNumber = 1000000.0
+                                                                                                                    val formattedNumber = formatter.format(saldo)
 
-                                                                                                                    saldo = saldo.substring(0, saldo.length-2)
+
                                                                                                                     //NumberFormat.getNumberInstance(Locale.US).format(saldo);
 
-                                                                                                                    textViewAvailableBalance.text = "%.0f".format(saldo)
+                                                                                                                    textViewAvailableBalance.text = "$$formattedNumber"
 
                                                                                                                     editTextQuotaDate.isEnabled = searchDataresponse!!.verfecha == 1
                                                                                                                     celular = searchDataresponse!!.celular
