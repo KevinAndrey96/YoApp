@@ -14,4 +14,5 @@ class ReportDataresponse : Serializable{
     var valor: Double? = null
     var cedula: Int? = null
     var idaliado: Int? = null
+    var identidad: Int? = null
 }

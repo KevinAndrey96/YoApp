@@ -52,15 +52,17 @@ class HomeActivity : AppCompatActivity() {
 
         if (name != ""){
             val lastname = prefs.getString("apellido", "")
-            nombre = name +" "+ lastname
+            nombre = "$name $lastname"
             cuenta = prefs.getString("cuenta", "")
             val txtname = findViewById<TextView>(R.id.txtName)
             val txtaccount = findViewById<TextView>(R.id.txtAccount)
             txtname.text = nombre
             txtaccount.text = cuenta
+            txtaccount.text = prefs.getString("cuenta", "")
         } else {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         val utilization = findViewById<Button>(R.id.BtnUtilizacion)

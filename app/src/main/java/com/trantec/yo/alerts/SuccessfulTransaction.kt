@@ -16,8 +16,8 @@ class SuccessfulTransaction : AppCompatActivity() {
         val btnclose2 = findViewById<ImageButton>(R.id.btnexitoclose)
 
         btnclose2.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            //val intent = Intent(this, HomeActivity::class.java)
+            //startActivity(intent)
             finish()
         }
     }

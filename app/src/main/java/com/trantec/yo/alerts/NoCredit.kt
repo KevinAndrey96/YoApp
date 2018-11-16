@@ -19,8 +19,8 @@ class NoCredit : AppCompatActivity() {
         val btnclose1 = findViewById<ImageButton>(R.id.btnclosecredit)
 
         btnclose1.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            //val intent = Intent(this, HomeActivity::class.java)
+            //startActivity(intent)
             finish()
         }
     }

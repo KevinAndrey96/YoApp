@@ -19,8 +19,8 @@ class EnrollmentOk : AppCompatActivity() {
         val btngohome = findViewById<ImageButton>(R.id.btnGoToHome)
 
         btngohome.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            //val intent = Intent(this, HomeActivity::class.java)
+            //startActivity(intent)
             finish()
         }
     }

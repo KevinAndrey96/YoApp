@@ -17,6 +17,7 @@ class Utilization : AppCompatActivity() {
         imageButtonTakeDNICapture1.setOnClickListener {
             val intent = Intent(this, TakeDNICaptureActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

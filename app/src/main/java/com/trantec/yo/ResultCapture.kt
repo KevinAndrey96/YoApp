@@ -427,7 +427,7 @@ class ResultCapture : AppCompatActivity() {
 
                                                                                                                         val intent = Intent(applicationContext, NoCredit::class.java)
                                                                                                                         startActivity(intent)
-                                                                                                                        //finish()
+                                                                                                                        finish()
 
 
                                                                                                                     }catch (ex: Exception){

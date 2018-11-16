@@ -256,8 +256,10 @@ class Reports : AppCompatActivity() {
                                                                                     for (item in data_reports) {
                                                                                         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
                                                                                         val cedula = prefs.getString("cuenta", "")
+                                                                                        val identi = prefs.getString("identidad", "")
 
-                                                                                        if(cedula == item.cedula.toString()){
+                                                                                        //if(cedula == item.cedula.toString()){
+                                                                                        if(identi == item.identidad.toString()){
                                                                                             adaptar(item.movimiento.toString(),item.fecha.toString(),item.valor.toString(), item.nombre.toString())
                                                                                         }
                                                                                     }

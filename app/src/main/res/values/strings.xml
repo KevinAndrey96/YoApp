@@ -72,5 +72,6 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
     <string name="title_activity_report_view">ReportView</string>
+    <string name="_0">0</string>
 
 </resources>
