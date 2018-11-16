@@ -982,6 +982,7 @@ class Enrollment : AppCompatActivity() {
                                                                     _datos.tipodocumento = "CC"
                                                                     _datos.numerodocumento = _numerocedula
                                                                     _datos.primerapellido = _primerapellido
+
                                                                     _datos.segundoapellido = _segundoapellido
                                                                     _datos.primernombre = _primernombre
                                                                     _datos.segundonombre = _segundonombre
@@ -993,13 +994,15 @@ class Enrollment : AppCompatActivity() {
                                                                     _datos.identidad = prefs.getString("enrollment_identidad", "")
                                                                     _datos.respuesta = "true"
                                                                     _datos.nombreimagencc = _pathimagen
-                                                                    _datos.nombreimagenfrontal = ""
-                                                                    _datos.nombreimagentracera = ""
-                                                                    _datos.ruta = ""
-                                                                    _datos.escaneo = ""
-                                                                    _datos.templatecc = ""
+                                                            _datos.nombreimagenfrontal = "frontal.jpg"
+                                                            _datos.nombreimagentracera = "tracera.jpg"
+                                                            _datos.ruta = "/media/imegenes/80794978/"
+                                                            _datos.escaneo = "123456"
+                                                            _datos.templatecc = "920478697654678907657489d7s6g98ya89fh4t9c7qr37gb9t5nyotc984ny7wm3gx5o8m59nfxh"
                                                                     _datos.templatefrontal = ""
                                                                     _datos.templatetracera = ""
+
+
 
                                                                     enrollment.datos = _datos
 
@@ -1092,7 +1095,7 @@ class Enrollment : AppCompatActivity() {
                                                                                             stopProgess()
                                                                                             PrettyDialog(this@Enrollment)
                                                                                                     .setTitle("Información")
-                                                                                                    .setMessage("Ha ocurrido un error, por favor intente de nuevo.")
+                                                                                                    .setMessage("Ha ocurrido un error, por favor intente de nuevo y asegurese de que los datos sean correctos y la persona no haya sido enrolada antes.")
                                                                                                     .show()
                                                                                         }
                                                                                     }
