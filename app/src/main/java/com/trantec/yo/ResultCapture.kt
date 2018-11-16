@@ -427,33 +427,9 @@ class ResultCapture : AppCompatActivity() {
 
                                                                                                                         val intent = Intent(applicationContext, NoCredit::class.java)
                                                                                                                         startActivity(intent)
-                                                                                                                        finish()
-
-                                                                                                                        val dialog = PrettyDialog(applicationContext)
-                                                                                                                                .setTitle(getString(R.string.information))
-                                                                                                                                .setMessage("El usuario no tiene cupo disponible para retiro.")
-                                                                                                                                .setAnimationEnabled(true)
+                                                                                                                        //finish()
 
 
-
-
-
-                                                                                                                        dialog.addButton(
-                                                                                                                                getString(android.R.string.ok), // button text
-                                                                                                                                R.color.pdlg_color_white, // button text color
-                                                                                                                                R.color.pdlg_color_green // button background color
-                                                                                                                        ) // button OnClick listener
-                                                                                                                        {
-                                                                                                                            val fragment = TakeDNIPictureFragment()
-                                                                                                                            val tx = fragmentManager!!.beginTransaction()
-                                                                                                                            //aquitx.replace(R.id.main_fragment, fragment)
-                                                                                                                            tx.addToBackStack("TakeDNIPicFrg").commit()
-                                                                                                                            dialog.dismiss()
-                                                                                                                        }
-
-
-
-                                                                                                                        dialog.show()
                                                                                                                     }catch (ex: Exception){
                                                                                                                         ex.printStackTrace()
                                                                                                                     }

@@ -311,7 +311,7 @@ class EscaneoOk : AppCompatActivity() {
                                                                                                                     R.color.pdlg_color_green // button background color
                                                                                                             ) // button OnClick listener
                                                                                                             {
-                                                                                                                val fragment = TakeDNIPictureFragment()
+                                                                                                                //val fragment = TakeDNIPictureFragment()
                                                                                                                 val tx = fragmentManager!!.beginTransaction()
                                                                                                                 //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                                 tx.addToBackStack("TakeDNIPicFrg").commit()
@@ -347,7 +347,7 @@ class EscaneoOk : AppCompatActivity() {
                                                                                                                 R.color.pdlg_color_green // button background color
                                                                                                         ) // button OnClick listener
                                                                                                         {
-                                                                                                            val fragment = TakeDNIPictureFragment()
+                                                                                                            //val fragment = TakeDNIPictureFragment()
                                                                                                             val tx = fragmentManager!!.beginTransaction()
                                                                                                             //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                             tx.addToBackStack("TakeDNIPicFrg").commit()
@@ -381,7 +381,7 @@ class EscaneoOk : AppCompatActivity() {
                                                                                                             R.color.pdlg_color_green // button background color
                                                                                                     ) // button OnClick listener
                                                                                                     {
-                                                                                                        val fragment = TakeDNIPictureFragment()
+                                                                                                        //val fragment = TakeDNIPictureFragment()
                                                                                                         val tx = fragmentManager!!.beginTransaction()
                                                                                                         //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                         tx.addToBackStack("TakeDNIPicFrg").commit()
@@ -415,7 +415,7 @@ class EscaneoOk : AppCompatActivity() {
                                                                                                         R.color.pdlg_color_green // button background color
                                                                                                 ) // button OnClick listener
                                                                                                 {
-                                                                                                    val fragment = TakeDNIPictureFragment()
+                                                                                                    //val fragment = TakeDNIPictureFragment()
                                                                                                     val tx = fragmentManager!!.beginTransaction()
                                                                                                     //aquitx.replace(R.id.main_fragment, fragment)
                                                                                                     tx.addToBackStack("TakeDNIPicFrg").commit()
