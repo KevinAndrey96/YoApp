@@ -190,7 +190,7 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="101dp"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="103dp"
         tools:text="$500,000" />
 </android.support.constraint.ConstraintLayout>

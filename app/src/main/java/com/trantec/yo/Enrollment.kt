@@ -616,23 +616,24 @@ class Enrollment : AppCompatActivity() {
                                                                     val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
                                                                     val name = prefs.getString("nombre", "")
 
+
                                                                     _datos.idusuario = prefs.getString("enrollment_idusuario", "")
                                                                     _datos.ip = prefs.getString("ip", "")
                                                                     _datos.accion = "1"
                                                                     _datos.tipodocumento = "CC"
-                                                                    _datos.numerodocumento = prefs.getString("enrollment_numerodocumento", "")
-                                                                    _datos.primerapellido = prefs.getString("enrollment_primerapellido", "")
-                                                                    _datos.segundoapellido = prefs.getString("enrollment_segundoapellido", "")
-                                                                    _datos.primernombre = prefs.getString("enrollment_primernombre", "")
-                                                                    _datos.segundonombre = prefs.getString("enrollment_segundonombre", "")
-                                                                    _datos.fechanacimiento = prefs.getString("enrollment_fechanacimiento", "")
-                                                                    _datos.sexo = prefs.getString("enrollment_sexo", "")
-                                                                    _datos.rh = prefs.getString("enrollment_rh", "")
+                                                                    _datos.numerodocumento = _numerocedula
+                                                                    _datos.primerapellido = _primerapellido
+                                                                    _datos.segundoapellido = _segundoapellido
+                                                                    _datos.primernombre = _primernombre
+                                                                    _datos.segundonombre = _segundonombre
+                                                                    _datos.fechanacimiento = _fechanacimiento
+                                                                    _datos.sexo = _sexo
+                                                                    _datos.rh = _rh
                                                                     _datos.codigo = ""
                                                                     _datos.idinformacionpersona = prefs.getString("enrollment_idinformacionpersona", "")
                                                                     _datos.identidad = prefs.getString("enrollment_identidad", "")
                                                                     _datos.respuesta = "true"
-                                                                    _datos.nombreimagencc = prefs.getString("enrollment_imgfrontal", "")
+                                                                    _datos.nombreimagencc = _pathimagen
                                                                     _datos.nombreimagenfrontal = ""
                                                                     _datos.nombreimagentracera = ""
                                                                     _datos.ruta = ""

@@ -1169,7 +1169,7 @@ class ResultCapture : AppCompatActivity() {
                                                                             var makeTransactionString = response.body()!!.string()
                                                                             Logger.d(makeTransactionString)
                                                                             makeTransactionString = makeTransactionString.replace("\"dataresponse\":{\"@nil\":\"true\"},", "")
-                                                                            Logger.d(makeTransactionString)
+                                                                            Logger.d("mmmm"+makeTransactionString)
 
                                                                             if (JSONUtils.isJSONValid(responseIpString)) {
 
@@ -1188,9 +1188,7 @@ class ResultCapture : AppCompatActivity() {
                                                                                                 try {
 
                                                                                                     sendSMSSuccessTransaction()
-
-                                                                                                    sendPaymentPlanMail(makeUseTransactionResponse.response!!.dataresponse!!)
-
+                                                                                                    Logger.d(makeUseTransactionResponse.response!!.dataresponse!!)
 
                                                                                                     val dialog = PrettyDialog(applicationContext)
                                                                                                             .setTitle(getString(R.string.information))
