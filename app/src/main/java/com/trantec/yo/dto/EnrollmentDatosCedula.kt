@@ -6,11 +6,11 @@ import java.io.Serializable
 @JsonIgnoreProperties(ignoreUnknown = true)
 class EnrollmentDatosCedula : Serializable {
     //INFORMACION CEDULA
-    var idusuario: Int? = null
+    var idusuario: String? = null
     var ip: String? = null
     var identidad: String? = null
-    var idcleinte: Int? = null
-    var accion: Int? = null
+    var idcliente: String? = null
+    var accion: String? = null
     var numerotarjeta: String? = null
     var numerocedula: String? = null
     var primerapellido: String? = null
@@ -26,35 +26,4 @@ class EnrollmentDatosCedula : Serializable {
     var barcodebase: String? = null
     var pathimagen: String? = null
     var platafomra: String? = null
-
-   /* var idusuario: Int? = null
-    var ip: String? = null
-    var identidad: String? = null
-    var idcleinte: Int? = null
-    var accion: String? = null
-    var estatusoperacion: String? = null
-    var pathimagen: String? = null*/
-
-    /*var idusuario: Int? = null
-    var ip: String? = null
-    var identidad: String? = null
-    var idcleinte: Int? = null
-    var accion: String? = null
-    var pathwsq: String? = null
-    var pathbitmap: String? = null
-    var minutia: String? = null
-    var fingerprint: String? = null*/
-
-    /*var idusuario: Int? = null
-    var ip: String? = null
-    var identidad: String? = null
-    var idcleinte: Int? = null
-    var accion: String? = null
-    var estatusoperacion: String? = null
-    var mensajeretorno: String? = null
-    var imagenpath: String? = null
-    var imagentemplate: String? = null*/
-
-
-
 }

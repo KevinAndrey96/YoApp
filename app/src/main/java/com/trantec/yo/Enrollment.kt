@@ -218,17 +218,12 @@ class Enrollment : AppCompatActivity() {
                     _pathimagen = escaner_front.pathimagen
                     _statusoperacion = escaner_front.statusoperacion
 
+                    enviarPaquete2()
+
                     val cedulafront = findViewById<Button>(R.id.btnCedula)
                     cedulafront.setEnabled(false)
 
                     cedulafront.setBackgroundResource(R.drawable.rounded_button2)
-
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle("Atención")
-                    builder.setMessage("Escaneo exitoso")
-                    builder.setPositiveButton("OK", null)
-                    builder.create()
-                    builder.show()
 
                     aux = aux!! + 1
                     validarDatos()
@@ -331,20 +326,16 @@ class Enrollment : AppCompatActivity() {
                     //var _pathimagen: String? = null
                     _platafomra = escaner_back.plataforma
 
+                    enviarPaquete1()
+
                     val cedulaback = findViewById<Button>(R.id.button7)
                     cedulaback.setEnabled(false)
 
                     cedulaback.setBackgroundResource(R.drawable.rounded_button2)
 
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle("Atención")
-                    builder.setMessage("Escaneo exitoso")
-                    builder.setPositiveButton("OK", null)
-                    builder.create()
-                    builder.show()
-
                     aux = aux!! + 1
                     validarDatos()
+
                 }
             }
 
@@ -422,50 +413,420 @@ class Enrollment : AppCompatActivity() {
         }
     }
 
-    /*private fun enviarDatos(){
-        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
-        val ip = prefs.getString("ip", "")
-        val idusuario = prefs.getString("idusuario", "")
+    private fun enviarPaquete1() {
 
-        //Informacion cedula
-        val infoDocument = EnrollmentDatosCedula()
-        infoDocument.idusuario = idusuario.toInt()
-        infoDocument.ip = ip
-        infoDocument.identidad
-        infoDocument.idcleinte
-        infoDocument.accion = 1
-        infoDocument.numerotarjeta = _numerotarjeta
-        infoDocument.numerocedula = _numerocedula
-        infoDocument.primerapellido = _primerapellido
-        infoDocument.segundoapellido = _segundoapellido
-        infoDocument.primernombre = _primernombre
-        infoDocument.segundonombre = _segundonombre
-        infoDocument.nombrecompletos = _nombrecompletos
-        infoDocument.sexo = _sexo
-        infoDocument.fechanacimiento = _fechanacimiento
-        infoDocument.rh = _rh
-        infoDocument.tipodedo = _tipodedo
-        infoDocument.versioncedula = _versioncedula
-        infoDocument.barcodebase = _barcodebase
-        infoDocument.pathimagen
-        infoDocument.platafomra = _platafomra
+        try{
+            val formBody = FormBody.Builder()
+                    .add("username", AppConstants.TOKEN_USERNAME)
+                    .add("password", AppConstants.TOKEN_PASSWORD)
+                    .add("grant_type", AppConstants.TOKEN_GRANT_TYPE)
+                    .build()
 
-        //Cedula frontal
-        val infoDocumentFront = EnrollmentDocumentoFrontal()
-        infoDocumentFront.idusuario = idusuario.toInt()
-        infoDocumentFront.ip = ip
-        infoDocumentFront.identidad
-        infoDocumentFront.idcleinte
-        infoDocumentFront.accion = 2
-        infoDocumentFront.estatusoperacion = _statusoperacion
-        infoDocumentFront.pathimagen = _pathimagen
+            val builderToken = Request.Builder()
+            builderToken.url(WebConstant.TOKEN_URL)
+            Logger.d(WebConstant.TOKEN_URL)
 
-        //Huellas
-        val infoFingerPrints = EnrollmentHuellas()
+            val request = builderToken
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .header("Authorization", AppConstants.TOKEN_HEADER_AUTHORIZATION_TOKEN)
+                    .post(formBody)
+                    .build()
+            mHandler.post{
+                run{
+                    startProgress()
+                }
+            }
 
-        //Cara
-        val infoFace = EnrollmentReconocimientoFacial()
-    }*/
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                    e.printStackTrace()
+                    Logger.d("Error generando token")
+                }
+
+                @Throws(IOException::class)
+                override fun onResponse(call: Call, response: Response) {
+
+                    val responseTokenString = response.body()!!.string()
+                    val tokenJSONObject: JSONObject
+                    val tokenResponse: TokenResponse
+
+                    if (responseTokenString != null) {
+
+                        Logger.d("Response from get token")
+                        Logger.d(responseTokenString)
+
+                        if (JSONUtils.isJSONValid(responseTokenString)) {
+                            tokenJSONObject = JSONObject(responseTokenString)
+                            if(tokenJSONObject != null){
+
+                                tokenResponse =  mapper.readValue<TokenResponse>(tokenJSONObject.toString(), TokenResponse::class.java)
+
+                                if(tokenResponse != null){
+                                    Logger.d("Token response on object")
+                                    Logger.d(tokenResponse.access_token)
+
+                                    if(tokenResponse.access_token != null){
+                                        SessionManager.putString(SessionKeys.ESB_TOKEN.key, tokenResponse.access_token)
+
+                                        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                                        val ip = prefs.getString("ip", "")
+                                        val idusuario = prefs.getString("enrollment_idusuario", "")
+                                        val idinformacionpersona = prefs.getString("enrollment_idinformacionpersona", "")
+                                        val identidad= prefs.getString("enrollment_identidad", "")
+
+                                        val infoDocument = EnrollmentDatosCedula()
+                                        val paq1 = EnrollmentDatosCedulaRequest()
+                                        infoDocument.idusuario = idusuario
+                                        infoDocument.ip = ip
+                                        infoDocument.identidad = identidad
+                                        infoDocument.idcliente = idinformacionpersona
+                                        infoDocument.accion = "1"
+                                        infoDocument.numerotarjeta = _numerotarjeta
+                                        infoDocument.numerocedula = _numerocedula
+                                        infoDocument.primerapellido = _primerapellido
+                                        infoDocument.segundoapellido = _segundoapellido
+                                        infoDocument.primernombre = _primernombre
+                                        infoDocument.segundonombre = _segundonombre
+                                        infoDocument.nombrecompletos = _nombrecompletos
+                                        infoDocument.sexo = _sexo
+                                        infoDocument.fechanacimiento = _fechanacimiento
+                                        infoDocument.rh = _rh
+                                        infoDocument.tipodedo = _tipodedo
+                                        infoDocument.versioncedula = _versioncedula
+                                        infoDocument.barcodebase = _barcodebase
+                                        infoDocument.pathimagen = ""
+                                        infoDocument.platafomra = _platafomra
+
+                                        paq1.datos = infoDocument
+
+                                        val bodyMap = RequestBody.create(HttpObjectsConstants.jsonMediaType, mapper.writeValueAsString(paq1))
+
+                                        val builderMap = Request.Builder()
+                                        builderMap.url(YoPrestoApp.getEndpoint(YoPrestoApp()) + WebConstant.DEV_PORT + WebConstant.WEB_URL)
+                                        Logger.d(YoPrestoApp.getEndpoint(YoPrestoApp()) + WebConstant.DEV_PORT + WebConstant.WEB_URL)
+
+                                        val requestReport = builderMap
+                                                .header("Content-Type", "application/json; charset=UTF-8")
+                                                .header("Accept", "application/json")
+                                                .header("Authorization", "Bearer " + SessionManager.getString(SessionKeys.ESB_TOKEN.key, null))
+                                                .header("operation", OperationConstants.PACKAGE)
+                                                .post(bodyMap)
+                                                .build()
+
+
+                                        client.newCall(requestReport).enqueue(object : Callback {
+                                            override fun onFailure(call: Call, e: IOException) {
+
+                                                e.printStackTrace()
+
+                                                mHandler.post{
+                                                    run{
+                                                        stopProgess()
+                                                        PrettyDialog(this@Enrollment)
+                                                                .setTitle("Información")
+                                                                .setMessage("Error. " + e.message)
+                                                                .show()
+                                                    }
+                                                }
+
+                                            }
+
+                                        @Throws(IOException::class)
+                                        override fun onResponse(call: Call, response: Response) {
+
+                                            val responseMapString = response.body()!!.string()
+                                            val enrollmentCedulaResponse: EnrollmentDatosCedulaResponse
+
+                                            Logger.d("Respu:"+responseMapString)
+
+                                                if (JSONUtils.isJSONValid(responseMapString)) {
+
+                                                    enrollmentCedulaResponse =  mapper.readValue<EnrollmentDatosCedulaResponse>(responseMapString, EnrollmentDatosCedulaResponse::class.java)
+
+                                                    if(enrollmentCedulaResponse?.response != null){
+                                                        if(enrollmentCedulaResponse.status!! && enrollmentCedulaResponse != null && enrollmentCedulaResponse.status!! == true ){
+                                                            mHandler.post{
+                                                                run{
+                                                                    stopProgess()
+                                                                    PrettyDialog(this@Enrollment)
+                                                                            .setTitle("Información")
+                                                                            .setMessage("Escaneo exitoso")
+                                                                            .show()
+                                                                }
+                                                            }
+
+                                                        } else {
+                                                            mHandler.post{
+                                                                run{
+                                                                    stopProgess()
+                                                                    PrettyDialog(this@Enrollment)
+                                                                            .setTitle("Información")
+                                                                            .setMessage(enrollmentCedulaResponse.message)
+                                                                            .show()
+                                                                }
+                                                            }
+                                                        }
+                                                    } else {
+                                                        mHandler.post{
+                                                            run{
+                                                                stopProgess()
+                                                                PrettyDialog(this@Enrollment)
+                                                                        .setTitle("Información")
+                                                                        .setMessage("Ha ocurrido un error, por favor intente de nuevo--.")
+                                                                        .show()
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        })
+
+                                    }else{
+                                        SessionManager.removeKey(SessionKeys.ESB_TOKEN.key)
+                                        mHandler.post{
+                                            run{
+                                                stopProgess()
+                                            }
+                                        }
+                                    }
+
+                                }else{
+                                    Logger.d("json object is null")
+                                    mHandler.post{
+                                        run{
+                                            stopProgess()
+                                        }
+                                    }
+                                }
+
+                            }else{
+                                Logger.d("Is not json object")
+                                mHandler.post{
+                                    run{
+                                        stopProgess()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+
+        } catch (ex: Exception){
+            ex.printStackTrace()
+            mHandler.post{
+                run{
+                    stopProgess()
+                    PrettyDialog(this@Enrollment)
+                            .setTitle("Información")
+                            .setMessage("Error ingresando")
+                            .show()
+                }
+            }
+        }
+    }
+
+    private fun enviarPaquete2() {
+
+        try{
+            val formBody = FormBody.Builder()
+                    .add("username", AppConstants.TOKEN_USERNAME)
+                    .add("password", AppConstants.TOKEN_PASSWORD)
+                    .add("grant_type", AppConstants.TOKEN_GRANT_TYPE)
+                    .build()
+
+            val builderToken = Request.Builder()
+            builderToken.url(WebConstant.TOKEN_URL)
+            Logger.d(WebConstant.TOKEN_URL)
+
+            val request = builderToken
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .header("Authorization", AppConstants.TOKEN_HEADER_AUTHORIZATION_TOKEN)
+                    .post(formBody)
+                    .build()
+            mHandler.post{
+                run{
+                    startProgress()
+                }
+            }
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                    e.printStackTrace()
+                    Logger.d("Error generando token")
+                }
+
+                @Throws(IOException::class)
+                override fun onResponse(call: Call, response: Response) {
+
+                    val responseTokenString = response.body()!!.string()
+                    val tokenJSONObject: JSONObject
+                    val tokenResponse: TokenResponse
+
+                    if (responseTokenString != null) {
+
+                        Logger.d("Response from get token")
+                        Logger.d(responseTokenString)
+
+                        if (JSONUtils.isJSONValid(responseTokenString)) {
+                            tokenJSONObject = JSONObject(responseTokenString)
+                            if(tokenJSONObject != null){
+
+                                tokenResponse =  mapper.readValue<TokenResponse>(tokenJSONObject.toString(), TokenResponse::class.java)
+
+                                if(tokenResponse != null){
+                                    Logger.d("Token response on object")
+                                    Logger.d(tokenResponse.access_token)
+
+                                    if(tokenResponse.access_token != null){
+                                        SessionManager.putString(SessionKeys.ESB_TOKEN.key, tokenResponse.access_token)
+
+                                        val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                                        val ip = prefs.getString("ip", "")
+                                        val idusuario = prefs.getString("enrollment_idusuario", "")
+                                        val idinformacionpersona = prefs.getString("enrollment_idinformacionpersona", "")
+                                        val identidad= prefs.getString("enrollment_identidad", "")
+
+                                        val infoDocumentFront = EnrollmentDocumentoFrontal()
+                                        val paq2 = EnrollmentDocumentoRequest()
+                                        infoDocumentFront.idusuario = idusuario
+                                        infoDocumentFront.ip = ip
+                                        infoDocumentFront.identidad = identidad
+                                        infoDocumentFront.idcliente = idinformacionpersona
+                                        infoDocumentFront.accion = "2"
+                                        infoDocumentFront.estatusoperacion = _statusoperacion
+                                        infoDocumentFront.pathimagen = _pathimagen
+
+                                        paq2.datos = infoDocumentFront
+
+                                        val bodyMap = RequestBody.create(HttpObjectsConstants.jsonMediaType, mapper.writeValueAsString(paq2))
+
+                                        val builderMap = Request.Builder()
+                                        builderMap.url(YoPrestoApp.getEndpoint(YoPrestoApp()) + WebConstant.DEV_PORT + WebConstant.WEB_URL)
+                                        Logger.d(YoPrestoApp.getEndpoint(YoPrestoApp()) + WebConstant.DEV_PORT + WebConstant.WEB_URL)
+
+                                        val requestReport = builderMap
+                                                .header("Content-Type", "application/json; charset=UTF-8")
+                                                .header("Accept", "application/json")
+                                                .header("Authorization", "Bearer " + SessionManager.getString(SessionKeys.ESB_TOKEN.key, null))
+                                                .header("operation", OperationConstants.PACKAGE)
+                                                .post(bodyMap)
+                                                .build()
+
+
+                                        client.newCall(requestReport).enqueue(object : Callback {
+                                            override fun onFailure(call: Call, e: IOException) {
+
+                                                e.printStackTrace()
+
+                                                mHandler.post{
+                                                    run{
+                                                        stopProgess()
+                                                        PrettyDialog(this@Enrollment)
+                                                                .setTitle("Información")
+                                                                .setMessage("Error. " + e.message)
+                                                                .show()
+                                                    }
+                                                }
+
+                                            }
+
+                                            @Throws(IOException::class)
+                                            override fun onResponse(call: Call, response: Response) {
+
+                                                val responseMapString = response.body()!!.string()
+                                                val enrollmentCedulaResponse: EnrollmentDatosCedulaResponse
+
+                                                Logger.d("Respu:"+responseMapString)
+
+                                                if (JSONUtils.isJSONValid(responseMapString)) {
+
+                                                    enrollmentCedulaResponse =  mapper.readValue<EnrollmentDatosCedulaResponse>(responseMapString, EnrollmentDatosCedulaResponse::class.java)
+
+                                                    if(enrollmentCedulaResponse?.response != null){
+                                                        if(enrollmentCedulaResponse.status!! && enrollmentCedulaResponse != null && enrollmentCedulaResponse.status!! == true ){
+                                                            mHandler.post{
+                                                                run{
+                                                                    stopProgess()
+                                                                    PrettyDialog(this@Enrollment)
+                                                                            .setTitle("Información")
+                                                                            .setMessage("Escaneo exitoso")
+                                                                            .show()
+                                                                }
+                                                            }
+
+                                                        } else {
+                                                            mHandler.post{
+                                                                run{
+                                                                    stopProgess()
+                                                                    PrettyDialog(this@Enrollment)
+                                                                            .setTitle("Información")
+                                                                            .setMessage(enrollmentCedulaResponse.message)
+                                                                            .show()
+                                                                }
+                                                            }
+                                                        }
+                                                    } else {
+                                                        mHandler.post{
+                                                            run{
+                                                                stopProgess()
+                                                                PrettyDialog(this@Enrollment)
+                                                                        .setTitle("Información")
+                                                                        .setMessage("Ha ocurrido un error, por favor intente de nuevo--.")
+                                                                        .show()
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        })
+
+                                    }else{
+                                        SessionManager.removeKey(SessionKeys.ESB_TOKEN.key)
+                                        mHandler.post{
+                                            run{
+                                                stopProgess()
+                                            }
+                                        }
+                                    }
+
+                                }else{
+                                    Logger.d("json object is null")
+                                    mHandler.post{
+                                        run{
+                                            stopProgess()
+                                        }
+                                    }
+                                }
+
+                            }else{
+                                Logger.d("Is not json object")
+                                mHandler.post{
+                                    run{
+                                        stopProgess()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+
+        } catch (ex: Exception){
+            ex.printStackTrace()
+            mHandler.post{
+                run{
+                    stopProgess()
+                    PrettyDialog(this@Enrollment)
+                            .setTitle("Información")
+                            .setMessage("Error ingresando")
+                            .show()
+                }
+            }
+        }
+    }
 
     private fun startProgress(){
         try{
@@ -498,7 +859,7 @@ class Enrollment : AppCompatActivity() {
     }
 
     private fun enviarDatos() {
-        Logger.d("Test")
+
         try{
                 val formBody = FormBody.Builder()
                         .add("username", AppConstants.TOKEN_USERNAME)
@@ -623,8 +984,6 @@ class Enrollment : AppCompatActivity() {
                                                                     val _datos = EnrollmentDatos()
 
                                                                     val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
-                                                                    val name = prefs.getString("nombre", "")
-
 
                                                                     _datos.idusuario = prefs.getString("enrollment_idusuario", "")
                                                                     _datos.ip = prefs.getString("ip", "")
@@ -652,7 +1011,6 @@ class Enrollment : AppCompatActivity() {
                                                                     _datos.templatetracera = ""
 
                                                                     enrollment.datos = _datos
-                                                                    Logger.d("Datos:"+enrollment.datos)
 
                                                                     val bodyMap = RequestBody.create(HttpObjectsConstants.jsonMediaType, mapper.writeValueAsString(enrollment))
 
