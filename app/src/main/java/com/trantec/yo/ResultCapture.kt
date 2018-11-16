@@ -171,27 +171,14 @@ class ResultCapture : AppCompatActivity() {
                     }
                 }
             }
-
-
-
         }
         editTextQuotaDate.setOnFocusChangeListener { v, hasFocus ->
-
             if(hasFocus) {
-
                 pickerDialog.show()
-                //DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show()
             }
         }
     }
 
-
-
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }*/
     private fun updateLabel() {
         val myFormat = "yyyy-MM-dd" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
@@ -1639,11 +1626,10 @@ class ResultCapture : AppCompatActivity() {
             ex.printStackTrace()
         }
     }
-
     private fun sendSms(celular: String, monto: String, fecha: String){
         try{
             val builderToken = Request.Builder()
-            val url = "http://api.yopresto.co:80/api/v1/sms/send/"+celular+"/Su%20pago en Yo Presto se realizo con exito por un valor de $"+monto+" el dia "+fecha+". Gracias por utilizar nuestros servicios."
+            val url = "http://api.yopresto.co:80/api/v1/sms/send/$celular/Acabas de confirmar una utilizacion en YOPRESTO por valor de $monto, el dia $fecha"
             builderToken.url(url)
             Logger.d(url)
 
