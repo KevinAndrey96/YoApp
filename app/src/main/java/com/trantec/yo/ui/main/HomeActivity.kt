@@ -11,27 +11,16 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.trantec.yo.*
 import com.trantec.yo.ui.LoginActivity
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
-import com.mikepenz.materialdrawer.model.interfaces.IProfile
 import com.trantec.yo.R
 import kotlinx.android.synthetic.main.app_bar_main.*
-import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.model.DividerDrawerItem
-import com.trantec.yo.enumeration.SessionKeys
-import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
-import hundredthirtythree.sessionmanager.SessionManager
-import libs.mjn.prettydialog.PrettyDialog
 
 
 class HomeActivity : AppCompatActivity() {

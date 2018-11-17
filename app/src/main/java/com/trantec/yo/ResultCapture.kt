@@ -19,7 +19,6 @@ import com.trantec.yo.constants.OperationConstants
 import com.trantec.yo.constants.WebConstant
 import com.trantec.yo.dto.*
 import com.trantec.yo.enumeration.SessionKeys
-import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
 import com.trantec.yo.utils.JSONUtils
 import dmax.dialog.SpotsDialog
 import hundredthirtythree.sessionmanager.SessionManager
@@ -33,6 +32,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Context
 import android.view.View.INVISIBLE
+import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
 import com.yopresto.app.yoprestoapp.dto.SendSmsResponse
 import java.text.DecimalFormat
 

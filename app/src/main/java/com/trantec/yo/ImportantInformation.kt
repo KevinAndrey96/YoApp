@@ -57,8 +57,7 @@ class ImportantInformation : AppCompatActivity() {
             val intent1 = Intent(this@ImportantInformation, BytteLicense::class.java)
             intent1.putExtra("URLPETICION", URLPETICION)
             startActivityForResult(intent1, MY_REQUEST_CODE_LISENCE)
-            val intent = Intent(this, Biometric::class.java)
-            startActivity(intent)
+
         }
     }
 

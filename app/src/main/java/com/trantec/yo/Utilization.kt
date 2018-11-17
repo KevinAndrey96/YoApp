@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.trantec.yo.ui.main.TakeDNICaptureActivity
 import kotlinx.android.synthetic.main.activity_utilizacion.*
-import kotlinx.android.synthetic.main.fragment_take_dnipicture.*
 
 
 class Utilization : AppCompatActivity() {

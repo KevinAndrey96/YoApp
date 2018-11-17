@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.orhanobut.logger.Logger
-import com.trantec.yo.alerts.NoCredit
 import com.trantec.yo.alerts.SuccessfulTransaction
 import com.trantec.yo.constants.AppConstants
 import com.trantec.yo.constants.HttpObjectsConstants
@@ -17,13 +15,11 @@ import com.trantec.yo.constants.WebConstant
 import com.trantec.yo.dto.*
 import com.trantec.yo.enumeration.SessionKeys
 import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
-import com.trantec.yo.ui.main.TakeDNICaptureActivity
 import com.trantec.yo.utils.JSONUtils
 import dmax.dialog.SpotsDialog
 import hundredthirtythree.sessionmanager.SessionManager
 import kotlinx.android.synthetic.main.activity_preutilizacion.*
 import kotlinx.android.synthetic.main.activity_result_capture.*
-import kotlinx.android.synthetic.main.activity_utilizacion.*
 import kotlinx.android.synthetic.main.fragment_take_dnipicture.*
 import libs.mjn.prettydialog.PrettyDialog
 import okhttp3.*

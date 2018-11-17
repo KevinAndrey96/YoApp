@@ -41,7 +41,7 @@ class TakeDNIPictureFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-Toast.makeText(context, "1", Toast.LENGTH_SHORT)
+        Toast.makeText(context, "1", Toast.LENGTH_SHORT)
         if(requestCode == takePictureRequestCode){
             Toast.makeText(context, "2", Toast.LENGTH_SHORT)
             if(resultCode == Activity.RESULT_OK){
