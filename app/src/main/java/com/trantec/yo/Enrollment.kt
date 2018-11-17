@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
 import com.microblink.activity.BaseScanActivity
+import com.mikepenz.materialize.color.Material
 import com.trantec.yo.dto.*
 import com.trantec.yo.utils.JSONUtils
 import kotlinx.android.synthetic.main.activity_enrollment.*
@@ -232,12 +234,15 @@ class Enrollment : AppCompatActivity() {
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
 
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Atención")
-                builder.setMessage("Inténtelo de nuevo")
-                builder.setPositiveButton("OK", null)
-                builder.create()
-                builder.show()
+                mHandler.post {
+                    run {
+                        stopProgess()
+                        PrettyDialog(this@Enrollment)
+                                .setTitle("Información")
+                                .setMessage("Intentelo de nuevo")
+                                .show()
+                    }
+                }
 
                 //RECONOCIMIENTO FACIAL
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_OK) {
@@ -251,24 +256,30 @@ class Enrollment : AppCompatActivity() {
 
                 reconocimientofacial.setBackgroundResource(R.drawable.rounded_button2)
 
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Atención")
-                builder.setMessage("Escaneo exitoso")
-                builder.setPositiveButton("OK", null)
-                builder.create()
-                builder.show()
+                mHandler.post {
+                    run {
+                        stopProgess()
+                        PrettyDialog(this@Enrollment)
+                                .setTitle("Información")
+                                .setMessage("Escaneo exitoso")
+                                .show()
+                    }
+                }
 
                 aux = aux!! + 1
                 validarDatos()
 
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_CANCELED) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Atención")
-                builder.setMessage("Inténtelo de nuevo")
-                builder.setPositiveButton("OK", null)
-                builder.create()
-                builder.show()
+                mHandler.post {
+                    run {
+                        stopProgess()
+                        PrettyDialog(this@Enrollment)
+                                .setTitle("Información")
+                                .setMessage("Intentelo de nuevo")
+                                .show()
+                    }
+                }
 
                 //HUELLAS
             } else if (requestCode == MY_REQUEST_CODE_BIOMETRIC && resultCode == BaseScanActivity.RESULT_OK) {//
@@ -293,57 +304,66 @@ class Enrollment : AppCompatActivity() {
                     val huellas: List<Fingers> = mapp.readValue((scanner_huella.fingerprintsobjects).toString())
                 }
 
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Atención")
-                builder.setMessage("Escaneo exitoso")
-                builder.setPositiveButton("OK", null)
-                builder.create()
-                builder.show()
+                mHandler.post {
+                    run {
+                        stopProgess()
+                        PrettyDialog(this@Enrollment)
+                                .setTitle("Información")
+                                .setMessage("Escaneo exitoso")
+                                .show()
+                    }
+                }
 
-                //CEDULA REVERSO
+            //CEDULA REVERSO
             } else if (requestCode == MY_REQUEST_CODE_BACK && resultCode == BaseScanActivity.RESULT_OK) {//back del documento colombiano
                 results_biometric = data?.extras?.getString("InfoBackDoc")!!
 
                 if (JSONUtils.isJSONValid(results_biometric)) {
                     val escaner_back: EscanerBack
                     val res_ = results_biometric.toLowerCase()
+                    val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
                     escaner_back = mapper.readValue<EscanerBack>(res_, EscanerBack::class.java)
 
-                    _numerotarjeta = escaner_back.numerotarjeta
-                    _numerocedula = escaner_back.numerocedula
-                    _primerapellido = escaner_back.primerapellido
-                    _segundoapellido = escaner_back.segundoapellido
-                    _primernombre = escaner_back.primernombre
-                    _segundonombre = escaner_back.segundonombre
-                    _nombrecompletos = escaner_back.nombrescompletos
-                    _sexo = escaner_back.sexo
-                    /*var FeFormat = escaner_back.fechanacimiento
-                    val AnFormat = FeFormat!!.substring(0,4)
-                    val MeFormat = FeFormat!!.substring(6,8)
-                    val DiFormat = FeFormat!!.substring(10,12)
-                    FeFormat = "$AnFormat-$MeFormat-$DiFormat"
+                    if (escaner_back.numerocedula == prefs.getString("enrollment_doc_val", "")){
+                        _numerotarjeta = escaner_back.numerotarjeta
+                        _numerocedula = escaner_back.numerocedula
+                        _primerapellido = escaner_back.primerapellido
+                        _segundoapellido = escaner_back.segundoapellido
+                        _primernombre = escaner_back.primernombre
+                        _segundonombre = escaner_back.segundonombre
+                        _nombrecompletos = escaner_back.nombrescompletos
+                        _sexo = escaner_back.sexo
+                        _fechanacimiento = escaner_back.fechanacimiento
+                        _rh = escaner_back.rh
+                        _tipodedo = escaner_back.tipodedo
+                        _versioncedula = escaner_back.versioncedula
+                        _barcodebase = escaner_back.barcodebase64
+                        //var _pathimagen: String? = null
+                        _platafomra = escaner_back.plataforma
 
-                    _fechanacimiento = FeFormat*/
-                    _fechanacimiento = escaner_back.fechanacimiento
-                    _rh = escaner_back.rh
-                    _tipodedo = escaner_back.tipodedo
-                    _versioncedula = escaner_back.versioncedula
-                    _barcodebase = escaner_back.barcodebase64
-                    //var _pathimagen: String? = null
-                    _platafomra = escaner_back.plataforma
+                        Logger.d("Fecha Nac:" + escaner_back.fechanacimiento)
+                        enviarPaquete1()
 
-                    Logger.d("Fecha Nac:" + escaner_back.fechanacimiento)
-                    enviarPaquete1()
+                        val cedulaback = findViewById<Button>(R.id.button7)
+                        cedulaback.isEnabled = false
 
-                    val cedulaback = findViewById<Button>(R.id.button7)
-                    cedulaback.isEnabled = false
+                        cedulaback.setBackgroundResource(R.drawable.rounded_button2)
 
-                    cedulaback.setBackgroundResource(R.drawable.rounded_button2)
+                        aux = aux!! + 1
+                        validarDatos()
 
-                    aux = aux!! + 1
-                    validarDatos()
-
+                    } else {
+                        mHandler.post {
+                            run {
+                                stopProgess()
+                                PrettyDialog(this@Enrollment)
+                                        .setTitle("Información")
+                                        .setMessage("Este documento no es valido para el QR escaneado")
+                                        .show()
+                            }
+                        }
+                    }
                 }
             }
 
@@ -368,7 +388,8 @@ class Enrollment : AppCompatActivity() {
 
                         if (YoPrestoQR == "yopresto") {
                             val parts = string.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                            DocumentoQR = parts[0]
+                            val t_doc = parts[0].length
+                            DocumentoQR = parts[0].substring(7, t_doc)
                             QR1 = parts[1]
                             QR2 = parts[2]
                             idusuario = parts[1].substring(0, 5)
@@ -862,6 +883,8 @@ class Enrollment : AppCompatActivity() {
         if (aux == 5) {
             val BtnSend = findViewById<Button>(R.id.btnSend)
             BtnSend.isEnabled = true
+            BtnSend.setBackgroundResource(R.drawable.use_button)
+            BtnSend.setTextColor(Color.WHITE)
         }
     }
 
@@ -999,11 +1022,8 @@ class Enrollment : AppCompatActivity() {
                                                                         _datos.ip = prefs.getString("ip", "")
                                                                         _datos.accion = "1"
                                                                         _datos.tipodocumento = "CC"
-
                                                                         _datos.numerodocumento = _numerocedula
-
                                                                         _datos.primerapellido = _primerapellido
-
                                                                         _datos.segundoapellido = _segundoapellido
                                                                         _datos.primernombre = _primernombre
                                                                         _datos.segundonombre = _segundonombre
@@ -1022,8 +1042,6 @@ class Enrollment : AppCompatActivity() {
                                                                         _datos.templatecc = "920478697654678907657489d7s6g98ya89fh4t9c7qr37gb9t5nyotc984ny7wm3gx5o8m59nfxh"
                                                                         _datos.templatefrontal = ""
                                                                         _datos.templatetracera = ""
-
-
 
                                                                         enrollment.datos = _datos
 
