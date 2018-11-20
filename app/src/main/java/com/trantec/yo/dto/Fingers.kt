@@ -5,8 +5,8 @@ import java.io.Serializable
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Fingers : Serializable {
-    var minutia: Int? = null
+    var minutia: String? = null
     var fingerprint: String? = null
     var pathbitmap: String? = null
-    var pathwsq: Int? = null
+    var pathwsq: String? = null
 }
