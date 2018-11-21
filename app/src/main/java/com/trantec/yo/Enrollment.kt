@@ -408,7 +408,7 @@ class Enrollment : AppCompatActivity() {
                         if (YoPrestoQR == "yopresto") {
                             val parts = string.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                             val t_doc = parts[0].length
-                            DocumentoQR = parts[0].substring(7, t_doc)
+                            DocumentoQR = parts[0]//.substring(7, t_doc)
                             QR1 = parts[1]
                             QR2 = parts[2]
                             idusuario = parts[1].substring(0, 5)

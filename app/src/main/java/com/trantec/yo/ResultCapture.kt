@@ -1,6 +1,8 @@
 package com.trantec.yo
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -32,6 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Context
 import android.view.View.INVISIBLE
+import android.view.Window
 import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
 import com.yopresto.app.yoprestoapp.dto.SendSmsResponse
 import java.text.DecimalFormat
@@ -56,13 +59,30 @@ class ResultCapture : AppCompatActivity() {
     var dialog: SpotsDialog? = null
     var identidad: String? = null
     var idusuario: String? = null
+    var valorutili: String? = null
     var idperiodo: Int? = null
+    var transaccion_id: String? = null
+    var fecha_hoy: String? = null
 
     private var progressDialog: MaterialDialog? ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         setContentView(R.layout.activity_result_capture)
+        editTextAmount
+
+        val w = resources.displayMetrics.widthPixels
+        val h = resources.displayMetrics.heightPixels
+
+        //editTextAmount.setText("$h $w")
+
+        val c = Calendar.getInstance()
+        fecha_hoy = c.time.toString()
+
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         textViewAvailableBalance.visibility = INVISIBLE
         val textViewDNINumber = findViewById<TextView>(R.id.textViewDNINumber)
@@ -832,11 +852,7 @@ class ResultCapture : AppCompatActivity() {
                                                                                 generateOTPString = convertStandardJSONString(generateOTPString)
 
                                                                                 if (JSONUtils.isJSONValid(generateOTPString)) {
-
-
                                                                                     val generateOTPResponse = mapper.readValue<GenerateOTPResponse>(generateOTPString, GenerateOTPResponse::class.java)
-
-
                                                                                     if(generateOTPResponse != null){
 
                                                                                         if(generateOTPResponse.status!!) {
@@ -1083,7 +1099,6 @@ class ResultCapture : AppCompatActivity() {
                                                                     makeUseTransactionDatos.accion = "3"
                                                                     makeUseTransactionDatos.ip = ipResponse.ip
                                                                     makeUseTransactionDatos.idusuario = idusuario
-                                                                    makeUseTransactionDatos.idusuario = idusuario
                                                                     makeUseTransactionDatos.documento = documento
                                                                     makeUseTransactionDatos.entidadorigen = identidad
                                                                     //makeUseTransactionDatos.entidadorigen = "10003"
@@ -1100,7 +1115,7 @@ class ResultCapture : AppCompatActivity() {
 
                                                                     fecha = editTextQuotaDate.text.toString()
                                                                     amount = editTextQuota.text.toString()
-
+                                                                    valorutili = editTextAmount.text.toString()
 
                                                                     makeUseTransactionRequest.datos = makeUseTransactionDatos
 
@@ -1145,7 +1160,9 @@ class ResultCapture : AppCompatActivity() {
                                                                             var makeTransactionString = response.body()!!.string()
                                                                             Logger.d(makeTransactionString)
                                                                             makeTransactionString = makeTransactionString.replace("\"dataresponse\":{\"@nil\":\"true\"},", "")
-                                                                            Logger.d("mmmm"+makeTransactionString)
+                                                                            Logger.d(""+makeTransactionString)
+
+
 
                                                                             if (JSONUtils.isJSONValid(responseIpString)) {
 
@@ -1162,9 +1179,12 @@ class ResultCapture : AppCompatActivity() {
 
                                                                                                 stopProgess()
                                                                                                 try {
+                                                                                                    Logger.d(makeUseTransactionResponse.response!!.dataresponse!!)
+                                                                                                    transaccion_id= makeUseTransactionResponse.response!!.dataresponse!!.substring(54, makeUseTransactionResponse.response!!.dataresponse!!.length-1)
+                                                                                                    Logger.d("Éxito: $transaccion_id")
+                                                                                                    sendPaymentPlanMail(transaccion_id!!)
 
                                                                                                     sendSMSSuccessTransaction()
-                                                                                                    Logger.d(makeUseTransactionResponse.response!!.dataresponse!!)
 
                                                                                                     val dialog = PrettyDialog(applicationContext)
                                                                                                             .setTitle(getString(R.string.information))
@@ -1504,10 +1524,13 @@ class ResultCapture : AppCompatActivity() {
 
                                                                             //Toast.makeText(applicationContext, "La utilización se ha realizado con exito!", Toast.LENGTH_LONG)
 
-                                                                            sendSms(celular.toString(), amount.toString(), fecha.toString())
+                                                                            sendSms(celular.toString(), valorutili.toString(), fecha.toString())
+
+
 
                                                                             val intent = Intent(applicationContext, SuccessfulTransaction::class.java)
                                                                             startActivity(intent)
+                                                                            finish()
                                                                         }
                                                                     })
 
@@ -1605,7 +1628,7 @@ class ResultCapture : AppCompatActivity() {
     private fun sendSms(celular: String, monto: String, fecha: String){
         try{
             val builderToken = Request.Builder()
-            val url = "http://api.yopresto.co:80/api/v1/sms/send/$celular/Acabas de confirmar una utilizacion en YOPRESTO por valor de $monto, el dia $fecha"
+            val url = "http://api.yopresto.co:80/api/v1/sms/send/$celular/Acabas de confirmar una utilizacion en YOPRESTO por valor de $monto, el dia $fecha_hoy"
             builderToken.url(url)
             Logger.d(url)
 

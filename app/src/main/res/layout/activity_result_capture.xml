@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondoutilizacion"
-    tools:layout_editor_absoluteY="81dp">
+    tools:layout_editor_absoluteY="81dp"
+    tools:context=".ResultCapture"
+    >
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="82dp"
         android:layout_height="80dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="26dp"
         android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/txtSaldo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,41 +25,47 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="41dp"
         android:ems="10"
         android:inputType="numberPassword"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAcceptUse"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8" />
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/editTextQuotaDate" />
 
     <EditText
         android:id="@+id/editTextQuota"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView7"
+        app:layout_constraintBottom_toTopOf="@+id/editTextQuotaDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView7" />
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAmount" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="269dp"
+        android:layout_marginTop="13dp"
         android:layout_marginEnd="140dp"
+        android:layout_marginBottom="13dp"
         android:text="@string/amount_to_use"
+        app:layout_constraintBottom_toTopOf="@+id/editTextQuota"
         app:layout_constraintEnd_toStartOf="@+id/editTextAmount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/editTextAmount" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="26dp"
         android:layout_marginEnd="146dp"
         android:text="@string/quota_amount"
         app:layout_constraintEnd_toStartOf="@+id/editTextQuota"
@@ -72,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="163dp"
         android:text="@string/write_otp"
         app:layout_constraintEnd_toStartOf="@+id/editTextOTP"
@@ -83,25 +88,24 @@
         android:id="@+id/textViewAvailableBalance"
         android:layout_width="114dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="87dp"
+        android:layout_marginBottom="7dp"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAcceptUse"
+        app:layout_constraintTop_toBottomOf="@+id/txtSaldo"
         tools:text="500.000" />
 
     <EditText
         android:id="@+id/editTextAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="178dp"
+        android:layout_marginEnd="7dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/textViewGenerateOTP"
+        app:layout_constraintBottom_toTopOf="@+id/editTextQuota"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textViewDNINumber" />
@@ -110,22 +114,22 @@
         android:id="@+id/textViewGenerateOTP"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="43dp"
         android:text="@string/generate_new_otp"
         android:textColor="@color/pdlg_color_blue"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAcceptUse"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAcceptUse"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextAmount" />
+        app:layout_constraintTop_toTopOf="@+id/editTextOTP" />
 
     <Button
         android:id="@+id/buttonAcceptUse"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="62dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginBottom="25dp"
+        android:layout_width="287dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="65dp"
         android:background="@drawable/use_button"
         android:capitalize="none"
         android:text="@string/accept"
@@ -133,13 +137,13 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewAvailableBalance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewGenerateOTP" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextOTP" />
 
     <TextView
         android:id="@+id/textViewDNINumber"
         android:layout_width="113dp"
         android:layout_height="20dp"
-        android:layout_marginBottom="81dp"
+        android:layout_marginBottom="82dp"
         android:textAlignment="center"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/editTextAmount"
@@ -153,8 +157,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="141dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="140dp"
         android:text="@string/quota_date"
         app:layout_constraintEnd_toStartOf="@+id/editTextQuotaDate"
         app:layout_constraintStart_toStartOf="parent"
@@ -169,16 +173,17 @@
         android:editable="false"
         android:ems="10"
         android:inputType="date"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView9"
+        app:layout_constraintBottom_toTopOf="@+id/editTextOTP"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView9" />
+        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextQuota" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="147dp"
         android:layout_height="20dp"
         android:layout_marginTop="103dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="31dp"
         android:text="@string/avalaible_value"
         android:textAlignment="center"
         android:textColor="#ffffff"
@@ -190,14 +195,16 @@
     <TextView
         android:id="@+id/txtSaldo"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="412dp"
         android:text="$0"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAvailableBalance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
         tools:text="$0" />
 </android.support.constraint.ConstraintLayout>
