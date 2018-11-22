@@ -344,7 +344,7 @@ class Enrollment : AppCompatActivity() {
 
                     escaner_back = mapper.readValue<EscanerBack>(res_, EscanerBack::class.java)
 
-                    if (escaner_back.numerocedula == prefs.getString("enrollment_doc_val", "")){
+                    if (escaner_back.numerocedula == DocumentoQR){
                         _numerotarjeta = escaner_back.numerotarjeta
                         _numerocedula = escaner_back.numerocedula
                         _primerapellido = escaner_back.primerapellido
@@ -409,6 +409,16 @@ class Enrollment : AppCompatActivity() {
                             val parts = string.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                             val t_doc = parts[0].length
                             DocumentoQR = parts[0]//.substring(7, t_doc)
+
+                            if (DocumentoQR!!.length == 9)
+                                DocumentoQR = "0"+DocumentoQR
+
+                            if (DocumentoQR!!.length == 8)
+                                DocumentoQR = "00"+DocumentoQR
+
+                            if (DocumentoQR!!.length == 8)
+                                DocumentoQR = "000"+DocumentoQR
+
                             QR1 = parts[1]
                             QR2 = parts[2]
                             idusuario = parts[1].substring(0, 5)
