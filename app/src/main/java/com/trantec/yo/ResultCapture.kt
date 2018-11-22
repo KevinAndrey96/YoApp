@@ -1523,6 +1523,10 @@ class ResultCapture : AppCompatActivity() {
                                                                             Logger.d(getMessageString)
 
                                                                             //Toast.makeText(applicationContext, "La utilización se ha realizado con exito!", Toast.LENGTH_LONG)
+                                                                            Logger.d(fecha.toString())
+                                                                            var mes = fecha.toString().substring(3,6)
+                                                                            var dia = fecha.toString().substring(8,9)
+                                                                            var anio = fecha.toString().substring(3,6)
 
                                                                             sendSms(celular.toString(), valorutili.toString(), fecha.toString())
 

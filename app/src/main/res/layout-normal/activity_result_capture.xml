@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btnUtilizacion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondoutilizacion"
-    tools:layout_editor_absoluteY="81dp"
-    tools:context=".ResultCapture"
-    >
+    tools:context="com.trantec.yo.ui.main.HomeActivity">
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="82dp"
         android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"
         android:contentDescription="@string/nav_header_desc"
         app:layout_constraintBottom_toTopOf="@+id/txtSaldo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,69 +22,172 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logoyopresto" />
 
-    <EditText
-        android:id="@+id/editTextOTP"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/txtSaldo"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="41dp"
-        android:ems="10"
-        android:inputType="numberPassword"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAcceptUse"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/editTextQuotaDate" />
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="118dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="117dp"
+        android:text="$0"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="$0" />
 
-    <EditText
-        android:id="@+id/editTextQuota"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="173dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="2dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/editTextQuotaDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/editTextAmount" />
+        android:layout_below="@+id/imageView4"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="117dp"
+        android:text="@string/avalaible_value"
+        android:textAlignment="center"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textViewDNINumber"
+        android:layout_width="163dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtSaldo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="122dp"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        tools:text="131313131313" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="13dp"
+        android:layout_below="@+id/textViewDNINumber"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="55dp"
         android:layout_marginEnd="140dp"
-        android:layout_marginBottom="13dp"
-        android:text="@string/amount_to_use"
-        app:layout_constraintBottom_toTopOf="@+id/editTextQuota"
-        app:layout_constraintEnd_toStartOf="@+id/editTextAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextAmount" />
+        android:text="@string/amount_to_use" />
+
+    <EditText
+        android:id="@+id/editTextAmount"
+        android:layout_width="164dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewDNINumber"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="29dp"
+        android:ems="10"
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="26dp"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="38dp"
         android:layout_marginEnd="146dp"
-        android:text="@string/quota_amount"
-        app:layout_constraintEnd_toStartOf="@+id/editTextQuota"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        android:text="@string/quota_amount" />
+
+    <EditText
+        android:id="@+id/editTextQuota"
+        android:layout_width="164dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextAmount"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="140dp"
+        android:text="@string/quota_date" />
+
+    <EditText
+        android:id="@+id/editTextQuotaDate"
+        android:layout_width="162dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextQuota"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="29dp"
+        android:clickable="true"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="date" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_below="@+id/textView9"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="38dp"
         android:layout_marginEnd="163dp"
-        android:text="@string/write_otp"
-        app:layout_constraintEnd_toStartOf="@+id/editTextOTP"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:text="@string/write_otp" />
+
+    <EditText
+        android:id="@+id/editTextOTP"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextQuotaDate"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="41dp"
+        android:ems="10"
+        android:inputType="numberPassword" />
+
+    <TextView
+        android:id="@+id/textViewGenerateOTP"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView8"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="105dp"
+        android:text="@string/generate_new_otp"
+        android:textColor="@color/pdlg_color_blue"
+        android:textStyle="bold|italic" />
+
+    <Button
+        android:id="@+id/buttonAcceptUse"
+        android:layout_width="287dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textViewGenerateOTP"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="65dp"
+        android:background="@drawable/use_button"
+        android:capitalize="none"
+        android:text="@string/accept"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/textViewAvailableBalance"
@@ -92,119 +197,5 @@
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSaldo"
         tools:text="500.000" />
-
-    <EditText
-        android:id="@+id/editTextAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="7dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/editTextQuota"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDNINumber" />
-
-    <TextView
-        android:id="@+id/textViewGenerateOTP"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="43dp"
-        android:text="@string/generate_new_otp"
-        android:textColor="@color/pdlg_color_blue"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonAcceptUse"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextOTP" />
-
-    <Button
-        android:id="@+id/buttonAcceptUse"
-        android:layout_width="287dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="65dp"
-        android:background="@drawable/use_button"
-        android:capitalize="none"
-        android:text="@string/accept"
-        android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/textViewAvailableBalance"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextOTP" />
-
-    <TextView
-        android:id="@+id/textViewDNINumber"
-        android:layout_width="113dp"
-        android:layout_height="20dp"
-        android:layout_marginBottom="82dp"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/editTextAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:text="131313131313" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="140dp"
-        android:text="@string/quota_date"
-        app:layout_constraintEnd_toStartOf="@+id/editTextQuotaDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <EditText
-        android:id="@+id/editTextQuotaDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:editable="false"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/editTextOTP"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextQuota" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="147dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="103dp"
-        android:layout_marginBottom="31dp"
-        android:text="@string/avalaible_value"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDNINumber"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtSaldo"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginBottom="412dp"
-        android:text="$0"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textViewAvailableBalance"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        tools:text="$0" />
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

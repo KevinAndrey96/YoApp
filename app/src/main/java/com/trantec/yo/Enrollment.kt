@@ -254,6 +254,8 @@ class Enrollment : AppCompatActivity() {
                     }
                 }
 
+                error()
+
             //RECONOCIMIENTO FACIAL
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_OK) {
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
@@ -295,6 +297,7 @@ class Enrollment : AppCompatActivity() {
                                 .show()
                     }
                 }
+                error()
 
             //HUELLAS
             } else if (requestCode == MY_REQUEST_CODE_BIOMETRIC && resultCode == BaseScanActivity.RESULT_OK) {//
@@ -382,6 +385,7 @@ class Enrollment : AppCompatActivity() {
                                         .show()
                             }
                         }
+                        error()
                     }
                 }
             }
@@ -454,15 +458,18 @@ class Enrollment : AppCompatActivity() {
 
                         } else {
                             Toast.makeText(this, "Hubo un error, por favor inténtelo de nuevo", Toast.LENGTH_LONG).show()
+                            error()
                         }
                     } else {
                         Toast.makeText(this, "Hubo un error, por favor inténtelo de nuevo", Toast.LENGTH_LONG).show()
+                        error()
                     }
 
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     Toast.makeText(this, "Hubo un error, por favor inténtelo de nuevo", Toast.LENGTH_LONG).show()
+                    error()
                 }
             }
         } else {
@@ -1660,5 +1667,54 @@ class Enrollment : AppCompatActivity() {
         {
             redirectno()
         }
+    }
+
+    private fun error(){
+        _numerotarjeta  = null
+        _numerocedula = null
+        _primerapellido = null
+        _segundoapellido = null
+        _primernombre = null
+        _segundonombre = null
+        _nombrecompletos = null
+        _sexo = null
+        _fechanacimiento = null
+        _rh = null
+        _tipodedo = null
+        _versioncedula = null
+        _barcodebase = null
+        _platafomra = null
+        _pathimagen = null
+        _statusoperacion = null
+        estatusoperacion = null
+        mensajeretorno = null
+        imagenpath = null
+        imagentemplate = null
+        minutia = null
+        fingerprint = null
+        pathbitmap = null
+        pathwsq  = null
+        DocumentoQR = null
+        YoPrestoQR  = null
+        QR1  = null
+        QR2 = null
+        QR3 = null
+        idinformacionpersona = null
+        identidad = null
+        idusuario = null
+
+        val cedulafront = findViewById<Button>(R.id.btnCedula)
+        val reconocimientofacial = findViewById<Button>(R.id.button4)
+        val escaner_huella = findViewById<Button>(R.id.button2)
+        val cedulaback = findViewById<Button>(R.id.button7)
+        val BtnSend = findViewById<Button>(R.id.btnSend)
+        val btnScan = findViewById<Button>(R.id.scannQr)
+        btnScan.setBackgroundResource(R.drawable.rounded_button1)
+        btnScan.setEnabled(true)
+        BtnSend.setEnabled(false)
+        cedulaback.setEnabled(false)
+        cedulafront.setEnabled(false)
+        reconocimientofacial.setEnabled(false)
+        escaner_huella.setEnabled(false)
     }
 }
