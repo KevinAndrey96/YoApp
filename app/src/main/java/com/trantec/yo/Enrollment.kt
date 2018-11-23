@@ -165,8 +165,8 @@ class Enrollment : AppCompatActivity() {
         button4.setOnClickListener {
             //rostro
             val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
-            intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "2")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
-            intent.putExtra("TIPO_CAMERA", "0")//0 capara frontal 1 camara posterior
+            intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "1")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
+            intent.putExtra("TIPO_CAMERA", "1")//0 capara frontal 1 camara posterior
             intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
             startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
         }
