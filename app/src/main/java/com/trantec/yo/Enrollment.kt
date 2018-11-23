@@ -3,6 +3,7 @@ package com.trantec.yo
 import org.json.JSONObject
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
@@ -22,12 +23,9 @@ import com.example.biometricbytte.morpho.license.BytteLicense
 import com.example.docbytte.BiometricCamera.ValuesBiometric
 import com.example.docbytte.ui.CBackDocument
 import com.example.docbytte.ui.CFrontDocument
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
 import com.microblink.activity.BaseScanActivity
-import com.mikepenz.materialize.color.Material
 import com.trantec.yo.dto.*
 import com.trantec.yo.utils.JSONUtils
 import kotlinx.android.synthetic.main.activity_enrollment.*
@@ -164,11 +162,20 @@ class Enrollment : AppCompatActivity() {
 
         button4.setOnClickListener {
             //rostro
-            val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
-            intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "1")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
-            intent.putExtra("TIPO_CAMERA", "1")//0 capara frontal 1 camara posterior
-            intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
-            startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
+            val builder = AlertDialog.Builder(this@Enrollment)
+            builder.setTitle("Escaner Facial")
+            builder.setIcon(R.drawable.reconocimiento_facial)
+            builder.setMessage("¿Que cámara deseas usar para realizar el escaner facial?")
+
+            builder.setPositiveButton("Cámara Frontal"){dialog, which ->
+                openCameraFront()
+            }
+            builder.setNegativeButton("Cámara Posterior"){dialog,which ->
+                openCameraBack()
+            }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
 
         button2.setOnClickListener {
@@ -177,14 +184,22 @@ class Enrollment : AppCompatActivity() {
             intent.putExtra("TipoHuella", "2")
             startActivityForResult(intent, MY_REQUEST_CODE_BIOMETRIC)
         }
+    }
 
-        /*button8.setOnClickListener {
-            val intent = Intent(this@Enrollment, BytteLicense::class.java)
-            intent.putExtra("URLPETICION", URLPETICION)
-            startActivityForResult(intent, MY_REQUEST_CODE_LISENCE)
-        }*/
+    private fun openCameraFront(){
+        val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
+        intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "1")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
+        intent.putExtra("TIPO_CAMERA", "0")//0 camara frontal 1 camara posterior
+        intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
+        startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
+    }
 
-
+    private fun openCameraBack(){
+        val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
+        intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "1")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
+        intent.putExtra("TIPO_CAMERA", "1")//0 camara frontal 1 camara posterior
+        intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
+        startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
     }
 
     private fun performAction() {
