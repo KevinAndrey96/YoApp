@@ -1,4 +1,4 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,9 +17,11 @@
         android:id="@+id/editTextUser"
         android:layout_width="291dp"
         android:layout_height="47dp"
+        android:layout_above="@+id/editTextPassword"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="364dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:fontFamily="@font/roboto_condensed_regular"
         android:hint="@string/user_hint"
@@ -33,9 +35,11 @@
         android:id="@+id/editTextPassword"
         android:layout_width="291dp"
         android:layout_height="42dp"
+        android:layout_above="@+id/buttonSignIn"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:fontFamily="@font/roboto_condensed_regular"
         android:hint="@string/password_hint"
@@ -47,20 +51,20 @@
 
     <Button
         android:id="@+id/buttonSignIn"
-        android:layout_width="293dp"
-        android:layout_height="35dp"
+        android:layout_width="298dp"
+        android:layout_height="31dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_button"
         android:text="@string/action_sign_in_short"
         android:textColor="#CB1E1E"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

@@ -935,6 +935,8 @@ class ResultCapture : AppCompatActivity() {
         return datajson
     }
     private fun makeUseAmount(){
+
+
         try{
             val formBody = FormBody.Builder()
                     .add("username", AppConstants.TOKEN_USERNAME)
@@ -1522,15 +1524,11 @@ class ResultCapture : AppCompatActivity() {
                                                                             var getMessageString = response.body().toString()
                                                                             Logger.d(getMessageString)
 
-                                                                            //Toast.makeText(applicationContext, "La utilización se ha realizado con exito!", Toast.LENGTH_LONG)
-                                                                            Logger.d(fecha.toString())
-                                                                            var mes = fecha.toString().substring(3,6)
-                                                                            var dia = fecha.toString().substring(8,9)
-                                                                            var anio = fecha.toString().substring(3,6)
+                                                                            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                                                                            val date = Date()
+                                                                            val _fecha = dateFormat.format(date)
 
-                                                                            sendSms(celular.toString(), valorutili.toString(), fecha.toString())
-
-
+                                                                            sendSms(celular.toString(), valorutili.toString(), _fecha.toString())
 
                                                                             val intent = Intent(applicationContext, SuccessfulTransaction::class.java)
                                                                             startActivity(intent)
@@ -1632,7 +1630,7 @@ class ResultCapture : AppCompatActivity() {
     private fun sendSms(celular: String, monto: String, fecha: String){
         try{
             val builderToken = Request.Builder()
-            val url = "http://api.yopresto.co:80/api/v1/sms/send/$celular/Acabas de confirmar una utilizacion en YOPRESTO por valor de $monto, el dia $fecha_hoy"
+            val url = "http://api.yopresto.co:80/api/v1/sms/send/$celular/Acabas de confirmar una utilizacion en YOPRESTO por valor de $monto, el dia $fecha"
             builderToken.url(url)
             Logger.d(url)
 
