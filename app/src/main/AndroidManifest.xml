@@ -118,26 +118,11 @@
             android:name=".Reports"
             android:label="Reportes" />
         <activity android:name=".Enrollment" />
-        <activity android:name=".ResultCapture" />
         <activity
-            android:name=".CaptureDocumentFront"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".CaptureDocumentReverse"
-            android:screenOrientation="portrait" />
+            android:name=".ResultCapture"/>
         <activity android:name=".ui.main.ImportantInformation" />
         <activity
-            android:name=".Biometric"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ScannerFacial"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Utilization"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ScannerQRSuccess" />
-        <activity
-            android:name=".ScannerQR"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.main.HomeActivity"
