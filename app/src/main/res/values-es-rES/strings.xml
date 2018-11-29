@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">YoPresto</string>
+    <string name="app_name">Yo Presto</string>
     <string name="sign_in">Ingreso</string>
-    <string name="prompt_email">Correo</string>
+    <string name="prompt_email">Correo Electrónico</string>
     <string name="action_sign_in_short">Ingresar</string>
     <string name="action_settings">Configuraciones</string>
     <string name="user_hint">Usuario</string>
@@ -15,23 +15,23 @@
     <string name="error_field_required">Campo obligatorio</string>
     <string name="permission_rationale">Es necesario permitir el acceso a los contactos</string>
     <string name="title_activity_main_menu">Menu Principal</string>
-    <string name="title_activity_main">YoPresto Aliado</string>
-    <string name="title_activity_capture_dni">YoPresto Aliado</string>
-    <string name="use">Utilizacion</string>
+    <string name="title_activity_main">Yo Presto Aliado</string>
+    <string name="title_activity_capture_dni">Yo Presto Aliado</string>
+    <string name="use">Utilización</string>
     <string name="use_message">Realice la lectura del código de barras de la cédula de ciudadanía</string>
     <string name="dni">Cédula</string>
     <string name="available_amount">Monto disponible para retiro</string>
     <string name="amount_to_use">Monto a utilizar</string>
-    <string name="quota_amount">Valor de la cuota</string>
-    <string name="write_otp">Ingresa la OTP</string>
-    <string name="generate_new_otp">Generar nueva OTP</string>
+    <string name="quota_amount">Valor de cuota</string>
+    <string name="write_otp">Código OTP</string>
+    <string name="generate_new_otp">Generar nuevo código</string>
     <string name="accept">Aceptar</string>
     <string name="close_session">Cerrar Sesión</string>
     <string name="use_transaction">Utilización</string>
     <string name="more">Más</string>
     <string name="information">Información</string>
     <string name="close_session_ask">¡Desea cerrar sesión?</string>
-    <string name="quota_date">Fecha Cuota</string>
+    <string name="quota_date">Fecha de cuota</string>
     <string name="loading">Cargando</string>
     <string name="progress_dialog">Consultando</string>
     <string name="please_wait">Por favor espere</string>
@@ -44,12 +44,8 @@
     <string name="avalaible_value">Mi cupo disponible</string>
     <string name="welcome">Bienvenido</string>
     <string name="avalaible_money">Tu dinero disponible:</string>
+    <string name="next" translatable="false">Siguiente</string>
 
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-    </string-array>
-
+    <string name="scan_qr_code">Escanear código QR</string>
+    <string name="result_not_found">Resultado no encontrado</string>
 </resources>

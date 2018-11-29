@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btnUtilizacion"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondoutilizacion"
+    tools:context="com.trantec.yo.ui.main.HomeActivity">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="78dp"
+        android:layout_height="75dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"
+        android:contentDescription="@string/nav_header_desc"
+        app:layout_constraintBottom_toTopOf="@+id/txtSaldo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logoyopresto" />
+
+    <TextView
+        android:id="@+id/txtSaldo"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="118dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="117dp"
+        android:text="$0"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="$0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_below="@+id/imageView4"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="86dp"
+        android:text="@string/avalaible_value"
+        android:textAlignment="center"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textViewDNINumber"
+        android:layout_width="108dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtSaldo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="108dp"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        tools:text="131313131313" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView7"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/amount_to_use" />
+
+    <EditText
+        android:id="@+id/editTextAmount"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextQuota"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="7dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView9"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="146dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/quota_amount" />
+
+    <EditText
+        android:id="@+id/editTextQuota"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextQuotaDate"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="11dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView8"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="31dp"
+        android:text="@string/quota_date" />
+
+    <EditText
+        android:id="@+id/editTextQuotaDate"
+        android:layout_width="167dp"
+        android:layout_height="43dp"
+        android:layout_above="@+id/editTextOTP"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="11dp"
+        android:clickable="true"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewGenerateOTP"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginBottom="42dp"
+        android:text="@string/write_otp" />
+
+    <EditText
+        android:id="@+id/editTextOTP"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewGenerateOTP"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="23dp"
+        android:ems="10"
+        android:inputType="numberPassword" />
+
+    <TextView
+        android:id="@+id/textViewGenerateOTP"
+        android:layout_width="268dp"
+        android:layout_height="32dp"
+        android:layout_above="@+id/buttonAcceptUse"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="76dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/generate_new_otp"
+        android:textAlignment="center"
+        android:textColor="@color/pdlg_color_blue"
+        android:textStyle="bold|italic" />
+
+    <Button
+        android:id="@+id/buttonAcceptUse"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="67dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/use_button"
+        android:capitalize="none"
+        android:text="@string/accept"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textViewAvailableBalance"
+        android:layout_width="114dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="7dp"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        tools:text="500.000" />
+</RelativeLayout>

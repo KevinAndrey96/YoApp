@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.yopresto.app.yoprestoapp">
+    package="com.trantec.yo"
+    android:largeHeap="true">
 
     <!-- permissions -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -29,14 +30,16 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <permission
+        android:name="com.trantec.yo.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
     <!-- Define new permissions -->
     <permission
         android:name="com.biometric.usosdkbytte.NEW_READ_LKMS_LICENSE_PROVIDER"
-        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
+        android:protectionLevel="signature" />
     <permission
         android:name="com.biometric.usosdkbytte.NEW_WRITE_LKMS_LICENSE_PROVIDER"
-        android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
-
+        android:protectionLevel="signature" />
     <permission
         android:name="com.biometric.usosdkbytte.NEW_READ_MPH_BIO_SDK_PROVIDER"
         android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
@@ -65,25 +68,25 @@
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/icon"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
         tools:replace="allowBackup">
-        <meta-data
-            android:name="net.hockeyapp.android.appIdentifier"
-            android:value="a22fc240470e4094806b6ae404fbf8e2" />
+
+        <!--
+            <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA_Y5V5Uh0uzIspPppruNQ5GSFUMeF76aw"/>
+        -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".ui.LoginActivity"
-            android:label="@string/app_name">
-
-        </activity>
+            android:label="@string/app_name" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
@@ -97,33 +100,70 @@
             android:name=".ui.main.TakeDNICaptureActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".Stores"
             android:label="Mis Tiendas" />
-        <activity android:name=".Enrollment"></activity>
+        <activity
+            android:name=".alerts.EnrollmentNo"
+            android:label="Yo presto"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Reports"
+            android:label="Reportes" />
+        <activity android:name=".Enrollment" />
+        <activity
+            android:name=".ResultCapture"/>
+        <activity android:name=".ui.main.ImportantInformation" />
+        <activity
+            android:name=".Utilization"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.main.HomeActivity"
-            android:label="Yo Presto"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
+        <!--
+        <activity
+            android:name=".activity_report"
+            android:label="@string/title_activity_report"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_tab"
+            android:label="@string/title_activity_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        -->
+        <activity
+            android:name=".Report"
+            android:label="@string/title_activity_report_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".alerts.NoCredit"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EscaneoOk"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".alerts.EnrollmentOk"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".alerts.SuccessfulTransaction"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".utilizacion_view"
+            android:label="@string/title_activity_utilizacion_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
