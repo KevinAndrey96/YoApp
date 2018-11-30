@@ -95,6 +95,11 @@ class Enrollment : AppCompatActivity() {
     var fingerprint: String? = null
     var pathbitmap: String? = null
     var pathwsq: String? = null
+    //Imagenes huellas
+    var imghuellaone: ByteArray? = null
+    var imghuellatwo: ByteArray? = null
+    var imghuellathree: ByteArray? = null
+    var imghuellafour: ByteArray? = null
 
     var DocumentoQR: String? = null
     var YoPrestoQR: String? = null
@@ -323,7 +328,14 @@ class Enrollment : AppCompatActivity() {
 
                 val jsonObj = JSONObject(res_.substring(res_.indexOf("{"), res_.lastIndexOf("}") + 1))
                 val fingers = jsonObj.getJSONArray("fingerprintsobjects")
+                Logger.d(res_)
+                Logger.d(fingers.getJSONObject(0).getString("pathbitmap"))
 
+                imghuellaone = fingers.getJSONObject(0).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 1
+                imghuellatwo = fingers.getJSONObject(1).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 2
+                imghuellathree = fingers.getJSONObject(2).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 3
+                imghuellafour = fingers.getJSONObject(3).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 4
+                
                 for (i in 0 until fingers!!.length()) {
                     val scanner = Fingers()
                     minutia = fingers.getJSONObject(i).getString("minutia")
