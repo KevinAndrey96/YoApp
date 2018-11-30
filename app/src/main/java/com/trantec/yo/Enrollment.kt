@@ -1708,24 +1708,28 @@ class Enrollment : AppCompatActivity() {
             val autenticacionCapturaHuellaOne = ProcesoAutenticacionCapturaHuella()
             autenticacionCapturaHuellaOne.IdFingerprint = 2
             autenticacionCapturaHuellaOne.Imagen = null //TODO byte[] huella 2
+            //imghuellaone
 
             autenticacionCapturaHuella.add(autenticacionCapturaHuellaOne)
 
             val autenticacionCapturaHuellaTwo = ProcesoAutenticacionCapturaHuella()
             autenticacionCapturaHuellaTwo.IdFingerprint = 3
             autenticacionCapturaHuellaTwo.Imagen = null //TODO byte[] huella 3
+            //imghuellatwo
 
             autenticacionCapturaHuella.add(autenticacionCapturaHuellaTwo)
 
             val autenticacionCapturaHuellaThree = ProcesoAutenticacionCapturaHuella()
             autenticacionCapturaHuellaThree.IdFingerprint = 4
             autenticacionCapturaHuellaThree.Imagen = null //TODO byte[] huella 4
+            //imghuellathree
 
             autenticacionCapturaHuella.add(autenticacionCapturaHuellaThree)
 
             val autenticacionCapturaHuellaFour = ProcesoAutenticacionCapturaHuella()
             autenticacionCapturaHuellaFour.IdFingerprint = 5
             autenticacionCapturaHuellaFour.Imagen = null //TODO byte[] huella 5
+            //imghuellafour
 
             autenticacionCapturaHuella.add(autenticacionCapturaHuellaFour)
 
