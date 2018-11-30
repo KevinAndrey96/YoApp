@@ -52,6 +52,7 @@ import java.io.File
 import java.io.IOException
 
 
+
 class Enrollment : AppCompatActivity() {
 
     internal var btnScan: Button? = null
@@ -173,10 +174,10 @@ class Enrollment : AppCompatActivity() {
             builder.setIcon(R.drawable.reconocimiento_facial)
             builder.setMessage("¿Que cámara deseas usar para realizar el escaner facial?")
 
-            builder.setPositiveButton("Cámara Frontal"){dialog, which ->
+            builder.setPositiveButton("Cámara Frontal"){ _, _ ->
                 openCameraFront()
             }
-            builder.setNegativeButton("Cámara Posterior"){dialog,which ->
+            builder.setNegativeButton("Cámara Posterior"){ _, _ ->
                 openCameraBack()
             }
 
@@ -186,9 +187,9 @@ class Enrollment : AppCompatActivity() {
 
         button2.setOnClickListener {
             //Huellas
-            val intent = Intent(this@Enrollment, BytteFingerPrint::class.java)
-            intent.putExtra("TipoHuella", "2")
-            startActivityForResult(intent, MY_REQUEST_CODE_BIOMETRIC)
+            val inten = Intent(this@Enrollment, BytteFingerPrint::class.java)
+            inten.putExtra("TipoHuella", "2")
+            startActivityForResult(inten, MY_REQUEST_CODE_BIOMETRIC)
         }
     }
 
@@ -226,8 +227,8 @@ class Enrollment : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var results_biometric = ""
-        val bitmap: Bitmap
+        var results_biometric: String
+        //val bitmap: Bitmap
         val gson = Gson()
         try {
             //LICENCIA
@@ -337,7 +338,7 @@ class Enrollment : AppCompatActivity() {
                 imghuellafour = fingers.getJSONObject(3).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 4
                 
                 for (i in 0 until fingers!!.length()) {
-                    val scanner = Fingers()
+                    //val scanner = Fingers()
                     minutia = fingers.getJSONObject(i).getString("minutia")
                     fingerprint = fingers.getJSONObject(i).getString("fingerprint")
                     pathbitmap = fingers.getJSONObject(i).getString("pathbitmap")
@@ -371,7 +372,7 @@ class Enrollment : AppCompatActivity() {
                 if (JSONUtils.isJSONValid(results_biometric)) {
                     val escaner_back: EscanerBack
                     val res_ = results_biometric.toLowerCase()
-                    val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                    //val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
                     escaner_back = mapper.readValue<EscanerBack>(res_, EscanerBack::class.java)
 
@@ -439,7 +440,7 @@ class Enrollment : AppCompatActivity() {
 
                         if (YoPrestoQR == "yopresto") {
                             val parts = string.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                            val t_doc = parts[0].length
+                            //val t_doc = parts[0].length
                             DocumentoQR = parts[0]//.substring(7, t_doc)
 
                             if (DocumentoQR!!.length == 9)
@@ -1707,28 +1708,28 @@ class Enrollment : AppCompatActivity() {
 
             val autenticacionCapturaHuellaOne = ProcesoAutenticacionCapturaHuella()
             autenticacionCapturaHuellaOne.IdFingerprint = 2
-            autenticacionCapturaHuellaOne.Imagen = null //TODO byte[] huella 2
+            autenticacionCapturaHuellaOne.Imagen = imghuellaone
             //imghuellaone
 
             autenticacionCapturaHuella.add(autenticacionCapturaHuellaOne)
 
             val autenticacionCapturaHuellaTwo = ProcesoAutenticacionCapturaHuella()
             autenticacionCapturaHuellaTwo.IdFingerprint = 3
-            autenticacionCapturaHuellaTwo.Imagen = null //TODO byte[] huella 3
+            autenticacionCapturaHuellaTwo.Imagen = imghuellatwo
             //imghuellatwo
 
             autenticacionCapturaHuella.add(autenticacionCapturaHuellaTwo)
 
             val autenticacionCapturaHuellaThree = ProcesoAutenticacionCapturaHuella()
             autenticacionCapturaHuellaThree.IdFingerprint = 4
-            autenticacionCapturaHuellaThree.Imagen = null //TODO byte[] huella 4
+            autenticacionCapturaHuellaThree.Imagen = imghuellathree
             //imghuellathree
 
             autenticacionCapturaHuella.add(autenticacionCapturaHuellaThree)
 
             val autenticacionCapturaHuellaFour = ProcesoAutenticacionCapturaHuella()
             autenticacionCapturaHuellaFour.IdFingerprint = 5
-            autenticacionCapturaHuellaFour.Imagen = null //TODO byte[] huella 5
+            autenticacionCapturaHuellaFour.Imagen = imghuellafour
             //imghuellafour
 
             autenticacionCapturaHuella.add(autenticacionCapturaHuellaFour)

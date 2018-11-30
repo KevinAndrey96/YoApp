@@ -46,32 +46,32 @@ class CustomAdapter internal constructor(internal var main: Reports) : BaseAdapt
     }*/
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
+        var convertView1 = convertView
         var holder = ViewHolderItem()
-        if (convertView == null) {
+        if (convertView1 == null) {
 
             //val inflater = mcontext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val inflater = main.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             //val inflater = getLayoutInflater().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = inflater.inflate(R.layout.cell, null)
+            convertView1 = inflater.inflate(R.layout.cell, null)
 
-            holder.fecha = convertView!!.findViewById(R.id.fecha) as TextView
-            holder.nombre = convertView.findViewById(R.id.nombre) as TextView
-            holder.valor = convertView.findViewById(R.id.valor) as TextView
-            holder.nombre_persona = convertView.findViewById(R.id.name) as TextView
+            holder.fecha = convertView1!!.findViewById(R.id.fecha) as TextView
+            holder.nombre = convertView1.findViewById(R.id.nombre) as TextView
+            holder.valor = convertView1.findViewById(R.id.valor) as TextView
+            holder.nombre_persona = convertView1.findViewById(R.id.name) as TextView
 
-            convertView.tag = holder
+            convertView1.tag = holder
         } else {
-            holder = convertView.tag as ViewHolderItem
+            holder = convertView1.tag as ViewHolderItem
         }
 
 
-        holder.nombre!!.setText(this.main.listActive.get(position).nombre)
-        holder.fecha!!.setText(this.main.listActive.get(position).fecha)
-        holder.valor!!.setText(this.main.listActive.get(position).valor)
-        holder.nombre_persona!!.setText(this.main.listActive.get(position).nombre_persona)
+        holder.nombre!!.text = this.main.listActive.get(position).nombre
+        holder.fecha!!.text = this.main.listActive.get(position).fecha
+        holder.valor!!.text = this.main.listActive.get(position).valor
+        holder.nombre_persona!!.text = this.main.listActive.get(position).nombre_persona
 
-        return convertView
+        return convertView1
     }
 
 }
