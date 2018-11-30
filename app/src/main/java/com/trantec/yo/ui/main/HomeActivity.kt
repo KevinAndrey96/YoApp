@@ -60,12 +60,12 @@ class HomeActivity : AppCompatActivity() {
         val reportes = findViewById<Button>(R.id.BtnReports)
         val toggle = findViewById<Button>(R.id.BtnToggle)
 
-        var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Inicio")
-        var item2 = PrimaryDrawerItem().withIdentifier(2).withName("Enrolamiento")
-        var item3 = PrimaryDrawerItem().withIdentifier(3).withName("Utilización")
-        var item4 = PrimaryDrawerItem().withIdentifier(4).withName("Mis tiendas")
-        var item5 = PrimaryDrawerItem().withIdentifier(5).withName("Reportes")
-        var item6 = PrimaryDrawerItem().withIdentifier(6).withName("Cerrar sesion")
+        val item1 = PrimaryDrawerItem().withIdentifier(1).withName("Inicio")
+        val item2 = PrimaryDrawerItem().withIdentifier(2).withName("Enrolamiento")
+        val item3 = PrimaryDrawerItem().withIdentifier(3).withName("Utilización")
+        val item4 = PrimaryDrawerItem().withIdentifier(4).withName("Mis tiendas")
+        val item5 = PrimaryDrawerItem().withIdentifier(5).withName("Reportes")
+        val item6 = PrimaryDrawerItem().withIdentifier(6).withName("Cerrar sesion")
 
         DrawerBuilder().withActivity(this).build()
 
@@ -77,7 +77,7 @@ class HomeActivity : AppCompatActivity() {
                 )
                 .build()
 
-        var result = DrawerBuilder()
+        val result = DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withDisplayBelowStatusBar(true)
@@ -92,7 +92,7 @@ class HomeActivity : AppCompatActivity() {
                         item5,
                         item6
                 )
-                .withOnDrawerItemClickListener { view, position, drawerItem ->
+                .withOnDrawerItemClickListener { _, _, drawerItem ->
                     when (drawerItem.identifier) {
                         item1.identifier -> {
                             val intent = Intent(this, HomeActivity::class.java)
@@ -116,10 +116,10 @@ class HomeActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                         item6.identifier -> {
-                            prefs.edit().remove("nombre").commit()
-                            prefs.edit().remove("apellido").commit()
-                            prefs.edit().remove("cuenta").commit()
-                            prefs.edit().remove("saldo").commit()
+                            prefs.edit().remove("nombre").apply()
+                            prefs.edit().remove("apellido").apply()
+                            prefs.edit().remove("cuenta").apply()
+                            prefs.edit().remove("saldo").apply()
                             startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
                             finish()
                         }

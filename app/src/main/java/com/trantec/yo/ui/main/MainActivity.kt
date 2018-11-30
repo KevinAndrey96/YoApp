@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
         val name = prefs.getString("nombre", "")
@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity() {
 
                 .build()
 
-        var item1 = PrimaryDrawerItem().withIdentifier(1).withName("Iniciar sesion")
-        var item2 = PrimaryDrawerItem().withIdentifier(2).withName("Mis tiendas")
+        val item1 = PrimaryDrawerItem().withIdentifier(1).withName("Iniciar sesion")
+        val item2 = PrimaryDrawerItem().withIdentifier(2).withName("Mis tiendas")
 
         result = DrawerBuilder()
                 .withActivity(this)
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                         item1,
                         item2
                 )
-                .withOnDrawerItemClickListener { view, position, drawerItem ->
+                .withOnDrawerItemClickListener { _, _, drawerItem ->
                     when (drawerItem.identifier) {
                         item1.identifier -> {
                             val intent = Intent(this, LoginActivity::class.java)

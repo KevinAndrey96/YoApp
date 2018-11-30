@@ -63,6 +63,9 @@
 -keep class com.google.android.**
 -dontwarn com.google.android.**
 
+-keep class okhttp3.*
+-dontwarn okhttp3.CertificatePinner
+
 # Platform calls Class.forName on types which do not exist on Android to determine platform.
 -dontnote retrofit2.Platform
 # Platform used when running on RoboVM on iOS. Will not be used at runtime.

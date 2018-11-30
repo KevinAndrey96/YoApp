@@ -1385,7 +1385,7 @@ class EscaneoOk : AppCompatActivity() {
             sendMail.idtransaccion = idtransaccion
 
             Logger.d("To send idtransaction")
-            Logger.d(sendMail.idtransaccion)
+            Logger.d(sendMail.idtransaccion!!)
 
             val body = RequestBody.create(HttpObjectsConstants.jsonMediaType, mapper.writeValueAsString(sendMail))
 

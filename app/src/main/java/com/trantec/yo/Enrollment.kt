@@ -3,7 +3,6 @@ package com.trantec.yo
 import org.json.JSONObject
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
@@ -43,13 +42,14 @@ import com.trantec.yo.constants.HttpObjectsConstants
 import com.trantec.yo.constants.OperationConstants
 import com.trantec.yo.constants.WebConstant
 import com.trantec.yo.enumeration.SessionKeys
+import com.trantec.yo.services.bytte.authentication.*
 import com.yopresto.app.yoprestoapp.dto.*
 import hundredthirtythree.sessionmanager.SessionManager
 import libs.mjn.prettydialog.PrettyDialog
 import okhttp3.*
+import okhttp3.Response
+import java.io.File
 import java.io.IOException
-import com.google.gson.*
-import com.google.gson.reflect.TypeToken
 
 
 class Enrollment : AppCompatActivity() {
@@ -124,11 +124,11 @@ class Enrollment : AppCompatActivity() {
         val escaner_huella = findViewById<Button>(R.id.button2)
         val cedulaback = findViewById<Button>(R.id.button7)
         val BtnSend = findViewById<Button>(R.id.btnSend)
-        BtnSend.setEnabled(false)
-        cedulaback.setEnabled(false)
-        cedulafront.setEnabled(false)
-        reconocimientofacial.setEnabled(false)
-        escaner_huella.setEnabled(false)
+        BtnSend.isEnabled = false
+        cedulaback.isEnabled = false
+        cedulafront.isEnabled = false
+        reconocimientofacial.isEnabled = false
+        escaner_huella.isEnabled = false
 
         val intent = Intent(this@Enrollment, BytteLicense::class.java)
         intent.putExtra("URLPETICION", URLPETICION)
@@ -142,23 +142,23 @@ class Enrollment : AppCompatActivity() {
         qrScanIntegrator?.setPrompt("Realice la lectura del código generado en la plataforma administrativa.")
 
         btnSend.setOnClickListener {
-            enviarDatos()
+            requestVerificationToBytte()
         }
 
         btnCedula.setOnClickListener {
             //captura de frente doc
-            var intent = Intent(this@Enrollment, CFrontDocument::class.java)
-            intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
-            intent.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
-            startActivityForResult(intent, MY_REQUEST_CODE_FRONT)
+            val inten = Intent(this@Enrollment, CFrontDocument::class.java)
+            inten.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
+            inten.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
+            startActivityForResult(inten, MY_REQUEST_CODE_FRONT)
         }
 
         button7.setOnClickListener {
             //captura de back doc
-            var intent = Intent(this@Enrollment, CBackDocument::class.java)
-            intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
-            intent.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
-            startActivityForResult(intent, MY_REQUEST_CODE_BACK)
+            val inten = Intent(this@Enrollment, CBackDocument::class.java)
+            inten.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
+            inten.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
+            startActivityForResult(inten, MY_REQUEST_CODE_BACK)
         }
 
         button4.setOnClickListener {
@@ -319,12 +319,12 @@ class Enrollment : AppCompatActivity() {
             } else if (requestCode == MY_REQUEST_CODE_BIOMETRIC && resultCode == BaseScanActivity.RESULT_OK) {//
                 results_biometric = data?.extras?.getString("InfoBiometric")!!
 
-                val res_ = results_biometric.toLowerCase().toString()
+                val res_ = results_biometric.toLowerCase()
 
                 val jsonObj = JSONObject(res_.substring(res_.indexOf("{"), res_.lastIndexOf("}") + 1))
                 val fingers = jsonObj.getJSONArray("fingerprintsobjects")
 
-                for (i in 0..fingers!!.length() - 1) {
+                for (i in 0 until fingers!!.length()) {
                     val scanner = Fingers()
                     minutia = fingers.getJSONObject(i).getString("minutia")
                     fingerprint = fingers.getJSONObject(i).getString("fingerprint")
@@ -335,7 +335,7 @@ class Enrollment : AppCompatActivity() {
                 }
 
                 val escaner_huella = findViewById<Button>(R.id.button2)
-                escaner_huella.setEnabled(false)
+                escaner_huella.isEnabled = false
 
                 escaner_huella.setBackgroundResource(R.drawable.rounded_button2)
 
@@ -431,13 +431,13 @@ class Enrollment : AppCompatActivity() {
                             DocumentoQR = parts[0]//.substring(7, t_doc)
 
                             if (DocumentoQR!!.length == 9)
-                                DocumentoQR = "0"+DocumentoQR
+                                DocumentoQR = "0$DocumentoQR"
 
                             if (DocumentoQR!!.length == 8)
-                                DocumentoQR = "00"+DocumentoQR
+                                DocumentoQR = "00$DocumentoQR"
 
                             if (DocumentoQR!!.length == 8)
-                                DocumentoQR = "000"+DocumentoQR
+                                DocumentoQR = "000$DocumentoQR"
 
                             QR1 = parts[1]
                             QR2 = parts[2]
@@ -460,14 +460,14 @@ class Enrollment : AppCompatActivity() {
                             val reconocimientofacial = findViewById<Button>(R.id.button4)
                             val escaner_huella = findViewById<Button>(R.id.button2)
                             val cedulaback = findViewById<Button>(R.id.button7)
-                            cedulaback.setEnabled(true)
-                            cedulafront.setEnabled(true)
-                            reconocimientofacial.setEnabled(true)
-                            escaner_huella.setEnabled(true)
+                            cedulaback.isEnabled = true
+                            cedulafront.isEnabled = true
+                            reconocimientofacial.isEnabled = true
+                            escaner_huella.isEnabled = true
 
                             val btnScan = findViewById<Button>(R.id.scannQr)
                             btnScan.setBackgroundResource(R.drawable.rounded_button2)
-                            btnScan.setEnabled(false)
+                            btnScan.isEnabled = false
 
                             aux = aux!! + 1
                             validarDatos()
@@ -618,7 +618,7 @@ class Enrollment : AppCompatActivity() {
                                                 val responseMapString = response.body()!!.string()
                                                 val enrollmentCedulaResponse: EnrollmentDatosCedulaResponse
 
-                                                Logger.d("Respu:" + responseMapString)
+                                                Logger.d("Respu:$responseMapString")
 
                                                 if (JSONUtils.isJSONValid(responseMapString)) {
 
@@ -819,14 +819,14 @@ class Enrollment : AppCompatActivity() {
                                                 val responseMapString = response.body()!!.string()
                                                 val enrollmentCedulaResponse: EnrollmentDatosCedulaResponse
 
-                                                Logger.d("Respu:" + responseMapString)
+                                                Logger.d("Respu:$responseMapString")
 
                                                 if (JSONUtils.isJSONValid(responseMapString)) {
 
                                                     enrollmentCedulaResponse = mapper.readValue<EnrollmentDatosCedulaResponse>(responseMapString, EnrollmentDatosCedulaResponse::class.java)
 
                                                     if (enrollmentCedulaResponse?.response != null) {
-                                                        if (enrollmentCedulaResponse.status!! && enrollmentCedulaResponse != null && enrollmentCedulaResponse.status!! == true) {
+                                                        if (enrollmentCedulaResponse.status!! && enrollmentCedulaResponse != null && enrollmentCedulaResponse.status!!) {
                                                             mHandler.post {
                                                                 run {
                                                                     stopProgess()
@@ -1021,14 +1021,14 @@ class Enrollment : AppCompatActivity() {
                                                 val responseMapString = response.body()!!.string()
                                                 val enrollmentCedulaResponse: EnrollmentDatosCedulaResponse
 
-                                                Logger.d("Respu:" + responseMapString)
+                                                Logger.d("Respu:$responseMapString")
 
                                                 if (JSONUtils.isJSONValid(responseMapString)) {
 
                                                     enrollmentCedulaResponse = mapper.readValue<EnrollmentDatosCedulaResponse>(responseMapString, EnrollmentDatosCedulaResponse::class.java)
 
                                                     if (enrollmentCedulaResponse?.response != null) {
-                                                        if (enrollmentCedulaResponse.status!! && enrollmentCedulaResponse != null && enrollmentCedulaResponse.status!! == true) {
+                                                        if (enrollmentCedulaResponse.status!! && enrollmentCedulaResponse != null && enrollmentCedulaResponse.status!!) {
 //bien
                                                         } else {
                                                             mHandler.post {
@@ -1215,14 +1215,14 @@ class Enrollment : AppCompatActivity() {
                                                 val responseMapString = response.body()!!.string()
                                                 val enrollmentCedulaResponse: EnrollmentDatosCedulaResponse
 
-                                                Logger.d("Respu:" + responseMapString)
+                                                Logger.d("Respu:$responseMapString")
 
                                                 if (JSONUtils.isJSONValid(responseMapString)) {
 
                                                     enrollmentCedulaResponse = mapper.readValue<EnrollmentDatosCedulaResponse>(responseMapString, EnrollmentDatosCedulaResponse::class.java)
 
                                                     if (enrollmentCedulaResponse?.response != null) {
-                                                        if (enrollmentCedulaResponse.status!! && enrollmentCedulaResponse != null && enrollmentCedulaResponse.status!! == true) {
+                                                        if (enrollmentCedulaResponse.status!! && enrollmentCedulaResponse != null && enrollmentCedulaResponse.status!!) {
                                                             mHandler.post {
                                                                 run {
                                                                     stopProgess()
@@ -1336,10 +1336,12 @@ class Enrollment : AppCompatActivity() {
         }
     }
 
-    private fun enviarDatos() {
-        while (_numerocedula!!.substring(0, 1).equals("0")) {
+    private fun enviarDatos(score: String) {
+
+        while (_numerocedula!!.substring(0, 1) == "0") {
             _numerocedula = _numerocedula!!.substring(1)
         }
+
         if (DocumentoQR == _numerocedula) {
             try {
                 val formBody = FormBody.Builder()
@@ -1486,7 +1488,7 @@ class Enrollment : AppCompatActivity() {
                                                                         _datos.nombreimagenfrontal = "frontal.jpg"
                                                                         _datos.nombreimagentracera = "tracera.jpg"
                                                                         _datos.ruta = "/media/imegenes/80794978/"
-                                                                        _datos.escaneo = "123456"
+                                                                        _datos.escaneo = score
                                                                         _datos.templatecc = "920478697654678907657489d7s6g98ya89fh4t9c7qr37gb9t5nyotc984ny7wm3gx5o8m59nfxh"
                                                                         _datos.templatefrontal = ""
                                                                         _datos.templatetracera = ""
@@ -1528,13 +1530,13 @@ class Enrollment : AppCompatActivity() {
                                                                             @Throws(IOException::class)
                                                                             override fun onResponse(call: Call, response: Response) {
 
-                                                                                Logger.d("Resp:" + response)
+                                                                                Logger.d("Resp:$response")
 
                                                                                 val responseMapString = response.body()!!.string()
                                                                                         .replace("\"response\": {\"dataresponse\":{\"@nil\":\"true\"},\"response\":\"LA ENTIDAD YA SE ENCUENTRA ENROLADA EXITOSAMENTE\",\"idresponse\":78},", "")
                                                                                 val enrollmentResponse: EnrollmentResponse
 
-                                                                                Logger.d("Respu:" + responseMapString)
+                                                                                Logger.d("Respu:$responseMapString")
 
                                                                                 if (JSONUtils.isJSONValid(responseMapString)) {
 
@@ -1683,6 +1685,107 @@ class Enrollment : AppCompatActivity() {
         {
             redirectno()
         }
+    }
+
+
+    private fun requestVerificationToBytte(){
+
+        try{
+            val autenticacionCapturaHuella = ArrayOfProcesoAutenticacionCapturaHuella()
+
+            val autenticacionCapturaHuellaOne = ProcesoAutenticacionCapturaHuella()
+            autenticacionCapturaHuellaOne.IdFingerprint = 2
+            autenticacionCapturaHuellaOne.Imagen = null //TODO byte[] huella 2
+
+            autenticacionCapturaHuella.add(autenticacionCapturaHuellaOne)
+
+            val autenticacionCapturaHuellaTwo = ProcesoAutenticacionCapturaHuella()
+            autenticacionCapturaHuellaTwo.IdFingerprint = 3
+            autenticacionCapturaHuellaTwo.Imagen = null //TODO byte[] huella 3
+
+            autenticacionCapturaHuella.add(autenticacionCapturaHuellaTwo)
+
+            val autenticacionCapturaHuellaThree = ProcesoAutenticacionCapturaHuella()
+            autenticacionCapturaHuellaThree.IdFingerprint = 4
+            autenticacionCapturaHuellaThree.Imagen = null //TODO byte[] huella 4
+
+            autenticacionCapturaHuella.add(autenticacionCapturaHuellaThree)
+
+            val autenticacionCapturaHuellaFour = ProcesoAutenticacionCapturaHuella()
+            autenticacionCapturaHuellaFour.IdFingerprint = 5
+            autenticacionCapturaHuellaFour.Imagen = null //TODO byte[] huella 5
+
+            autenticacionCapturaHuella.add(autenticacionCapturaHuellaFour)
+
+
+            val validacionEnrolamientoDocumentoRequest = ValidacionEnrolamientoDocumentoRequest()
+
+            validacionEnrolamientoDocumentoRequest.BarCodeBase64 = _barcodebase
+            validacionEnrolamientoDocumentoRequest.IdentificadorProceso =  UUID.randomUUID().toString()
+            validacionEnrolamientoDocumentoRequest.NumeroDocumento = _numerocedula
+            validacionEnrolamientoDocumentoRequest.ImageKey = ""
+
+            val frontal = File("/media/imegenes/80794978/frontal.jpg")
+            val tracera = File("/media/imegenes/80794978/tracera.jpg")
+
+            validacionEnrolamientoDocumentoRequest.ImagenFrente = org.apache.commons.io.FileUtils.readFileToByteArray(frontal) //TODO byte[] imagen frontal
+            validacionEnrolamientoDocumentoRequest.ImagenReverso = org.apache.commons.io.FileUtils.readFileToByteArray(tracera) //TODO byte[] imagen tracera
+
+            validacionEnrolamientoDocumentoRequest.SoloMinucia = false
+            validacionEnrolamientoDocumentoRequest.Completo = false
+
+            val scoreRequest = ScoreRequest()
+            scoreRequest.Score_ConANI_ANIBarCode = 20
+            scoreRequest.Score_ConANI_ANIOCR = 10
+            scoreRequest.Score_ConANI_Fingerprint = 60
+            scoreRequest.Score_ConANI_OCRBarCode = 10
+            scoreRequest.Score_SinANI_Fingerprint = 70
+            scoreRequest.Score_SinANI_OCRBarCode = 30
+            scoreRequest.Score_AutenticacionDactilar = 3000
+
+            validacionEnrolamientoDocumentoRequest.HuellasAProcesar = autenticacionCapturaHuella.size
+            validacionEnrolamientoDocumentoRequest.HuellasProceso = autenticacionCapturaHuella
+
+            val service = CASB_x002E_ProcesoAutenticacionService()
+
+            val response = service.ValidacionEnrolamientoDocumento(validacionEnrolamientoDocumentoRequest)
+
+
+            Logger.d("Response ${response.ScoreDactilarValor}")
+
+            if(response != null){
+                if(response.OperacionExitosa){
+                    enviarDatos(response.ScoreDactilarValor.toString())
+                }else{
+                    PrettyDialog(this@Enrollment)
+                            .setTitle("Información")
+                            .setMessage(response.Mensaje)
+                            .show()
+                }
+            }else{
+                PrettyDialog(this@Enrollment)
+                        .setTitle("Información")
+                        .setMessage("No se pudo verificar los datos.")
+                        .show()
+            }
+
+
+        }catch(ex: Error){
+            ex.printStackTrace()
+            PrettyDialog(this@Enrollment)
+                    .setTitle("Información")
+                    .setMessage(ex.message)
+                    .show()
+        }
+
+
+
+
+    }
+
+
+    private fun getBytesFromFile(){
+
     }
 
     private fun error(){
