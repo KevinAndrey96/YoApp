@@ -21,4 +21,5 @@ class EscanerBack : Serializable {
     var tipodedo: String? = null
     var versioncedula: String? = null
     var plataforma: String? = null
+    var pathimagen: String? = null
 }

@@ -7,6 +7,9 @@ import com.orhanobut.logger.Logger
 import com.trantec.yo.constants.WebConstant
 import com.trantec.yo.enumeration.SessionKeys
 import hundredthirtythree.sessionmanager.SessionManager
+import android.os.StrictMode
+
+
 
 class YoPrestoApp : Application(){
     val endpoint = WebConstant.DEV_ENDPOINT_URL
@@ -17,6 +20,9 @@ class YoPrestoApp : Application(){
         MultiDex.install(this)
 
         Logger.addLogAdapter(AndroidLogAdapter())
+
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
 
         SessionManager.Builder()
                 .setContext(applicationContext)

@@ -2,10 +2,12 @@ package com.trantec.yo
 
 import org.json.JSONObject
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -16,13 +18,13 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
-import com.example.biometricbytte.morpho.face.BytteCaptureFace
-import com.example.biometricbytte.morpho.huella.BytteFingerPrint
-import com.example.biometricbytte.morpho.license.BytteLicense
-import com.example.docbytte.BiometricCamera.ValuesBiometric
-import com.example.docbytte.helper.Util
-import com.example.docbytte.ui.CBackDocument
-import com.example.docbytte.ui.CFrontDocument
+import com.bytte.biometricbytte.bfactor.face.BytteCaptureFace
+import com.bytte.biometricbytte.bfactor.huella.BytteFingerPrint
+import com.bytte.biometricbytte.bfactor.license.BytteLicense
+import com.bytte.biometricbytte.bfactor.license.BytteLicenseA
+import com.bytte.docbytte.BiometricCamera.ValuesBiometric
+import com.bytte.docbytte.ui.CBackDocument
+import com.bytte.docbytte.ui.CFrontDocument
 import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
 import com.microblink.activity.BaseScanActivity
@@ -102,6 +104,10 @@ class Enrollment : AppCompatActivity() {
     var imghuellathree: ByteArray? = null
     var imghuellafour: ByteArray? = null
 
+    //Images
+    var _imageFront: File? = null
+    var _imageBack: File? = null
+
     var DocumentoQR: String? = null
     var YoPrestoQR: String? = null
     var QR1: String? = null
@@ -117,6 +123,7 @@ class Enrollment : AppCompatActivity() {
     private var client = OkHttpClient()
     private val mapper = ObjectMapper()
     var aux: Int? = null
+    val  license = BytteLicenseA()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,10 +143,18 @@ class Enrollment : AppCompatActivity() {
         reconocimientofacial.isEnabled = false
         escaner_huella.isEnabled = false
 
-        val intent = Intent(this@Enrollment, BytteLicense::class.java)
-        intent.putExtra("URLPETICION", URLPETICION)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        startActivityForResult(intent, MY_REQUEST_CODE_LISENCE)
+        try{
+            val lis = license.activarlicensia(URLPETICION,applicationContext,this@Enrollment)
+
+            Logger.d("LIC $lis")
+        }catch (ex: Exception){
+            ex.printStackTrace()
+        }
+
+
+        val intent1 = Intent(this@Enrollment, BytteLicense::class.java)
+        intent1.putExtra("URLPETICION", URLPETICION)
+        startActivityForResult(intent1, MY_REQUEST_CODE_LISENCE)
 
         val btnScan = findViewById<Button>(R.id.scannQr)
         btnScan!!.setOnClickListener { performAction() }
@@ -156,6 +171,7 @@ class Enrollment : AppCompatActivity() {
             val inten = Intent(this@Enrollment, CFrontDocument::class.java)
             inten.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
             inten.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
+            inten.putExtra("EXTRAS_TIMEOUT", "20")
             startActivityForResult(inten, MY_REQUEST_CODE_FRONT)
         }
 
@@ -164,6 +180,7 @@ class Enrollment : AppCompatActivity() {
             val inten = Intent(this@Enrollment, CBackDocument::class.java)
             inten.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
             inten.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
+            inten.putExtra("EXTRAS_TIMEOUT", "20")
             startActivityForResult(inten, MY_REQUEST_CODE_BACK)
         }
 
@@ -195,7 +212,7 @@ class Enrollment : AppCompatActivity() {
 
     private fun openCameraFront(){
         val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
-        intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "1")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
+        intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "4")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
         intent.putExtra("TIPO_CAMERA", "0")//0 camara frontal 1 camara posterior
         intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
         startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
@@ -203,7 +220,7 @@ class Enrollment : AppCompatActivity() {
 
     private fun openCameraBack(){
         val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
-        intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "1")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
+        intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "4")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
         intent.putExtra("TIPO_CAMERA", "1")//0 camara frontal 1 camara posterior
         intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
         startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
@@ -227,7 +244,7 @@ class Enrollment : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var results_biometric: String
+        val results_biometric: String
         //val bitmap: Bitmap
         val gson = Gson()
         try {
@@ -241,21 +258,31 @@ class Enrollment : AppCompatActivity() {
 
             //CEDULA FRONTAL
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_OK) {
+
+                val lis = license.activarlicensia(URLPETICION,applicationContext,this@Enrollment)
+
+                Logger.d("LIC $lis")
+
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
 
                 if (JSONUtils.isJSONValid(results_biometric)) {
                     val escaner_front: EscanerFront
                     val res_ = results_biometric.toLowerCase()
 
+                    Logger.d("RES --> $res_")
+
                     escaner_front = mapper.readValue<EscanerFront>(res_, EscanerFront::class.java)
 
-                    _pathimagen = escaner_front.pathimagen
                     _statusoperacion = escaner_front.statusoperacion
+
+                    Logger.d("Imagen path front $escaner_front.pathimagen!!")
+
+                    _imageFront = File(escaner_front.pathimagen!!)
 
                     enviarPaquete2()
 
                     val cedulafront = findViewById<Button>(R.id.btnCedula)
-                    cedulafront.setEnabled(false)
+                    cedulafront.isEnabled = false
 
                     cedulafront.setBackgroundResource(R.drawable.rounded_button2)
 
@@ -264,6 +291,11 @@ class Enrollment : AppCompatActivity() {
                 }
 
             } else if (requestCode == MY_REQUEST_CODE_FRONT && resultCode == BaseScanActivity.RESULT_CANCELED) {
+
+                val lis = license.activarlicensia(URLPETICION,applicationContext,this@Enrollment)
+
+                Logger.d("LIC $lis")
+
                 results_biometric = data?.extras?.getString("InfoFrontDoc")!!
 
                 mHandler.post {
@@ -280,6 +312,11 @@ class Enrollment : AppCompatActivity() {
 
             //RECONOCIMIENTO FACIAL
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_OK) {
+
+                val lis = license.activarlicensia(URLPETICION,applicationContext,this@Enrollment)
+
+                Logger.d("LIC $lis")
+
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
                 val properties = gson.fromJson(results_biometric, Properties::class.java)
 
@@ -309,6 +346,11 @@ class Enrollment : AppCompatActivity() {
                 }
 
             } else if (requestCode == MY_REQUEST_CODE_FACECAPTURE && resultCode == BaseScanActivity.RESULT_CANCELED) {
+
+                val lis = license.activarlicensia(URLPETICION,applicationContext,this@Enrollment)
+
+                Logger.d("LIC $lis")
+
                 results_biometric = data?.extras?.getString("InfoimgRostro")!!
                 mHandler.post {
                     run {
@@ -323,6 +365,11 @@ class Enrollment : AppCompatActivity() {
 
             //HUELLAS
             } else if (requestCode == MY_REQUEST_CODE_BIOMETRIC && resultCode == BaseScanActivity.RESULT_OK) {//
+
+                val lis = license.activarlicensia(URLPETICION,applicationContext,this@Enrollment)
+
+                Logger.d("LIC $lis")
+
                 results_biometric = data?.extras?.getString("InfoBiometric")!!
 
                 val res_ = results_biometric.toLowerCase()
@@ -367,16 +414,26 @@ class Enrollment : AppCompatActivity() {
 
                 //CEDULA REVERSO
             } else if (requestCode == MY_REQUEST_CODE_BACK && resultCode == BaseScanActivity.RESULT_OK) {//back del documento colombiano
+
+                val lis = license.activarlicensia(URLPETICION,applicationContext,this@Enrollment)
+
+                Logger.d("LIC $lis")
+
                 results_biometric = data?.extras?.getString("InfoBackDoc")!!
 
                 if (JSONUtils.isJSONValid(results_biometric)) {
+
                     val escaner_back: EscanerBack
                     val res_ = results_biometric.toLowerCase()
+
+                    Logger.d("Res reverso $res_")
+
                     //val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
                     escaner_back = mapper.readValue<EscanerBack>(res_, EscanerBack::class.java)
 
                     if (escaner_back.numerocedula == DocumentoQR){
+
                         _numerotarjeta = escaner_back.numerotarjeta
                         _numerocedula = escaner_back.numerocedula
                         _primerapellido = escaner_back.primerapellido
@@ -394,6 +451,10 @@ class Enrollment : AppCompatActivity() {
                         _platafomra = escaner_back.plataforma
 
                         Logger.d("Fecha Nac:" + escaner_back.fechanacimiento)
+                        Logger.d("Path imagen " + escaner_back.pathimagen)
+
+                        _imageBack = File(escaner_back.pathimagen)
+
                         enviarPaquete1()
 
                         val cedulaback = findViewById<Button>(R.id.button7)
@@ -463,7 +524,7 @@ class Enrollment : AppCompatActivity() {
                             editor.putString("enrollment_identidad", identidad)
                             editor.putString("enrollment_doc_val", DocumentoQR)
                             editor.putString("enrollment_idusuario", idusuario)
-                            editor.commit()
+                            editor.apply()
 
                             /*val intent = Intent(this, ScannerQRSuccess::class.java)
                             startActivity(intent)*/
@@ -505,6 +566,7 @@ class Enrollment : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
 
     private fun enviarPaquete1() {
 
@@ -1500,7 +1562,7 @@ class Enrollment : AppCompatActivity() {
                                                                         _datos.nombreimagencc = _pathimagen
                                                                         _datos.nombreimagenfrontal = "frontal.jpg"
                                                                         _datos.nombreimagentracera = "tracera.jpg"
-                                                                        _datos.ruta = "/media/imegenes/80794978/"
+                                                                        _datos.ruta = "/media/imagenes/80794978/"
                                                                         _datos.escaneo = score
                                                                         _datos.templatecc = "920478697654678907657489d7s6g98ya89fh4t9c7qr37gb9t5nyotc984ny7wm3gx5o8m59nfxh"
                                                                         _datos.templatefrontal = ""
@@ -1742,11 +1804,32 @@ class Enrollment : AppCompatActivity() {
             validacionEnrolamientoDocumentoRequest.NumeroDocumento = _numerocedula
             validacionEnrolamientoDocumentoRequest.ImageKey = ""
 
-            val frontal = File("/media/imegenes/80794978/frontal.jpg")
-            val tracera = File("/media/imegenes/80794978/tracera.jpg")
 
-            validacionEnrolamientoDocumentoRequest.ImagenFrente = org.apache.commons.io.FileUtils.readFileToByteArray(frontal) //TODO byte[] imagen frontal
-            validacionEnrolamientoDocumentoRequest.ImagenReverso = org.apache.commons.io.FileUtils.readFileToByteArray(tracera) //TODO byte[] imagen tracera
+
+            if(_imageFront!!.exists()){
+                validacionEnrolamientoDocumentoRequest.ImagenFrente = org.apache.commons.io.FileUtils.readFileToByteArray(_imageFront) //TODO byte[] imagen frontal
+            }else{
+                Logger.d("File no existe frontal")
+                /*PrettyDialog(this@Enrollment)
+                        .setTitle("Información")
+                        .setMessage("No hay imagen frontal de la cedula")
+                        .show()
+
+                return*/
+            }
+            if(_imageBack!!.exists()){
+                validacionEnrolamientoDocumentoRequest.ImagenReverso = org.apache.commons.io.FileUtils.readFileToByteArray(_imageBack) //TODO byte[] imagen tracera
+            }else{
+                Logger.d("File no existe tracera")
+                /*PrettyDialog(this@Enrollment)
+                        .setTitle("Información")
+                        .setMessage("No hay imagen trasera de la cedula")
+                        .show()
+                return*/
+            }
+
+
+
 
             validacionEnrolamientoDocumentoRequest.SoloMinucia = false
             validacionEnrolamientoDocumentoRequest.Completo = false
@@ -1768,7 +1851,7 @@ class Enrollment : AppCompatActivity() {
             val response = service.ValidacionEnrolamientoDocumento(validacionEnrolamientoDocumentoRequest)
 
 
-            Logger.d("Response ${response.ScoreDactilarValor}")
+            Logger.d("Score ${response.ScoreDactilarValor}")
 
             if(response != null){
                 if(response.OperacionExitosa){
@@ -1778,16 +1861,18 @@ class Enrollment : AppCompatActivity() {
                             .setTitle("Información")
                             .setMessage(response.Mensaje)
                             .show()
+                    Logger.d(response.Mensaje)
                 }
             }else{
                 PrettyDialog(this@Enrollment)
                         .setTitle("Información")
                         .setMessage("No se pudo verificar los datos.")
                         .show()
+                Logger.d("No hay respuesta de bytte")
             }
 
 
-        }catch(ex: Error){
+        }catch(ex: Exception){
             ex.printStackTrace()
             PrettyDialog(this@Enrollment)
                     .setTitle("Información")
@@ -1806,7 +1891,16 @@ class Enrollment : AppCompatActivity() {
     }
 
     private fun error(){
-        Util.Eliminarimgaplicacion(this@Enrollment)
+
+
+        val `as` = File(this@Enrollment.filesDir, "Documents")
+        if (`as`.isDirectory) {
+            val children = `as`.list()
+            for (i in children!!.indices) {
+                File(`as`, children!![i]).delete()
+            }
+        }
+        //Util.Eliminarimgaplicacion(this@Enrollment)
 //        _numerotarjeta  = null
 //        _numerocedula = null
 //        _primerapellido = null

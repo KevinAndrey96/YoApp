@@ -5,25 +5,12 @@ package com.trantec.yo.ui.main
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.Button
-import android.widget.TextView
-import com.example.biometricbytte.morpho.license.BytteLicense
-import com.mikepenz.materialdrawer.DrawerBuilder
-import com.mikepenz.materialdrawer.model.interfaces.IProfile
-import com.mikepenz.materialdrawer.AccountHeader
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem
-import com.mikepenz.materialdrawer.AccountHeaderBuilder
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
-import com.trantec.yo.*
-import com.trantec.yo.ui.LoginActivity
-import kotlinx.android.synthetic.main.app_bar_main.*
-import com.trantec.yo.dto.LoginDataresponse
-import com.trantec.yo.enumeration.SessionKeys
-import hundredthirtythree.sessionmanager.SessionManager
-import org.codehaus.jackson.map.ObjectMapper
+import com.bytte.biometricbytte.bfactor.license.BytteLicense
+import com.bytte.biometricbytte.bfactor.license.BytteLicenseA
+import com.orhanobut.logger.Logger
+import com.trantec.yo.R
 
 
 class ImportantInformation : AppCompatActivity() {
@@ -39,11 +26,12 @@ class ImportantInformation : AppCompatActivity() {
     val URLPETICION = "https://portal.bytte.com.co/casb/SmartBio/SB/API/SmartBio/"//esta url se debe solicitar a bytte para licenciar el projecto
     //val URLPETICION = "https://portal.bytte.com.co/casb/YoPrestoPR/CASB.ProcesoAutenticacion/Service/ServicioAutenticacion.svc"
 
+    val  license = BytteLicenseA()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.important_information)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val decline = findViewById<Button>(R.id.decline)
         val accept = findViewById<Button>(R.id.accept)
 
@@ -57,6 +45,10 @@ class ImportantInformation : AppCompatActivity() {
             val intent1 = Intent(this@ImportantInformation, BytteLicense::class.java)
             intent1.putExtra("URLPETICION", URLPETICION)
             startActivityForResult(intent1, MY_REQUEST_CODE_LISENCE)
+
+            val lis = license.activarlicensia(URLPETICION,applicationContext,this@ImportantInformation)
+
+            Logger.d("LIC $lis")
 
         }
     }

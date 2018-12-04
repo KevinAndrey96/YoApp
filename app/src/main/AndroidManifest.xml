@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!-- features -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -23,11 +24,6 @@
         android:name="android.hardware.location.gps"
         android:required="false" />
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
-    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <permission
@@ -73,7 +69,8 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/icon"
         android:theme="@style/AppTheme"
-        tools:replace="allowBackup">
+        tools:replace="allowBackup"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <!--
             <meta-data
@@ -159,10 +156,31 @@
         <activity
             android:name=".alerts.SuccessfulTransaction"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".utilizacion_view"
-            android:label="@string/title_activity_utilizacion_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+
+
+        <activity android:name="com.bytte.docbytte.ui.CFrontDocument"/>
+        <activity android:name="com.bytte.docbytte.ui.CBackDocument"/>
+        <activity android:name="com.bytte.biometricbytte.bfactor.license.BytteLicense"/>
+        <activity android:name="com.bytte.biometricbytte.bfactor.face.BytteCaptureFace"/>
+        <activity android:name="com.bytte.biometricbytte.bfactor.huella.BytteFingerPrint" />
+
+        <provider
+            android:name="com.morpho.mph_bio_sdk.android.sdk.content_provider.BioStoreProvider"
+            tools:replace="android:authorities, android:readPermission, android:writePermission"
+            android:authorities="com.bytte.testapp.bio_store"
+            android:readPermission="com.bytte.testapp.NEW_READ_MPH_BIO_SDK_PROVIDER"
+            android:writePermission="com.bytte.testapp.NEW_WRITE_MPH_BIO_SDK_PROVIDER" />
+        <provider
+
+            android:name="com.morpho.lkms.android.sdk.lkms_core.content_provider.LkmsStoreProvider"
+            tools:replace="android:authorities, android:readPermission, android:writePermission"
+            android:authorities="com.bytte.testapp.lkms"
+            android:readPermission="com.bytte.testapp.NEW_READ_LKMS_LICENSE_PROVIDER"
+            android:writePermission="com.bytte.testapp.NEW_WRITE_LKMS_LICENSE_PROVIDER" />
+
+
     </application>
 
 </manifest>
