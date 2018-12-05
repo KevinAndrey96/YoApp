@@ -376,13 +376,22 @@ class Enrollment : AppCompatActivity() {
 
                 val jsonObj = JSONObject(res_.substring(res_.indexOf("{"), res_.lastIndexOf("}") + 1))
                 val fingers = jsonObj.getJSONArray("fingerprintsobjects")
-                Logger.d(res_)
-                Logger.d(fingers.getJSONObject(0).getString("pathbitmap"))
 
-                imghuellaone = fingers.getJSONObject(0).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 1
-                imghuellatwo = fingers.getJSONObject(1).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 2
-                imghuellathree = fingers.getJSONObject(2).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 3
-                imghuellafour = fingers.getJSONObject(3).getString("pathbitmap").toByteArray(Charsets.UTF_8)// ruta imagen huella 4
+                Logger.d("1"+fingers.getJSONObject(0).getString("pathbitmap"))
+                Logger.d("2"+fingers.getJSONObject(1).getString("pathbitmap"))
+                Logger.d("3"+fingers.getJSONObject(2).getString("pathbitmap"))
+                Logger.d("4"+fingers.getJSONObject(3).getString("pathbitmap"))
+
+
+                var img1 = File(fingers.getJSONObject(0).getString("pathbitmap"))
+                var img2 = File(fingers.getJSONObject(1).getString("pathbitmap"))
+                var img3 = File(fingers.getJSONObject(2).getString("pathbitmap"))
+                var img4 = File(fingers.getJSONObject(3).getString("pathbitmap"))
+
+                imghuellaone = org.apache.commons.io.FileUtils.readFileToByteArray(img1)
+                imghuellatwo = org.apache.commons.io.FileUtils.readFileToByteArray(img2)
+                imghuellathree = org.apache.commons.io.FileUtils.readFileToByteArray(img3)
+                imghuellafour = org.apache.commons.io.FileUtils.readFileToByteArray(img4)
                 
                 for (i in 0 until fingers!!.length()) {
                     //val scanner = Fingers()
@@ -1949,3 +1958,4 @@ class Enrollment : AppCompatActivity() {
 //        escaner_huella.setEnabled(false)
     }
 }
+
