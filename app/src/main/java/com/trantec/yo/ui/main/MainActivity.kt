@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity() {
 
                 .build()
 
-        val item1 = PrimaryDrawerItem().withIdentifier(1).withName("Iniciar sesion")
-        val item2 = PrimaryDrawerItem().withIdentifier(2).withName("Mis tiendas")
+        val iniciar_session = PrimaryDrawerItem().withIdentifier(1).withName("Iniciar sesion")
+        val mis_tiendas = PrimaryDrawerItem().withIdentifier(2).withName("Mis tiendas")
 
         result = DrawerBuilder()
                 .withActivity(this)
@@ -89,16 +89,16 @@ class MainActivity : AppCompatActivity() {
                 .withActionBarDrawerToggle(true)
                 //.withAccountHeader(headerResult)
                 .addDrawerItems(
-                        item1,
-                        item2
+                        iniciar_session,
+                        mis_tiendas
                 )
                 .withOnDrawerItemClickListener { _, _, drawerItem ->
                     when (drawerItem.identifier) {
-                        item1.identifier -> {
+                        iniciar_session.identifier -> {
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                         }
-                        item2.identifier -> {
+                        mis_tiendas.identifier -> {
                             val intent = Intent(this, Stores::class.java)
                             startActivity(intent)
                         }

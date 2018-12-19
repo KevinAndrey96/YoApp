@@ -24,14 +24,15 @@ public class ValidacionEnrolamientoDocumentoRequest extends RequestBase implemen
     public String BarCodeBase64;
     
     public byte[] ImagenReverso;
-    
+
     public byte[] ImagenFrente;
-    
+
     public ArrayOfProcesoAutenticacionCapturaHuella HuellasProceso;
     
     public ScoreRequest ScoreProceso;
     
     public Integer HuellasAProcesar=0;
+//    public String IdentificadorProceso;
     
 
     public ValidacionEnrolamientoDocumentoRequest()
@@ -161,6 +162,24 @@ public class ValidacionEnrolamientoDocumentoRequest extends RequestBase implemen
             }
             return true;
         }
+//        if (info.name.equals("IdentificadorProceso"))
+//        {
+//            if(obj!=null)
+//            {
+//                if (obj.getClass().equals(SoapPrimitive.class))
+//                {
+//                    SoapPrimitive j =(SoapPrimitive) obj;
+//                    if(j.toString()!=null)
+//                    {
+//                        this.IdentificadorProceso = j.toString();
+//                    }
+//                }
+//                else if (obj instanceof String){
+//                    this.IdentificadorProceso = (String)obj;
+//                }
+//            }
+//            return true;
+//        }
         return super.loadProperty(info,soapObject,__envelope);
     }
     
@@ -203,6 +222,11 @@ public class ValidacionEnrolamientoDocumentoRequest extends RequestBase implemen
         {
             return HuellasAProcesar;
         }
+
+//        if(propertyIndex==count+8)
+//        {
+//            return IdentificadorProceso;
+//        }
         return super.getProperty(propertyIndex);
     }
 
@@ -264,6 +288,12 @@ public class ValidacionEnrolamientoDocumentoRequest extends RequestBase implemen
             info.name = "HuellasAProcesar";
             info.namespace= "http://casb.bytte.com.co/";
         }
+//        if(propertyIndex==count+8)
+//        {
+//            info.type = PropertyInfo.STRING_CLASS;
+//            info.name = "IdentificadorProceso";
+//            info.namespace= "http://casb.bytte.com.co/";
+//        }
         super.getPropertyInfo(propertyIndex,arg1,info);
     }
     
@@ -285,6 +315,7 @@ public class ValidacionEnrolamientoDocumentoRequest extends RequestBase implemen
         this.HuellasProceso = (ArrayOfProcesoAutenticacionCapturaHuella)parcel.readValue(this.getClass().getClassLoader());
         this.ScoreProceso = (ScoreRequest)parcel.readValue(this.getClass().getClassLoader());
         this.HuellasAProcesar = (Integer)parcel.readValue(null);
+//        this.IdentificadorProceso = (String)parcel.readValue(null);
     }
 
     @Override
@@ -304,6 +335,7 @@ public class ValidacionEnrolamientoDocumentoRequest extends RequestBase implemen
         parcel.writeValue(this.HuellasProceso);
         parcel.writeValue(this.ScoreProceso);
         parcel.writeValue(this.HuellasAProcesar);
+//        parcel.writeValue(this.IdentificadorProceso);
     }
 
     public static final Creator< ValidacionEnrolamientoDocumentoRequest> CREATOR = new Creator< ValidacionEnrolamientoDocumentoRequest>() {

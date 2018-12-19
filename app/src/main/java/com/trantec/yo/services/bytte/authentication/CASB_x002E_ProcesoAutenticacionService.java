@@ -37,7 +37,7 @@ public class CASB_x002E_ProcesoAutenticacionService
 
     String url="https://portal.bytte.com.co/casb/YoPrestoPR/CASB.ProcesoAutenticacion/Service/ServicioAutenticacion.svc";
 
-    int timeOut=60000;
+    int timeOut=80000;
     public List< HeaderProperty> httpHeaders= new ArrayList< HeaderProperty>();
     public boolean enableLogging;
     public boolean createClassesForAny = false;

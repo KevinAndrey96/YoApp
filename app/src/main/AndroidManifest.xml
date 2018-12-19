@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- features -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -69,8 +69,8 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/icon"
         android:theme="@style/AppTheme"
-        tools:replace="allowBackup"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="allowBackup">
 
         <!--
             <meta-data
@@ -115,8 +115,7 @@
             android:name=".Reports"
             android:label="Reportes" />
         <activity android:name=".Enrollment" />
-        <activity
-            android:name=".ResultCapture"/>
+        <activity android:name=".ResultCapture" />
         <activity android:name=".ui.main.ImportantInformation" />
         <activity
             android:name=".Utilization"
@@ -156,31 +155,26 @@
         <activity
             android:name=".alerts.SuccessfulTransaction"
             android:screenOrientation="portrait" />
-
-
-
-
-        <activity android:name="com.bytte.docbytte.ui.CFrontDocument"/>
-        <activity android:name="com.bytte.docbytte.ui.CBackDocument"/>
-        <activity android:name="com.bytte.biometricbytte.bfactor.license.BytteLicense"/>
-        <activity android:name="com.bytte.biometricbytte.bfactor.face.BytteCaptureFace"/>
+        <activity android:name="com.bytte.docbytte.ui.CFrontDocument" />
+        <activity android:name="com.bytte.docbytte.ui.CBackDocument" />
+        <activity android:name="com.bytte.biometricbytte.bfactor.license.BytteLicense" />
+        <activity android:name="com.bytte.biometricbytte.bfactor.face.BytteCaptureFace" />
         <activity android:name="com.bytte.biometricbytte.bfactor.huella.BytteFingerPrint" />
 
         <provider
             android:name="com.morpho.mph_bio_sdk.android.sdk.content_provider.BioStoreProvider"
-            tools:replace="android:authorities, android:readPermission, android:writePermission"
             android:authorities="com.bytte.testapp.bio_store"
             android:readPermission="com.bytte.testapp.NEW_READ_MPH_BIO_SDK_PROVIDER"
-            android:writePermission="com.bytte.testapp.NEW_WRITE_MPH_BIO_SDK_PROVIDER" />
+            android:writePermission="com.bytte.testapp.NEW_WRITE_MPH_BIO_SDK_PROVIDER"
+            tools:replace="android:authorities, android:readPermission, android:writePermission" />
         <provider
-
             android:name="com.morpho.lkms.android.sdk.lkms_core.content_provider.LkmsStoreProvider"
-            tools:replace="android:authorities, android:readPermission, android:writePermission"
             android:authorities="com.bytte.testapp.lkms"
             android:readPermission="com.bytte.testapp.NEW_READ_LKMS_LICENSE_PROVIDER"
-            android:writePermission="com.bytte.testapp.NEW_WRITE_LKMS_LICENSE_PROVIDER" />
+            android:writePermission="com.bytte.testapp.NEW_WRITE_LKMS_LICENSE_PROVIDER"
+            tools:replace="android:authorities, android:readPermission, android:writePermission" />
 
-
+        <activity android:name=".ui.Main2Activity"></activity>
     </application>
 
 </manifest>

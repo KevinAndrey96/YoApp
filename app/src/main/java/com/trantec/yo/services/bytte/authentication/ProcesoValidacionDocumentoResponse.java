@@ -16,7 +16,7 @@ import org.ksoap2.serialization.*;
 public class ProcesoValidacionDocumentoResponse extends Response implements KvmSerializable,java.io.Serializable,android.os.Parcelable
 {
 
-    
+
     public Integer ScoreDactilar=0;
     
     public Integer ScoreDactilarValor=0;

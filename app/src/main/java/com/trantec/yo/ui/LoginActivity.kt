@@ -68,273 +68,226 @@ class LoginActivity : AppCompatActivity() {
         yoprestoAliado = applicationContext as YoPrestoApp?
 
         buttonSignIn.setOnClickListener {
-
-
             try{
                 when {
                     editTextUser.text.toString().isNullOrEmpty() -> editTextUser.error = getString(R.string.error_field_required)
                     editTextPassword.text.toString().isNullOrEmpty() -> editTextPassword.error = getString(R.string.error_field_required)
-                    else ->
+                    else -> {
+                        System.out.println("entro aca a login")
+                        val formBody = FormBody.Builder()
+                                .add("username", AppConstants.TOKEN_USERNAME)
+                                .add("password", AppConstants.TOKEN_PASSWORD)
+                                .add("grant_type", AppConstants.TOKEN_GRANT_TYPE)
+                                .build()
 
-                        SafetyNet.getClient(this@LoginActivity).verifyWithRecaptcha(getString(R.string.site_key))
-                            .addOnSuccessListener {response ->
+                        val builderToken = Request.Builder()
+                        builderToken.url(WebConstant.TOKEN_URL)
+                        Logger.d(WebConstant.TOKEN_URL)
 
-                                val userResponseToken = response.tokenResult
+                        val request = builderToken
+                                .header("Content-Type", "application/x-www-form-urlencoded")
+                                .header("Authorization", AppConstants.TOKEN_HEADER_AUTHORIZATION_TOKEN)
+                                .post(formBody)
+                                .build()
+                        mHandler.post{
+                            run{
+                                startProgress()
+                            }
+                        }
 
-                                if (!userResponseToken.isEmpty()) {
-                                //if (1==1) {
-                                    // Validate the user response token using the
-                                    // reCAPTCHA siteverify API.
 
+                        client.newCall(request).enqueue(object : Callback {
+                            override fun onFailure(call: Call, e: IOException) {
 
-                                    val formBody = FormBody.Builder()
-                                            .add("username", AppConstants.TOKEN_USERNAME)
-                                            .add("password", AppConstants.TOKEN_PASSWORD)
-                                            .add("grant_type", AppConstants.TOKEN_GRANT_TYPE)
-                                            .build()
+                                e.printStackTrace()
 
-                                    val builderToken = Request.Builder()
-                                    builderToken.url(WebConstant.TOKEN_URL)
-                                    Logger.d(WebConstant.TOKEN_URL)
-
-                                    val request = builderToken
-                                            .header("Content-Type", "application/x-www-form-urlencoded")
-                                            .header("Authorization", AppConstants.TOKEN_HEADER_AUTHORIZATION_TOKEN)
-                                            .post(formBody)
-                                            .build()
-                                    mHandler.post{
-                                        run{
-                                            startProgress()
-                                        }
+                                mHandler.post{
+                                    run{
+                                        stopProgess()
+                                        PrettyDialog(this@LoginActivity)
+                                                .setTitle("Información")
+                                                .setMessage("Error. " + e.message)
+                                                .show()
                                     }
+                                }
+                            }
 
+                            @Throws(IOException::class)
+                            override fun onResponse(call: Call, response: Response) {
 
-                                    client.newCall(request).enqueue(object : Callback {
-                                        override fun onFailure(call: Call, e: IOException) {
+                                val responseTokenString = response.body()!!.string()
+                                val tokenJSONObject: JSONObject
+                                val tokenResponse: TokenResponse
 
-                                            e.printStackTrace()
+                                if (responseTokenString != null) {
 
-                                            mHandler.post{
-                                                run{
-                                                    stopProgess()
-                                                    PrettyDialog(this@LoginActivity)
-                                                            .setTitle("Información")
-                                                            .setMessage("Error. " + e.message)
-                                                            .show()
-                                                }
-                                            }
-                                        }
+                                    Logger.d("Response from get token")
+                                    Logger.d(responseTokenString)
 
-                                        @Throws(IOException::class)
-                                        override fun onResponse(call: Call, response: Response) {
+                                    if (JSONUtils.isJSONValid(responseTokenString)) {
 
-                                            val responseTokenString = response.body()!!.string()
-                                            val tokenJSONObject: JSONObject
-                                            val tokenResponse: TokenResponse
+                                        tokenJSONObject = JSONObject(responseTokenString)
 
-                                            if (responseTokenString != null) {
+                                        if(tokenJSONObject != null){
 
-                                                Logger.d("Response from get token")
-                                                Logger.d(responseTokenString)
+                                            tokenResponse =  mapper.readValue<TokenResponse>(tokenJSONObject.toString(), TokenResponse::class.java)
 
-                                                if (JSONUtils.isJSONValid(responseTokenString)) {
+                                            if(tokenResponse != null){
 
-                                                    tokenJSONObject = JSONObject(responseTokenString)
+                                                Logger.d("Token response on object")
+                                                Logger.d(tokenResponse.access_token)
 
-                                                    if(tokenJSONObject != null){
+                                                if(tokenResponse.access_token != null){
 
-                                                        tokenResponse =  mapper.readValue<TokenResponse>(tokenJSONObject.toString(), TokenResponse::class.java)
+                                                    SessionManager.putString(SessionKeys.ESB_TOKEN.key, tokenResponse.access_token)
 
-                                                        if(tokenResponse != null){
 
-                                                            Logger.d("Token response on object")
-                                                            Logger.d(tokenResponse.access_token)
+                                                    val builderIp = Request.Builder()
+                                                    builderIp.url(WebConstant.IPIFY_ENDPOINT)
 
-                                                            if(tokenResponse.access_token != null){
+                                                    val requestIp = builderIp
+                                                            .header("Accept", "application/json")
+                                                            .build()
 
-                                                                SessionManager.putString(SessionKeys.ESB_TOKEN.key, tokenResponse.access_token)
+                                                    client.newCall(requestIp).enqueue(object : Callback {
+                                                        override fun onFailure(call: Call, e: IOException) {
 
+                                                            e.printStackTrace()
 
-                                                                val builderIp = Request.Builder()
-                                                                builderIp.url(WebConstant.IPIFY_ENDPOINT)
+                                                            mHandler.post{
+                                                                run{
+                                                                    stopProgess()
+                                                                    PrettyDialog(this@LoginActivity)
+                                                                            .setTitle("Información")
+                                                                            .setMessage("Error ingresando " + e.message)
+                                                                            .show()
+                                                                }
+                                                            }
 
-                                                                val requestIp = builderIp
-                                                                        .header("Accept", "application/json")
-                                                                        .build()
+                                                        }
 
-                                                                client.newCall(requestIp).enqueue(object : Callback {
-                                                                    override fun onFailure(call: Call, e: IOException) {
+                                                        @Throws(IOException::class)
+                                                        override fun onResponse(call: Call, response: Response) {
 
-                                                                        e.printStackTrace()
+                                                            val responseIpString = response.body()!!.string()
+                                                            val ipJSONObject: JSONObject
+                                                            val ipResponse: IPResponse
 
-                                                                        mHandler.post{
-                                                                            run{
-                                                                                stopProgess()
-                                                                                PrettyDialog(this@LoginActivity)
-                                                                                        .setTitle("Información")
-                                                                                        .setMessage("Error ingresando " + e.message)
-                                                                                        .show()
-                                                                            }
-                                                                        }
+                                                            if (responseIpString != null) {
 
-                                                                    }
+                                                                Logger.d("Response from get ip")
+                                                                Logger.d(responseIpString)
 
-                                                                    @Throws(IOException::class)
-                                                                    override fun onResponse(call: Call, response: Response) {
+                                                                if (JSONUtils.isJSONValid(responseIpString)) {
 
-                                                                        val responseIpString = response.body()!!.string()
-                                                                        val ipJSONObject: JSONObject
-                                                                        val ipResponse: IPResponse
+                                                                    ipJSONObject = JSONObject(responseIpString)
 
-                                                                        if (responseIpString != null) {
+                                                                    if(ipJSONObject != null){
 
-                                                                            Logger.d("Response from get ip")
-                                                                            Logger.d(responseIpString)
+                                                                        ipResponse =  mapper.readValue<IPResponse>(ipJSONObject.toString(), IPResponse::class.java)
 
-                                                                            if (JSONUtils.isJSONValid(responseIpString)) {
+                                                                        if(ipResponse != null){
 
-                                                                                ipJSONObject = JSONObject(responseIpString)
+                                                                            Logger.d("Token response on object")
+                                                                            Logger.d(ipResponse.ip)
 
-                                                                                if(ipJSONObject != null){
+                                                                            if(ipResponse.ip != null){
 
-                                                                                    ipResponse =  mapper.readValue<IPResponse>(ipJSONObject.toString(), IPResponse::class.java)
+                                                                                val login = LoginRequest()
+                                                                                val datos = LoginDatos()
 
-                                                                                    if(ipResponse != null){
 
-                                                                                        Logger.d("Token response on object")
-                                                                                        Logger.d(ipResponse.ip)
+                                                                                datos.cuenta = editTextUser.text.toString()
+                                                                                datos.clave = PhoneUtil.getSHA512(editTextPassword.text.toString())
 
-                                                                                        if(ipResponse.ip != null){
+                                                                                datos.ip = ipResponse.ip
 
-                                                                                            val login = LoginRequest()
-                                                                                            val datos = LoginDatos()
+                                                                                Logger.d("Clave " + datos.clave)
 
+                                                                                login.datos = datos
 
-                                                                                            datos.cuenta = editTextUser.text.toString()
-                                                                                            datos.clave = PhoneUtil.getSHA512(editTextPassword.text.toString())
 
-                                                                                            datos.ip = ipResponse.ip
+                                                                                val bodyLogin = RequestBody.create(HttpObjectsConstants.jsonMediaType, mapper.writeValueAsString(login))
 
-                                                                                            Logger.d("Clave " + datos.clave)
+                                                                                val builderLogin = Request.Builder()
+                                                                                builderLogin.url(YoPrestoApp.getEndpoint(YoPrestoApp()) + WebConstant.DEV_PORT + WebConstant.WEB_URL)
+                                                                                Logger.d(YoPrestoApp.getEndpoint(YoPrestoApp()) + WebConstant.DEV_PORT + WebConstant.WEB_URL)
 
-                                                                                            login.datos = datos
+                                                                                val requestLogin = builderLogin
+                                                                                        .header("Content-Type", "application/json; charset=UTF-8")
+                                                                                        .header("Accept", "application/json")
+                                                                                        .header("Authorization", "Bearer " + SessionManager.getString(SessionKeys.ESB_TOKEN.key, null))
+                                                                                        .header("operation", OperationConstants.LOGIN_OPERATION)
+                                                                                        .post(bodyLogin)
+                                                                                        .build()
 
 
-                                                                                            val bodyLogin = RequestBody.create(HttpObjectsConstants.jsonMediaType, mapper.writeValueAsString(login))
+                                                                                client.newCall(requestLogin).enqueue(object : Callback {
+                                                                                    override fun onFailure(call: Call, e: IOException) {
 
-                                                                                            val builderLogin = Request.Builder()
-                                                                                            builderLogin.url(YoPrestoApp.getEndpoint(YoPrestoApp()) + WebConstant.DEV_PORT + WebConstant.WEB_URL)
-                                                                                            Logger.d(YoPrestoApp.getEndpoint(YoPrestoApp()) + WebConstant.DEV_PORT + WebConstant.WEB_URL)
+                                                                                        e.printStackTrace()
 
-                                                                                            val requestLogin = builderLogin
-                                                                                                    .header("Content-Type", "application/json; charset=UTF-8")
-                                                                                                    .header("Accept", "application/json")
-                                                                                                    .header("Authorization", "Bearer " + SessionManager.getString(SessionKeys.ESB_TOKEN.key, null))
-                                                                                                    .header("operation", OperationConstants.LOGIN_OPERATION)
-                                                                                                    .post(bodyLogin)
-                                                                                                    .build()
+                                                                                        mHandler.post{
+                                                                                            run{
+                                                                                                stopProgess()
+                                                                                                PrettyDialog(this@LoginActivity)
+                                                                                                        .setTitle("Información")
+                                                                                                        .setMessage("Error. " + e.message)
+                                                                                                        .show()
+                                                                                            }
+                                                                                        }
 
+                                                                                    }
 
-                                                                                            client.newCall(requestLogin).enqueue(object : Callback {
-                                                                                                override fun onFailure(call: Call, e: IOException) {
+                                                                                    @Throws(IOException::class)
+                                                                                    override fun onResponse(call: Call, response: Response) {
 
-                                                                                                    e.printStackTrace()
+                                                                                        val responseLoginString = response.body()!!.string()
+                                                                                                .replace("\"response\": {\"dataresponse\":{\"@nil\":\"true\"},\"response\":\"CLAVE INVALIDA\",\"idresponse\":3},","")
+                                                                                                .replace("\"response\": {\"dataresponse\":{\"@nil\":\"true\"},\"response\":\"CUENTA INVALIDA\",\"idresponse\":2},", "")
+                                                                                        val loginResponse: LoginResponse
 
-                                                                                                    mHandler.post{
-                                                                                                        run{
-                                                                                                            stopProgess()
-                                                                                                            PrettyDialog(this@LoginActivity)
-                                                                                                                    .setTitle("Información")
-                                                                                                                    .setMessage("Error. " + e.message)
-                                                                                                                    .show()
-                                                                                                        }
-                                                                                                    }
+                                                                                        Logger.d("Response login")
+                                                                                        Logger.d(responseLoginString)
 
-                                                                                                }
 
-                                                                                                @Throws(IOException::class)
-                                                                                                override fun onResponse(call: Call, response: Response) {
+                                                                                        if (JSONUtils.isJSONValid(responseLoginString)) {
 
-                                                                                                    val responseLoginString = response.body()!!.string()
-                                                                                                            .replace("\"response\": {\"dataresponse\":{\"@nil\":\"true\"},\"response\":\"CLAVE INVALIDA\",\"idresponse\":3},","")
-                                                                                                            .replace("\"response\": {\"dataresponse\":{\"@nil\":\"true\"},\"response\":\"CUENTA INVALIDA\",\"idresponse\":2},", "")
-                                                                                                    val loginResponse: LoginResponse
+                                                                                            loginResponse =  mapper.readValue<LoginResponse>(responseLoginString, LoginResponse::class.java)
 
-                                                                                                    Logger.d("Response login")
-                                                                                                    Logger.d(responseLoginString)
+                                                                                            if(loginResponse?.response != null && loginResponse.response!!.dataresponse != null){
 
 
-                                                                                                    if (JSONUtils.isJSONValid(responseLoginString)) {
+                                                                                                val loginDataresponse: LoginDataresponse = mapper.readValue<LoginDataresponse>(loginResponse.response!!.dataresponse, LoginDataresponse::class.java)
 
-                                                                                                        loginResponse =  mapper.readValue<LoginResponse>(responseLoginString, LoginResponse::class.java)
+                                                                                                if(loginResponse.status!!){
 
-                                                                                                        if(loginResponse?.response != null && loginResponse.response!!.dataresponse != null){
+                                                                                                    if(loginResponse.response!!.dataresponse != null){
 
 
-                                                                                                            val loginDataresponse: LoginDataresponse = mapper.readValue<LoginDataresponse>(loginResponse.response!!.dataresponse, LoginDataresponse::class.java)
+                                                                                                        if(loginDataresponse != null){
+                                                                                                            if(loginDataresponse.idusuario != null){
 
-                                                                                                            if(loginResponse.status!!){
+                                                                                                                val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+                                                                                                                val editor = prefs.edit()
+                                                                                                                editor.putString("ip", ipResponse.ip)
+                                                                                                                editor.putString("idusuario", loginDataresponse.idusuario.toString())
+                                                                                                                editor.putString("nombre", loginDataresponse.primernombre)
+                                                                                                                editor.putString("apellido", loginDataresponse.primerapellido)
+                                                                                                                editor.putString("saldo", loginDataresponse.saldo.toString())
+                                                                                                                editor.putString("cuenta", loginDataresponse.cuenta)
+                                                                                                                editor.putString("identidad", loginDataresponse.identidad.toString())
+                                                                                                                editor.commit()
 
-                                                                                                                if(loginResponse.response!!.dataresponse != null){
-
-
-                                                                                                                    if(loginDataresponse != null){
-                                                                                                                        if(loginDataresponse.idusuario != null){
-
-                                                                                                                            val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
-                                                                                                                            val editor = prefs.edit()
-                                                                                                                            editor.putString("ip", ipResponse.ip)
-                                                                                                                            editor.putString("idusuario", loginDataresponse.idusuario.toString())
-                                                                                                                            editor.putString("nombre", loginDataresponse.primernombre)
-                                                                                                                            editor.putString("apellido", loginDataresponse.primerapellido)
-                                                                                                                            editor.putString("saldo", loginDataresponse.saldo.toString())
-                                                                                                                            editor.putString("cuenta", loginDataresponse.cuenta)
-                                                                                                                            editor.putString("identidad", loginDataresponse.identidad.toString())
-                                                                                                                            editor.commit()
-
-                                                                                                                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                                                                                                                            finish()
-                                                                                                                        }else{
-
-                                                                                                                            mHandler.post{
-                                                                                                                                run{
-                                                                                                                                    stopProgess()
-                                                                                                                                    PrettyDialog(this@LoginActivity)
-                                                                                                                                            .setTitle("Información")
-                                                                                                                                            .setMessage("Datos incorrectos, verifique e intente nuevamente.")
-                                                                                                                                            .show()
-                                                                                                                                }
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    }else{
-                                                                                                                        mHandler.post{
-                                                                                                                            stopProgess()
-                                                                                                                            run{
-                                                                                                                                PrettyDialog(this@LoginActivity)
-                                                                                                                                        .setTitle("Información")
-                                                                                                                                        .setMessage("Datos incorrectos, verifique e intente nuevamente.")
-                                                                                                                                        .show()
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    }
-
-                                                                                                                }else{
-                                                                                                                    mHandler.post{
-                                                                                                                        stopProgess()
-                                                                                                                        run{
-                                                                                                                            PrettyDialog(this@LoginActivity)
-                                                                                                                                    .setTitle("Información")
-                                                                                                                                    .setMessage("Datos incorrectos, verifique e intente nuevamente.")
-                                                                                                                                    .show()
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                }
+                                                                                                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                                                                                                                finish()
                                                                                                             }else{
+
                                                                                                                 mHandler.post{
                                                                                                                     run{
                                                                                                                         stopProgess()
                                                                                                                         PrettyDialog(this@LoginActivity)
-                                                                                                                                .setTitle("Error")
+                                                                                                                                .setTitle("Información")
                                                                                                                                 .setMessage("Datos incorrectos, verifique e intente nuevamente.")
                                                                                                                                 .show()
                                                                                                                     }
@@ -342,8 +295,8 @@ class LoginActivity : AppCompatActivity() {
                                                                                                             }
                                                                                                         }else{
                                                                                                             mHandler.post{
+                                                                                                                stopProgess()
                                                                                                                 run{
-                                                                                                                    stopProgess()
                                                                                                                     PrettyDialog(this@LoginActivity)
                                                                                                                             .setTitle("Información")
                                                                                                                             .setMessage("Datos incorrectos, verifique e intente nuevamente.")
@@ -354,8 +307,8 @@ class LoginActivity : AppCompatActivity() {
 
                                                                                                     }else{
                                                                                                         mHandler.post{
+                                                                                                            stopProgess()
                                                                                                             run{
-                                                                                                                stopProgess()
                                                                                                                 PrettyDialog(this@LoginActivity)
                                                                                                                         .setTitle("Información")
                                                                                                                         .setMessage("Datos incorrectos, verifique e intente nuevamente.")
@@ -363,14 +316,30 @@ class LoginActivity : AppCompatActivity() {
                                                                                                             }
                                                                                                         }
                                                                                                     }
-
-
+                                                                                                }else{
+                                                                                                    mHandler.post{
+                                                                                                        run{
+                                                                                                            stopProgess()
+                                                                                                            PrettyDialog(this@LoginActivity)
+                                                                                                                    .setTitle("Error")
+                                                                                                                    .setMessage("Datos incorrectos, verifique e intente nuevamente.")
+                                                                                                                    .show()
+                                                                                                        }
+                                                                                                    }
                                                                                                 }
-                                                                                            })
-
+                                                                                            }else{
+                                                                                                mHandler.post{
+                                                                                                    run{
+                                                                                                        stopProgess()
+                                                                                                        PrettyDialog(this@LoginActivity)
+                                                                                                                .setTitle("Información")
+                                                                                                                .setMessage("Datos incorrectos, verifique e intente nuevamente.")
+                                                                                                                .show()
+                                                                                                    }
+                                                                                                }
+                                                                                            }
 
                                                                                         }else{
-                                                                                            SessionManager.removeKey(SessionKeys.ESB_TOKEN.key)
                                                                                             mHandler.post{
                                                                                                 run{
                                                                                                     stopProgess()
@@ -382,116 +351,93 @@ class LoginActivity : AppCompatActivity() {
                                                                                             }
                                                                                         }
 
-                                                                                    }else{
-                                                                                        Logger.d("json object is null")
-                                                                                        mHandler.post{
-                                                                                            run{
-                                                                                                stopProgess()
-                                                                                                PrettyDialog(this@LoginActivity)
-                                                                                                        .setTitle("Información")
-                                                                                                        .setMessage("Datos incorrectos, verifique e intente nuevamente.")
-                                                                                                        .show()
-                                                                                            }
-                                                                                        }
-                                                                                    }
 
-                                                                                }else{
-                                                                                    Logger.d("Is not json object")
-                                                                                    mHandler.post{
-                                                                                        run{
-                                                                                            stopProgess()
-                                                                                            PrettyDialog(this@LoginActivity)
-                                                                                                    .setTitle("Información")
-                                                                                                    .setMessage("Datos incorrectos, verifique e intente nuevamente.")
-                                                                                                    .show()
-                                                                                        }
+                                                                                    }
+                                                                                })
+
+
+                                                                            }else{
+                                                                                SessionManager.removeKey(SessionKeys.ESB_TOKEN.key)
+                                                                                mHandler.post{
+                                                                                    run{
+                                                                                        stopProgess()
+                                                                                        PrettyDialog(this@LoginActivity)
+                                                                                                .setTitle("Información")
+                                                                                                .setMessage("Datos incorrectos, verifique e intente nuevamente.")
+                                                                                                .show()
                                                                                     }
                                                                                 }
-
                                                                             }
 
+                                                                        }else{
+                                                                            Logger.d("json object is null")
+                                                                            mHandler.post{
+                                                                                run{
+                                                                                    stopProgess()
+                                                                                    PrettyDialog(this@LoginActivity)
+                                                                                            .setTitle("Información")
+                                                                                            .setMessage("Datos incorrectos, verifique e intente nuevamente.")
+                                                                                            .show()
+                                                                                }
+                                                                            }
                                                                         }
 
+                                                                    }else{
+                                                                        Logger.d("Is not json object")
+                                                                        mHandler.post{
+                                                                            run{
+                                                                                stopProgess()
+                                                                                PrettyDialog(this@LoginActivity)
+                                                                                        .setTitle("Información")
+                                                                                        .setMessage("Datos incorrectos, verifique e intente nuevamente.")
+                                                                                        .show()
+                                                                            }
+                                                                        }
+                                                                    }
 
-                                                                    }
-                                                                })
-                                                            }else{
-                                                                SessionManager.removeKey(SessionKeys.ESB_TOKEN.key)
-                                                                mHandler.post{
-                                                                    run{
-                                                                        stopProgess()
-                                                                    }
                                                                 }
+
                                                             }
 
-                                                        }else{
-                                                            Logger.d("json object is null")
-                                                            mHandler.post{
-                                                                run{
-                                                                    stopProgess()
-                                                                }
-                                                            }
+
                                                         }
-
-                                                    }else{
-                                                        Logger.d("Is not json object")
-                                                        mHandler.post{
-                                                            run{
-                                                                stopProgess()
-                                                            }
+                                                    })
+                                                }else{
+                                                    SessionManager.removeKey(SessionKeys.ESB_TOKEN.key)
+                                                    mHandler.post{
+                                                        run{
+                                                            stopProgess()
                                                         }
                                                     }
-
                                                 }
 
+                                            }else{
+                                                Logger.d("json object is null")
+                                                mHandler.post{
+                                                    run{
+                                                        stopProgess()
+                                                    }
+                                                }
                                             }
 
-
+                                        }else{
+                                            Logger.d("Is not json object")
+                                            mHandler.post{
+                                                run{
+                                                    stopProgess()
+                                                }
+                                            }
                                         }
-                                    })
 
-
-                                }
-                            }
-                            .addOnFailureListener { e ->
-
-                                if (e is ApiException) {
-                                    // An error occurred when communicating with the
-                                    // reCAPTCHA service. Refer to the status code to
-                                    // handle the error appropriately.
-                                    val statusCode = e.statusCode
-                                    Logger.d("Error: " + CommonStatusCodes.getStatusCodeString(statusCode))
-                                } else {
-                                    // A different, unknown type of error occurred.
-                                    Logger.d("Error: " + e.message)
-                                }
-                                mHandler.post{
-                                    run{
-                                        stopProgess()
-                                        PrettyDialog(this@LoginActivity)
-                                                .setTitle("Información")
-                                                .setMessage("Ha fallado el reconocimiento captcha.")
-                                                .show()
                                     }
+
                                 }
 
+
                             }
-                            .addOnCanceledListener {
-                                //TODO
-                                //if user cancel request
-                                Logger.d("Cancel")
-                                mHandler.post{
-                                    run{
-                                        stopProgess()
-                                        PrettyDialog(this@LoginActivity)
-                                                .setTitle("Información")
-                                                .setMessage("Se ha cancelado el reconocimiento captcha.")
-                                                .show()
-                                    }
-                                }
-                            }
+                        })
+                    }
                 }
-
 
 
             }catch (ex: Exception){

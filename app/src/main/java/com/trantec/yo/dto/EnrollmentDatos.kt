@@ -1,5 +1,6 @@
 package com.trantec.yo.dto
 
+import android.graphics.Bitmap
 import org.codehaus.jackson.annotate.JsonIgnoreProperties
 import java.io.Serializable
 
