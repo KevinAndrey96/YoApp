@@ -1,6 +1,7 @@
 package com.trantec.yo
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.PendingIntent.getActivity
 import android.content.Intent
@@ -35,6 +36,7 @@ import java.util.*
 import android.content.Context
 import android.view.View.INVISIBLE
 import android.view.Window
+import com.trantec.yo.alerts.UtilizationError
 import com.trantec.yo.ui.fragment.TakeDNIPictureFragment
 import com.yopresto.app.yoprestoapp.dto.SendSmsResponse
 import java.text.DecimalFormat
@@ -1162,64 +1164,77 @@ class ResultCapture : AppCompatActivity() {
                                                                             var makeTransactionString = response.body()!!.string()
                                                                             Logger.d(makeTransactionString)
                                                                             makeTransactionString = makeTransactionString.replace("\"dataresponse\":{\"@nil\":\"true\"},", "")
-                                                                            Logger.d(""+makeTransactionString)
+
+                                                                            val error = "ENTIDAD CON PROBLEMAS DE INFORMACION"
+                                                                            val intIndex = makeTransactionString.indexOf(error)
+                                                                            Logger.d(intIndex)
+
+                                                                            if (intIndex == -1){
+                                                                                if (JSONUtils.isJSONValid(responseIpString)) {
+
+                                                                                    val makeUseTransactionResponse = mapper.readValue<MakeUseTransactionResponse>(makeTransactionString, MakeUseTransactionResponse::class.java)
+
+                                                                                    //val makeUseTransactionDataResponse = mapper.readValue<MakeUseTransactionDataResponse>(makeTransactionString, MakeUseTransactionDataResponse::class.java)
+
+                                                                                    if(makeUseTransactionResponse != null){
+
+                                                                                        if(makeUseTransactionResponse.status!!){
+
+                                                                                            mHandler.post {
+                                                                                                run {
+
+                                                                                                    stopProgess()
+                                                                                                    try {
+                                                                                                        Logger.d(makeUseTransactionResponse.response!!.dataresponse!!)
+                                                                                                        transaccion_id= makeUseTransactionResponse.response!!.dataresponse!!.substring(54, makeUseTransactionResponse.response!!.dataresponse!!.length-1)
+                                                                                                        Logger.d("Éxito: $transaccion_id")
+                                                                                                        sendPaymentPlanMail(transaccion_id!!)
+
+                                                                                                        sendSMSSuccessTransaction()
+
+                                                                                                        val dialog = PrettyDialog(applicationContext)
+                                                                                                                .setTitle(getString(R.string.information))
+                                                                                                                .setMessage("Transacción Exitosa. Desembolso realizado exitosamente.")
+                                                                                                                .setAnimationEnabled(true)
 
 
-
-                                                                            if (JSONUtils.isJSONValid(responseIpString)) {
-
-                                                                                val makeUseTransactionResponse = mapper.readValue<MakeUseTransactionResponse>(makeTransactionString, MakeUseTransactionResponse::class.java)
-
-                                                                                //val makeUseTransactionDataResponse = mapper.readValue<MakeUseTransactionDataResponse>(makeTransactionString, MakeUseTransactionDataResponse::class.java)
-
-                                                                                if(makeUseTransactionResponse != null){
-
-                                                                                    if(makeUseTransactionResponse.status!!){
-
-                                                                                        mHandler.post {
-                                                                                            run {
-
-                                                                                                stopProgess()
-                                                                                                try {
-                                                                                                    Logger.d(makeUseTransactionResponse.response!!.dataresponse!!)
-                                                                                                    transaccion_id= makeUseTransactionResponse.response!!.dataresponse!!.substring(54, makeUseTransactionResponse.response!!.dataresponse!!.length-1)
-                                                                                                    Logger.d("Éxito: $transaccion_id")
-                                                                                                    sendPaymentPlanMail(transaccion_id!!)
-
-                                                                                                    sendSMSSuccessTransaction()
-
-                                                                                                    val dialog = PrettyDialog(applicationContext)
-                                                                                                            .setTitle(getString(R.string.information))
-                                                                                                            .setMessage("Transacción Exitosa. Desembolso realizado exitosamente.")
-                                                                                                            .setAnimationEnabled(true)
+                                                                                                        dialog.addButton(
+                                                                                                                getString(android.R.string.ok), // button text
+                                                                                                                R.color.pdlg_color_white, // button text color
+                                                                                                                R.color.pdlg_color_green // button background color
+                                                                                                        ) // button OnClick listener
+                                                                                                        {
 
 
-                                                                                                    dialog.addButton(
-                                                                                                            getString(android.R.string.ok), // button text
-                                                                                                            R.color.pdlg_color_white, // button text color
-                                                                                                            R.color.pdlg_color_green // button background color
-                                                                                                    ) // button OnClick listener
-                                                                                                    {
+                                                                                                            val fragment = TakeDNIPictureFragment()
+                                                                                                            val tx = fragmentManager!!.beginTransaction()
+                                                                                                            ///tx.replace(R.id.main_fragment, fragment)
+                                                                                                            tx.addToBackStack("TakeDNIPicFrg").commit()
 
 
-                                                                                                        val fragment = TakeDNIPictureFragment()
-                                                                                                        val tx = fragmentManager!!.beginTransaction()
-                                                                                                        ///tx.replace(R.id.main_fragment, fragment)
-                                                                                                        tx.addToBackStack("TakeDNIPicFrg").commit()
+                                                                                                        }
 
+                                                                                                        dialog.setOnCancelListener {
+                                                                                                            val fragment = TakeDNIPictureFragment()
+                                                                                                            val tx = fragmentManager!!.beginTransaction()
+                                                                                                            //aquitx.replace(R.id.main_fragment, fragment)
+                                                                                                            tx.addToBackStack("TakeDNIPicFrg").commit()
+                                                                                                        }
 
+                                                                                                        dialog.show()
+                                                                                                    } catch (ex: Exception) {
+                                                                                                        ex.printStackTrace()
                                                                                                     }
-
-                                                                                                    dialog.setOnCancelListener {
-                                                                                                        val fragment = TakeDNIPictureFragment()
-                                                                                                        val tx = fragmentManager!!.beginTransaction()
-                                                                                                        //aquitx.replace(R.id.main_fragment, fragment)
-                                                                                                        tx.addToBackStack("TakeDNIPicFrg").commit()
-                                                                                                    }
-
-                                                                                                    dialog.show()
-                                                                                                } catch (ex: Exception) {
-                                                                                                    ex.printStackTrace()
+                                                                                                }
+                                                                                            }
+                                                                                        }else{
+                                                                                            mHandler.post {
+                                                                                                run {
+                                                                                                    stopProgess()
+                                                                                                    /*PrettyDialog(this@ResultCapture)
+                                                                                                            .setTitle("Información")
+                                                                                                            .setMessage("Error realizando la transacción, intente nuevamente.")
+                                                                                                            .show()*/
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -1227,17 +1242,17 @@ class ResultCapture : AppCompatActivity() {
                                                                                         mHandler.post {
                                                                                             run {
                                                                                                 stopProgess()
-                                                                                                /*PrettyDialog(this@ResultCapture)
+                                                                                                PrettyDialog(applicationContext)
                                                                                                         .setTitle("Información")
-                                                                                                        .setMessage("Error realizando la transacción, intente nuevamente.")
-                                                                                                        .show()*/
+                                                                                                        .setMessage("Error realizando la transacción")
+                                                                                                        .show()
                                                                                             }
                                                                                         }
                                                                                     }
                                                                                 }else{
                                                                                     mHandler.post {
+                                                                                        stopProgess()
                                                                                         run {
-                                                                                            stopProgess()
                                                                                             PrettyDialog(applicationContext)
                                                                                                     .setTitle("Información")
                                                                                                     .setMessage("Error realizando la transacción")
@@ -1245,16 +1260,11 @@ class ResultCapture : AppCompatActivity() {
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            }else{
-                                                                                mHandler.post {
-                                                                                    stopProgess()
-                                                                                    run {
-                                                                                        PrettyDialog(applicationContext)
-                                                                                                .setTitle("Información")
-                                                                                                .setMessage("Error realizando la transacción")
-                                                                                                .show()
-                                                                                    }
-                                                                                }
+
+                                                                            } else {
+                                                                                val intent = Intent(applicationContext, UtilizationError::class.java)
+                                                                                startActivity(intent)
+                                                                                finish()
                                                                             }
 
                                                                         }

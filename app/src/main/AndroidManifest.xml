@@ -150,6 +150,9 @@
             android:name=".EscaneoOk"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".alerts.UtilizationError"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".alerts.EnrollmentOk"
             android:screenOrientation="portrait" />
         <activity
