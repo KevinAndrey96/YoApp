@@ -154,7 +154,7 @@ class Enrollment : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         //Inicio de UI y deshabiltar botones para escaneo y enrolamiento
-        val respuesta = ProcesoValidacionDocumentoResponse()
+        //val respuesta = ProcesoValidacionDocumentoResponse()
         this.cedulafront = findViewById<Button>(R.id.btnCedula)
         this.BtnSend = findViewById<Button>(R.id.btnSend)
         this.cedulaback = findViewById<Button>(R.id.button7)
@@ -307,7 +307,13 @@ class Enrollment : AppCompatActivity() {
                                     error()
                                 }
                             } else {
-                                Toast.makeText(this, "91 - El QR es incorrecto", Toast.LENGTH_LONG).show()
+                                //Toast.makeText(this, "91 - El QR es incorrecto", Toast.LENGTH_LONG).show()
+                                PrettyDialog(this@Enrollment)
+                                        .setTitle("Información")
+                                        .setMessage("91 - El QR es incorrecto")
+                                        .setIconTint(R.color.pdlg_color_red)
+
+                                        .show()
                                 error()
                             }
 
@@ -392,6 +398,7 @@ class Enrollment : AppCompatActivity() {
                                     PrettyDialog(this@Enrollment)
                                             .setTitle("Información")
                                             .setMessage("91 - Este documento no es valido para el QR escaneado")
+                                            .setIconTint(R.color.pdlg_color_red)
                                             .show()
                                 }
                             }
@@ -474,6 +481,7 @@ class Enrollment : AppCompatActivity() {
                         PrettyDialog(this@Enrollment)
                                 .setTitle("Información")
                                 .setMessage("90 - Proceso no termino, intentelo de nuevo")
+                                .setIconTint(R.color.pdlg_color_red)
                                 .show()
                     }
                 }
@@ -485,6 +493,7 @@ class Enrollment : AppCompatActivity() {
                     PrettyDialog(this@Enrollment)
                             .setTitle("Información")
                             .setMessage("99 - Proceso no termino, intentelo de nuevo")
+                            .setIconTint(R.color.pdlg_color_red)
                             .show()
                 }
             }
@@ -559,6 +568,7 @@ class Enrollment : AppCompatActivity() {
                     PrettyDialog(this@Enrollment)
                             .setTitle("Información")
                             .setMessage("Proceso terminado con exito")
+                            .setIconTint(R.color.pdlg_color_red)
                             .show()
                 }
             }
@@ -568,6 +578,7 @@ class Enrollment : AppCompatActivity() {
                     PrettyDialog(this@Enrollment)
                             .setTitle("Información")
                             .setMessage("Ejecutar de nuevo el proceso")
+                            .setIconTint(R.color.pdlg_color_red)
                             .show()
                 }
             }
@@ -623,6 +634,7 @@ class Enrollment : AppCompatActivity() {
                                             .setTitle("Información")
                                             //.setMessage("Error. " + e.message)
                                             .setMessage("Verifique su conexión a internet e intentelo de nuevo")
+                                            .setIconTint(R.color.pdlg_color_red)
                                             .show()
                                 }
                             }
@@ -675,6 +687,7 @@ class Enrollment : AppCompatActivity() {
                                                                 PrettyDialog(this@Enrollment)
                                                                         .setTitle("Información")
                                                                         .setMessage("Intente de nuevo" + e.message)
+                                                                        .setIconTint(R.color.pdlg_color_red)
                                                                         .show()
                                                             }
                                                         }
@@ -765,6 +778,7 @@ class Enrollment : AppCompatActivity() {
                                                                                             PrettyDialog(this@Enrollment)
                                                                                                     .setTitle("Información")
                                                                                                     .setMessage("Error. " + e.message)
+                                                                                                    .setIconTint(R.color.pdlg_color_red)
                                                                                                     .show()
                                                                                         }
                                                                                     }
@@ -812,6 +826,7 @@ class Enrollment : AppCompatActivity() {
                                                                                                         PrettyDialog(this@Enrollment)
                                                                                                                 .setTitle("Información")
                                                                                                                 .setMessage(enrollmentResponse.message)
+                                                                                                                .setIconTint(R.color.pdlg_color_red)
                                                                                                                 .show()
                                                                                                     }
                                                                                                 }
@@ -841,6 +856,7 @@ class Enrollment : AppCompatActivity() {
                                                                                     PrettyDialog(this@Enrollment)
                                                                                             .setTitle("Información")
                                                                                             .setMessage("Intente de nuevo.")
+                                                                                            .setIconTint(R.color.pdlg_color_red)
                                                                                             .show()
                                                                                 }
                                                                             }
@@ -853,6 +869,7 @@ class Enrollment : AppCompatActivity() {
                                                                                 PrettyDialog(this@Enrollment)
                                                                                         .setTitle("Información")
                                                                                         .setMessage("Intente de nuevo.")
+                                                                                        .setIconTint(R.color.pdlg_color_red)
                                                                                         .show()
                                                                             }
                                                                         }
@@ -865,6 +882,7 @@ class Enrollment : AppCompatActivity() {
                                                                             PrettyDialog(this@Enrollment)
                                                                                     .setTitle("Información")
                                                                                     .setMessage("Intente de nuevo.")
+                                                                                    .setIconTint(R.color.pdlg_color_red)
                                                                                     .show()
                                                                         }
                                                                     }
@@ -926,6 +944,7 @@ class Enrollment : AppCompatActivity() {
         val validacionEnrolamientoDocumentoRequest = ValidacionEnrolamientoDocumentoRequest()
         val scoreRequest = ScoreRequest()
         val service = CASB_x002E_ProcesoAutenticacionService()
+        var excepcion: Boolean = false
 
 
         override fun onPreExecute() {
@@ -934,6 +953,7 @@ class Enrollment : AppCompatActivity() {
                     PrettyDialog(this@Enrollment)
                             .setTitle("Información")
                             .setMessage("Enviando Información")
+                            .setIconTint(R.color.pdlg_color_red)
                             .show()
                 }
             }
@@ -986,20 +1006,37 @@ class Enrollment : AppCompatActivity() {
 
 
         override fun doInBackground(vararg params: Void?): ProcesoValidacionDocumentoResponse? {
-            val response = service.ValidacionEnrolamientoDocumento(validacionEnrolamientoDocumentoRequest)
-            enviarDatos(response!!.ScoreDactilarValor.toString())
+            var response :ProcesoValidacionDocumentoResponse
+            try{
+                response = service.ValidacionEnrolamientoDocumento(validacionEnrolamientoDocumentoRequest)
+                enviarDatos(response!!.ScoreDactilarValor.toString())
+            }catch (e: Exception ){
+                excepcion=true
+                runOnUiThread(Runnable() {
+                    run() {
+                        Toast.makeText(getApplicationContext(), "No se logro el envio de datos, por favor verifique su internet.", Toast.LENGTH_LONG).show()
+                    }
+                })
+            }finally {
+                response= ProcesoValidacionDocumentoResponse()
+            }
+            // If you need update UI, simply do this:
             return response
 
         }
 
         override fun onPostExecute(result: ProcesoValidacionDocumentoResponse?) {
 //            enviarDatos(result!!.ScoreDactilarValor.toString())
-            mHandler.post {
-                run {
-                    PrettyDialog(this@Enrollment)
-                            .setTitle("Información")
-                            .setMessage("Enviando Información")
-                            .hide()
+            if(excepcion){
+                Toast.makeText(getApplicationContext(), "No se logro el envio de datos, por favor verifique su internet.", Toast.LENGTH_LONG).show()
+            }else{
+                mHandler.post {
+                    run {
+                        PrettyDialog(this@Enrollment)
+                                .setTitle("Información")
+                                .setMessage("Enviando Información")
+                                .hide()
+                    }
                 }
             }
             super.onPostExecute(result)
