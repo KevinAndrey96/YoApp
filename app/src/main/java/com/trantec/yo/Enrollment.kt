@@ -66,7 +66,7 @@ class Enrollment : AppCompatActivity() {
 
     internal var btnScan: Button? = null
     internal var qrScanIntegrator: IntentIntegrator? = null
-    val LICENSEMICROBLINK = "6BU6AIUW-EH5VOF3J-G5FD27UJ-7ATNWT3K-PJVZTAUN-URAHBIPF-3JGQDV4D-CDZIYJWZ"//esta licencia se debe solicitar a bytte para el funcionamiento en los documentos
+    val LICENSEMICROBLINK = "Y7NBT5HO-UVKHQUT2-NOCCBXY4-2NZGXGMC-RWSEA4FB-4XNE2ALX-MUT5RH7S-6PO3H7EL"
     val MY_REQUEST_CODE_LISENCE = 1329
     val MY_REQUEST_CODE_FRONT = 1330
     val MY_REQUEST_CODE_BACK = 1331
@@ -172,7 +172,8 @@ class Enrollment : AppCompatActivity() {
 
         //Activar Licencia si ya tiene la reutiliza
         try {
-            val lis = license.activarlicensia(URLPETICION, applicationContext, this@Enrollment)
+            //val lis = license.activarlicensia(URLPETICION, applicationContext, this@Enrollment)
+            val lis = license.activarlicensia(URLPETICION, applicationContext, this@Enrollment,"yopresto")
             Logger.d("LIC $lis")
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -1035,6 +1036,7 @@ class Enrollment : AppCompatActivity() {
                         PrettyDialog(this@Enrollment)
                                 .setTitle("Información")
                                 .setMessage("Enviando Información")
+                                .setIconTint(R.color.pdlg_color_red)
                                 .hide()
                     }
                 }

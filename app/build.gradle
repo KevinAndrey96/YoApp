@@ -8,8 +8,8 @@ android {
         applicationId "com.trantec.yo"
         minSdkVersion 18
         targetSdkVersion 27
-        versionCode 20
-        versionName "3.8"
+        versionCode 21
+        versionName "3.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
@@ -111,8 +111,8 @@ dependencies {
     //Enrollment
     implementation 'com.microblink:blinkid:3.18.0'
 
-    implementation(name: 'docbytte-3.0.9', ext: 'aar')
-    implementation(name: 'biometricbytte-3.0.6', ext: 'aar')
+    implementation(name: 'docbytte-3.0.7', ext: 'aar')
+    implementation(name: 'biometricbytte-3.0.5', ext: 'aar')
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation(name: 'lkms_core-1.2.5', ext: 'aar')
