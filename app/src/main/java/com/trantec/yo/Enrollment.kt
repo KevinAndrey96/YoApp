@@ -66,7 +66,10 @@ class Enrollment : AppCompatActivity() {
 
     internal var btnScan: Button? = null
     internal var qrScanIntegrator: IntentIntegrator? = null
-    val LICENSEMICROBLINK = "Y7NBT5HO-UVKHQUT2-NOCCBXY4-2NZGXGMC-RWSEA4FB-4XNE2ALX-MUT5RH7S-6PO3H7EL"
+
+    //val LICENSEMICROBLINK = "Y7NBT5HO-UVKHQUT2-NOCCBXY4-2NZGXGMC-RWSEA4FB-4XNE2ALX-MUT5RH7S-6PO3H7EL"
+    val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+    val LICENSEMICROBLINK = prefs.getString("identidad", "")
     val MY_REQUEST_CODE_LISENCE = 1329
     val MY_REQUEST_CODE_FRONT = 1330
     val MY_REQUEST_CODE_BACK = 1331

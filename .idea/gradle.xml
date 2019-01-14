@@ -10,7 +10,9 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ExKsoap2-1.0.2.5" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/biometricbytte-3.0.8" />
             <option value="$PROJECT_DIR$/commons-io-2.6" />
+            <option value="$PROJECT_DIR$/docbytte-3.0.6" />
             <option value="$PROJECT_DIR$/ksoap2-android-assembly-3.6.2-jar-with-dependencies" />
           </set>
         </option>

@@ -1,1 +1,1 @@
-include ':app', ':ExKsoap2-1.0.2.5', ':ksoap2-android-assembly-3.6.2-jar-with-dependencies', ':commons-io-2.6'
+include ':app', ':ExKsoap2-1.0.2.5', ':ksoap2-android-assembly-3.6.2-jar-with-dependencies', ':commons-io-2.6', ':biometricbytte-3.0.8', ':docbytte-3.0.6'
