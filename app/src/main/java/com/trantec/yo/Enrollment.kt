@@ -67,9 +67,10 @@ class Enrollment : AppCompatActivity() {
     internal var btnScan: Button? = null
     internal var qrScanIntegrator: IntentIntegrator? = null
 
-    //val LICENSEMICROBLINK = "Y7NBT5HO-UVKHQUT2-NOCCBXY4-2NZGXGMC-RWSEA4FB-4XNE2ALX-MUT5RH7S-6PO3H7EL"
-    val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
-    val LICENSEMICROBLINK = prefs.getString("identidad", "")
+    val LICENSEMICROBLINK = "Y7NBT5HO-UVKHQUT2-NOCCBXY4-2NZGXGMC-RWSEA4FB-4XNE2ALX-MUT5RH7S-6PO3H7EL"
+
+    //val prefs = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+    //val LICENSEMICROBLINK = prefs.getString("key", "")
     val MY_REQUEST_CODE_LISENCE = 1329
     val MY_REQUEST_CODE_FRONT = 1330
     val MY_REQUEST_CODE_BACK = 1331
@@ -79,7 +80,7 @@ class Enrollment : AppCompatActivity() {
     val MY_REQUEST_CODE_QR = 49374
     val MY_REQUEST_CODE_NFCPAST = 1335
     val REQUEST_PERMISSION = 1433
-    val URLPETICION = "https://portal.bytte.com.co/casb/SmartBio/SB/API/SmartBio/"//esta url se debe solicitar a bytte para licenciar el projecto
+    val URLPETICION = "https://portal.bytte.com.co/casb/SmartBio/V2/SB/API/Smartbio"//esta url se debe solicitar a bytte para licenciar el projecto
 
     //Datos cedula
     var _numerotarjeta: String? = null
@@ -176,6 +177,8 @@ class Enrollment : AppCompatActivity() {
         //Activar Licencia si ya tiene la reutiliza
         try {
             //val lis = license.activarlicensia(URLPETICION, applicationContext, this@Enrollment)
+
+            //val lis = license.activarlicensia(URLPETICION, applicationContext, this@Enrollment,"yopresto")
             val lis = license.activarlicensia(URLPETICION, applicationContext, this@Enrollment,"yopresto")
             Logger.d("LIC $lis")
         } catch (ex: Exception) {
@@ -220,7 +223,10 @@ class Enrollment : AppCompatActivity() {
             builder.setIcon(R.drawable.reconocimiento_facial)
             builder.setMessage("¿Que cámara deseas usar para realizar el escaner facial?")
             builder.setPositiveButton("Cámara Frontal") { _, _ ->
-                openCameraFront()
+
+                    openCameraFront()
+
+
             }
             builder.setNegativeButton("Cámara Posterior") { _, _ ->
                 openCameraBack()
@@ -508,11 +514,26 @@ class Enrollment : AppCompatActivity() {
      * Abre Camara Frontal
      */
     private fun openCameraFront() {
-        val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
-        intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "4")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
-        intent.putExtra("TIPO_CAMERA", "0")//0 camara frontal 1 camara posterior
-        intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
-        startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
+        try {
+            val intent = Intent(this@Enrollment, BytteCaptureFace::class.java)
+            intent.putExtra(ValuesBiometric.EXTRAS_FACECAPTURE, "4")//factor de captura  0  facil 1  medio 2 dificil 3 muy dificil 0,1,2,3 deteccion por movimientos, 4,5,6 deteccion de rostro
+            intent.putExtra("TIPO_CAMERA", "0")//0 camara frontal 1 camara posterior
+            intent.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
+            startActivityForResult(intent, MY_REQUEST_CODE_FACECAPTURE)
+
+        }catch (e: Exception) {
+            Toast.makeText(applicationContext,"Error: "+e.message , Toast.LENGTH_LONG)
+            run {
+                PrettyDialog(this@Enrollment)
+                        .setTitle("Información")
+                        .setMessage("Error"+e)
+                        .setIconTint(R.color.pdlg_color_red)
+                        .show()
+            }
+
+        }
+
+
     }
 
     /**

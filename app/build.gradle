@@ -8,8 +8,8 @@ android {
         applicationId "com.trantec.yo"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 21
-        versionName "3.9"
+        versionCode 22
+        versionName "4.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
@@ -51,7 +51,7 @@ android {
 repositories {
     mavenCentral()
     maven { url 'http://maven.microblink.com' }
-    flatDir {
+    flatDir{
         dirs 'libs'
     }
 }
@@ -113,12 +113,14 @@ dependencies {
 
     implementation(name: 'docbytte-3.0.6', ext: 'aar')
     implementation(name: 'biometricbytte-3.0.8', ext: 'aar')
+
+
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation(name: 'lkms_core-1.2.5', ext: 'aar')
 
     implementation(name: 'AndroidBiometricSDK-4.7.0-biometry', ext: 'aar')
     implementation 'net.zetetic:android-database-sqlcipher:3.5.7'
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    //implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.okhttp3:okhttp:3.6.0'
     implementation('com.mikepenz:materialdrawer:6.0.9@aar') {
         transitive = true

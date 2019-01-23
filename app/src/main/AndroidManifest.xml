@@ -31,16 +31,16 @@
         android:protectionLevel="signature" />
     <!-- Define new permissions -->
     <permission
-        android:name="com.biometric.usosdkbytte.NEW_READ_LKMS_LICENSE_PROVIDER"
+        android:name="com.trantec.yo.NEW_READ_LKMS_LICENSE_PROVIDER"
         android:protectionLevel="signature" />
     <permission
-        android:name="com.biometric.usosdkbytte.NEW_WRITE_LKMS_LICENSE_PROVIDER"
+        android:name="com.trantec.yo.NEW_WRITE_LKMS_LICENSE_PROVIDER"
         android:protectionLevel="signature" />
     <permission
-        android:name="com.biometric.usosdkbytte.NEW_READ_MPH_BIO_SDK_PROVIDER"
+        android:name="com.trantec.yo.NEW_READ_MPH_BIO_SDK_PROVIDER"
         android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
     <permission
-        android:name="com.biometric.usosdkbytte.NEW_WRITE_MPH_BIO_SDK_PROVIDER"
+        android:name="com.trantec.yo.NEW_WRITE_MPH_BIO_SDK_PROVIDER"
         android:protectionLevel="signature" /> <!-- unless otherwise required, set the maximum security permission -->
 
 
@@ -166,15 +166,15 @@
 
         <provider
             android:name="com.morpho.mph_bio_sdk.android.sdk.content_provider.BioStoreProvider"
-            android:authorities="com.bytte.testapp.bio_store"
-            android:readPermission="com.bytte.testapp.NEW_READ_MPH_BIO_SDK_PROVIDER"
-            android:writePermission="com.bytte.testapp.NEW_WRITE_MPH_BIO_SDK_PROVIDER"
+            android:authorities="com.trantec.yo.bio_store"
+            android:readPermission="com.trantec.yo.NEW_READ_MPH_BIO_SDK_PROVIDER"
+            android:writePermission="com.trantec.yo.NEW_WRITE_MPH_BIO_SDK_PROVIDER"
             tools:replace="android:authorities, android:readPermission, android:writePermission" />
         <provider
             android:name="com.morpho.lkms.android.sdk.lkms_core.content_provider.LkmsStoreProvider"
-            android:authorities="com.bytte.testapp.lkms"
-            android:readPermission="com.bytte.testapp.NEW_READ_LKMS_LICENSE_PROVIDER"
-            android:writePermission="com.bytte.testapp.NEW_WRITE_LKMS_LICENSE_PROVIDER"
+            android:authorities="com.trantec.yo.lkms"
+            android:readPermission="com.trantec.yo.NEW_READ_LKMS_LICENSE_PROVIDER"
+            android:writePermission="com.trantec.yo.NEW_WRITE_LKMS_LICENSE_PROVIDER"
             tools:replace="android:authorities, android:readPermission, android:writePermission" />
 
         <activity android:name=".ui.Main2Activity"></activity>
