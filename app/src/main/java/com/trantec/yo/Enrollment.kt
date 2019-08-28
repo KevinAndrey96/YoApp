@@ -208,11 +208,25 @@ class Enrollment : AppCompatActivity() {
 
         //captura de back doc
         button7.setOnClickListener {
-            val inten = Intent(this@Enrollment, CBackDocument::class.java)
-            inten.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
-            inten.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
-            inten.putExtra("EXTRAS_TIMEOUT", "20")
-            startActivityForResult(inten, MY_REQUEST_CODE_BACK)
+            try {
+                val inten = Intent(this@Enrollment, CBackDocument::class.java)
+                inten.putExtra("EXTRAS_LICENSEE", "")//si la imagen estara protegida si esta en vacio no esta protejida
+                inten.putExtra(BaseScanActivity.EXTRAS_LICENSE_KEY, LICENSEMICROBLINK)
+                inten.putExtra("EXTRAS_TIMEOUT", "20")
+                startActivityForResult(inten, MY_REQUEST_CODE_BACK)
+
+            }catch (e: Exception) {
+                Toast.makeText(applicationContext,"Error: "+e.message , Toast.LENGTH_LONG)
+                run {
+                    PrettyDialog(this@Enrollment)
+                            .setTitle("Información")
+                            .setMessage("Error"+e)
+                            .setIconTint(R.color.pdlg_color_red)
+                            .show()
+                }
+
+            }
+
         }
 
         //Boton para captura facial
@@ -1016,7 +1030,7 @@ class Enrollment : AppCompatActivity() {
             validacionEnrolamientoDocumentoRequest.IdentificadorProceso = UUID.randomUUID().toString() //Identificador del Proceso automatico
             validacionEnrolamientoDocumentoRequest.ImageKey = "" //Se envia vacio porque la imagen no va comprimida
             validacionEnrolamientoDocumentoRequest.SoloMinucia = false
-            validacionEnrolamientoDocumentoRequest.Completo = false
+            validacionEnrolamientoDocumentoRequest.Completo = true
             scoreRequest.Score_ConANI_ANIBarCode = 20
             scoreRequest.Score_ConANI_ANIOCR = 10
             scoreRequest.Score_ConANI_Fingerprint = 60
